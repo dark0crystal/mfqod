@@ -1,0 +1,157 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+ 
+model User {
+  id            String          @id @default(cuid())
+  name          String?
+  email         String          @unique
+  emailVerified DateTime?
+  image         String?
+  role           Role @default(BASIC)
+  accounts      Account[]
+  sessions      Session[]
+  // Optional for WebAuthn support
+  Authenticator Authenticator[]
+  post Post[]
+  claim Claim[]
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+ 
+ enum Role{
+  BASIC
+  VERIFIED
+  ADMIN
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([provider, providerAccountId])
+}
+ 
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+ 
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@id([identifier, token])
+}
+ 
+// Optional for WebAuthn support
+model Authenticator {
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([userId, credentialID])
+}
+
+
+model Post{
+  id  String   @id @default(cuid())
+  userId String
+  title String
+  content String?
+  type String? 
+  temporaryDeletion Boolean @default(false)
+  approval Boolean @default(true)
+  author User @relation(fields: [userId],references: [id])
+  createdAt DateTime @default(now())
+  writtenClaims Claim[]
+  uploadedPostPhotos PostPhotos[]
+  postAddress Address[]
+
+}
+model PostPhotos{
+  id      String          @id @default(cuid())
+  postId String
+  postPhoto Post @relation(fields: [postId], references: [id])
+  postUrl String?
+  createdAt DateTime @default(now())
+}
+
+model Address{
+  id      String          @id @default(cuid())
+  place String?
+  country String?
+  orgnization String?
+  postId String
+  postAddress Post @relation(fields: [postId], references: [id])
+  status AddressStatus @default(Available)
+  createdAt DateTime @default(now())
+
+}
+
+enum AddressStatus{
+  UnAvailable
+  Available
+}
+model Claim{
+  id    String          @id @default(cuid())
+  postId String
+  post Post @relation(fields: [postId] , references: [id])
+  claimTitle String
+  claimContent String?
+  temporaryDeletion Boolean @default(false)
+  createdAt DateTime @default(now())
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  uploadedClaimPhotos ClaimPhotos[]
+
+}
+
+model ClaimPhotos{
+  id  String          @id @default(cuid())
+  claimId String
+  photoUrl String
+  claim Claim @relation(fields: [claimId], references: [id])
+  createdAt DateTime @default(now())
+}
