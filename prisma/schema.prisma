@@ -24,6 +24,7 @@ model User {
   role           Role @default(BASIC)
   accounts      Account[]
   sessions      Session[]
+  manage        Manage[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
   post Post[]
@@ -38,7 +39,13 @@ model User {
   VERIFIED
   ADMIN
 }
-
+model Manage{
+  id String  @id @default(cuid())
+  userId String
+  place String?
+  user User @relation(fields: [userId], references: [id])
+  orgnization String?
+}
 model Account {
   userId            String
   type              String
