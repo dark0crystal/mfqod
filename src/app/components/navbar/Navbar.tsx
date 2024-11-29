@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Brand from "./Brand";
 // import LanguageChange from "./LangChange";
-import MobileMenu from "./MobileNavbar";
+// import MobileMenu from "./MobileNavbar";
 // import { getLocale, getTranslations } from "next-intl/server";
 // import { Link } from "@/i18n/routing";
 import NavMenu from "./NavMenu";
