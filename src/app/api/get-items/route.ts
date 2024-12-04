@@ -1,54 +1,56 @@
-// import prisma from "@/lib/db";
-// import { NextResponse } from 'next/server';
-// export async function POST(){
-//     const res = await prisma.post.findMany();
-
-
-//     if (!res) {
-//         return new Response('Place not found', { status: 404 });
-//       }
-
-//       return NextResponse.json({ res });
-
-
-// }
-import prisma from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
-
-/** 
- * @method POST 
- * @route ~/api/get-items
- * @description get all items or posts with same body data
-*/
+import prisma from "@/lib/db";
 
 export async function GET(req: NextRequest) {
-  const { searchParams } = req.nextUrl;  // Access query parameters
+  const { searchParams } = new URL(req.url);
+  const title = searchParams.get("item") ?? ""; // Assuming 'item' is the search parameter for title
+  const place = searchParams.get("place") ?? ""; // Assuming 'place' is the search parameter for place
 
-  const item = searchParams.get("item") || '';  // Get item from query params (default to empty string)
+  // Fetch posts from the database with related postPhotos and addresses
+  const posts = await prisma.post.findMany({
+    where: {
+      title: {
+        contains: title, // Filter posts by title (if provided)
+      },
+      approval: true, // Only fetch posts that are approved
+      temporaryDeletion: false, // Only fetch posts that are not marked for deletion
+    },
+    include: {
+      uploadedPostPhotos: {
+        select: {
+          postUrl: true, // Select the URL for post images
+        },
+      },
+      postAddress: {
+        select: {
+          place: true, // Place associated with the post
+          country: true, // Country associated with the post
+          orgnization: true, // Organization associated with the post
+        },
+      },
+    },
+  });
 
-  // Build a filter object for Prisma based on the query parameter
-  const filter: any = {};
+  // Map through the posts and ensure each post has image URLs, or set a default image if none exist
+  const postsWithImages = posts.map((post) => {
+    const imageUrls = post.uploadedPostPhotos.length > 0
+      ? post.uploadedPostPhotos.map((photo) => photo.postUrl) // If post has images, map to image URLs
+      : ['https://ggrrwpwyqbblxoxidpmn.supabase.co/storage/v1/object/public/mfqodFiles/images']; // Default image URL if no images are found
 
-  // Partial search for 'item' using the `contains` operator (case-insensitive)
-  if (item) {
-    filter.title = { contains: item, mode: "insensitive" };  // Partial match, case-insensitive
-  }
+    // Check if address exists and prepare the address info
+    const address = post.postAddress.length > 0 ? post.postAddress[0] : null;
 
-  try {
-    // Perform the database query with the filter applied
-    const data = await prisma.post.findMany({
-      where: filter,  // Apply the filter to the database query
-    });
-    return NextResponse.json(data, { status: 200 });  // Return the filtered data
-  } catch (error) {
-    console.error("Error fetching items:", error);
-    return NextResponse.json({ error: "Failed to fetch items" }, { status: 500 });
-  }
+    return {
+      ...post,
+      imageUrls,
+      address: address ? {
+        place: address.place,
+        country: address.country,
+        orgnization: address.orgnization,
+      } : null,
+    };
+  });
+
+  // Return the posts with images and address information
+  return NextResponse.json(postsWithImages);
 }
-
-
-
-// export async function POST(req:NextRequest){
-//     const body  = await req.json();
-
-// }

@@ -1,16 +1,16 @@
-"use client"
+"use client";
+import Image1 from "../../../public/img1.jpeg"
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";  // Import Zod
+import { z } from "zod";  // Import Zod for validation
 import { zodResolver } from "@hookform/resolvers/zod";  // Import Zod resolver
 import { useRouter } from "next/navigation";  // Import useRouter for page navigation
-import { useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";  // Import useSession for user session
+import Image from "next/image";
 
 // Define Zod validation schema
 const schema = z.object({
-  item: z
-    .string()
-    .min(1, { message: "The Field is required!" }),
+  item: z.string().min(1, { message: "The Field is required!" }),
   place: z.string().min(1, { message: "Please select a place" }),
 });
 
@@ -20,17 +20,16 @@ type FormFields = {
 };
 
 export default function Search() {
-  const [items, setItems] = useState<any[]>([]);  // Initialize state to hold fetched items
-  const router = useRouter();  // To handle navigation to a details page
+  const [items, setItems] = useState<any[]>([]);  // State to hold fetched items
+  const router = useRouter();  // To navigate to the details page
   const session = useSession();
 
-  // Function to fetch posts from the server using a custom API route
+  // Fetch posts based on item and place
   const fetchItems = async (item: string, place: string) => {
     try {
       const response = await fetch(`/api/get-items?item=${item}&place=${place}`);
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetched data: ", data);
         setItems(data); // Set the fetched data to state
       } else {
         console.error("Failed to fetch items");
@@ -40,32 +39,29 @@ export default function Search() {
     }
   };
 
-  // Initialize the useForm hook with Zod validation schema
+  // UseForm hook with Zod for form validation
   const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<FormFields>({
-    resolver: zodResolver(schema),  // Use Zod for validation
+    resolver: zodResolver(schema),
   });
 
   // Handle form submission
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    console.log(data);  // Log form data on submit
+    console.log(data);
 
     // Fetch items based on form data
     await fetchItems(data.item, data.place);
-
-    reset();  // Reset form after submission
+    reset();  // Reset form
   };
 
-  // Function to handle post click and navigate to the details page
+  // Handle post click to navigate to details
   const handlePostClick = (postId: string) => {
-    // Redirect to the post details page
     router.push(`/find/${postId}`);
   };
 
   return (
     <div className="flex flex-col mt-6 items-center">
-        <h1>{session.data?.user?.id}</h1>
+      <h1>{session.data?.user?.id}</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-row justify-center">
-        {/* Input for item */}
         <div>
           <input
             id="item"
@@ -74,13 +70,8 @@ export default function Search() {
             placeholder="هيش مغيّب ؟ "
             className="p-3 border text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
-          {/* Error message for item */}
-          {errors.item && (
-            <p className="mt-2 text-xs text-red-500">{errors.item.message}</p>
-          )}
+          {errors.item && <p className="mt-2 text-xs text-red-500">{errors.item.message}</p>}
         </div>
-
-        {/* Select for place */}
         <div>
           <select
             id="place"
@@ -95,13 +86,8 @@ export default function Search() {
             <option value="UTAS Ibra">UTAS Ibra</option>
             <option value="NIZWA Uni">NIZWA Uni</option>
           </select>
-          {/* Error message for place */}
-          {errors.place && (
-            <p className="mt-2 text-xs text-red-500">{errors.place.message}</p>
-          )}
+          {errors.place && <p className="mt-2 text-xs text-red-500">{errors.place.message}</p>}
         </div>
-
-        {/* Submit button */}
         <div className="md:col-span-2">
           <button
             type="submit"
@@ -113,25 +99,49 @@ export default function Search() {
         </div>
       </form>
 
-      {/* Display the fetched items */}
-      <div className="w-full max-w-4xl p-8 mt-6 bg-violet-300">
-        <h3 className="text-lg font-bold mb-4">Fetched Items</h3>
-        <div className="space-y-4">
+      {/* Display the fetched posts */}
+      <div className="w-full max-w-2xl p-6 mt-6 bg-violet-100 rounded-lg shadow-lg">
+        <h3 className="text-xl font-semibold mb-6 text-indigo-800">Fetched Items</h3>
+        <div className="space-y-6">
           {items.length > 0 ? (
-            items.map((item: any, index) => (
-              <div key={index} className="p-4 bg-violet-300 rounded-md">
+            items.map((item: any, index: number) => (
+              <div key={index} className="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-[450px]">
                 <button
-                  onClick={() => handlePostClick(item.id)} // Navigate to post details on click
-                  className="w-full text-left text-blue-500 hover:underline"
+                  onClick={() => handlePostClick(item.id)}
+                  className="w-full text-left text-indigo-600 hover:text-indigo-800"
                 >
-                  <p><strong>ID:</strong> {item.id}</p>
-                  <p><strong>Title:</strong> {item.title}</p>
-                  <p><strong>Content:</strong> {item.content}</p>
+                  <h4 className="text-lg font-semibold">{item.title}</h4>
+                  <p className="text-gray-600">{item.content}</p>
+                  <p className="text-sm text-gray-500">Location: {item.address?.place}, {item.address?.country}</p>
+
+                  {/* Display images */}
+                  <div className="mt-4 h-[300px] relative">
+                    {item.imageUrls.length > 0 ? (
+                      item.imageUrls.map((url: string, idx: number) => (
+                        <Image
+                          key={idx}
+                          src={url}
+                          alt={`Image ${idx}`}
+                          layout="fill" // Cover the available space
+                          objectFit="cover" // Ensure image covers the space without distortion
+                          className="rounded-md shadow-sm"
+                        />
+                      ))
+                    ) : (
+                      <Image
+                        src="/images/image1.jpg"
+                        alt="Default Image"
+                        layout="fill" // Cover the available space
+                        objectFit="cover" // Ensure image covers the space without distortion
+                        className="rounded-md shadow-sm"
+                      />
+                    )}
+                  </div>
                 </button>
               </div>
             ))
           ) : (
-            <p>No items found.</p>
+            <p className="text-gray-500">No items found.</p>
           )}
         </div>
       </div>
