@@ -28,9 +28,25 @@ export async function POST(req: NextRequest) {
         title: body.title,
         content: body.content,
         type: body.type,
-        // You can add other fields like 'place', 'country', etc. as needed
+        
       },
+      select:{
+        id:true
+      }
     });
+
+    // Create a new post in the database
+    const newAddress = await prisma.address.create({
+        data: {
+          postId:newPost.id,
+          place:body.place,
+          country :body.country,
+          orgnization :body.orgnization
+          
+        },
+        
+      });
+
 
     // Return the new post ID in the response
     return NextResponse.json({ message: "Post created successfully", postId: newPost.id }, { status: 200 });

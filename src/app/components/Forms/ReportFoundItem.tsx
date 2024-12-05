@@ -1,7 +1,8 @@
-'use client'; // Ensure this component is executed on the client side
+'use client';
 
 import { supabase } from "@/lib/supabase";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useState, useEffect } from "react";
 
 type ItemFormFields = {
   title: string;
@@ -10,17 +11,24 @@ type ItemFormFields = {
   place: string;
   country: string;
   orgnization: string;
-  image: FileList; // New field for the images
+  image: FileList;
 };
 
 export default function ReportFoundItem() {
-  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<ItemFormFields>();
+  const { register, handleSubmit, formState: { errors, isSubmitting }, reset, setValue } = useForm<ItemFormFields>();
+  const [organization, setOrganization] = useState<string>(''); // State for organization
+  const [placeOptions, setPlaceOptions] = useState<string[]>([]); // State for dynamically updating place options
+
+  const OrgPlaces = [
+    { "SQU": ["SQU Library", "SQU Lost and Found Department"] },
+    { "UTAS Muscat": ["UTAS Library", "UTAS Lost and Found Department"] },
+    { "Bin Omair": ["Bin Omair Library", "Bin Omair Lost and Found Department"] },
+  ];
 
   // Handle form submission
   const onSubmit: SubmitHandler<ItemFormFields> = async (data) => {
     console.log(data);
 
-    // Create FormData object for text fields (excluding images)
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("content", data.content);
@@ -30,10 +38,9 @@ export default function ReportFoundItem() {
     formData.append("orgnization", data.orgnization);
 
     try {
-      // Send data to API for item creation
       const response = await fetch("/api/upload-found-item", {
         method: "POST",
-        body: JSON.stringify(data), // Send as JSON for text data
+        body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' }
       });
 
@@ -42,9 +49,7 @@ export default function ReportFoundItem() {
       if (response.ok) {
         console.log("Item uploaded successfully.");
 
-        // Check if images are uploaded
         if (data.image && data.image.length > 0) {
-          // Use Promise.all to upload all images asynchronously
           const uploadPromises = Array.from(data.image).map((file) => {
             const filePath = `${result.postId}/${file.name}`;
             return supabase.storage
@@ -56,33 +61,30 @@ export default function ReportFoundItem() {
                   throw new Error(`Failed to upload image: ${error.message}`);
                 } else {
                   console.log("Uploaded image:", uploadedData);
-                  return uploadedData?.path; // Return the key for the uploaded file
-                  
+                  return uploadedData?.path;
                 }
               })
               .catch((error) => {
                 console.error(`Error uploading file ${file.name}:`, error.message);
-                return null; // Handle failed image uploads gracefully
+                return null;
               });
           });
 
-          // Wait for all image uploads to finish
           const uploadedFilesKeys = await Promise.all(uploadPromises);
 
-          // Construct URLs for all uploaded images
           const imageUrls = uploadedFilesKeys.map((fileKey) => {
             if (fileKey) {
               return `https://ggrrwpwyqbblxoxidpmn.supabase.co/storage/v1/object/public/mfqodFiles/${fileKey}`;
             }
             return null;
-          }).filter(Boolean); // Filter out any null URLs
-          console.log("the images url in client before sending :",imageUrls)
-          // Now save the URLs in the database for the post
+          }).filter(Boolean);
+          console.log("the images url in client before sending :", imageUrls);
+
           await fetch("/api/save-post-images", {
             method: "POST",
             body: JSON.stringify({
-              postId: result.postId,  // The post ID returned from the first API
-              imageUrls: imageUrls,   // List of image URLs
+              postId: result.postId,
+              imageUrls: imageUrls,
             }),
             headers: { 'Content-Type': 'application/json' },
           });
@@ -98,6 +100,33 @@ export default function ReportFoundItem() {
       console.error("Error submitting form:", error);
     }
   };
+
+  // Handle organization change and update places
+  const handleOrganizationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedOrg = e.target.value;
+    setOrganization(selectedOrg);
+
+    // Get the places related to the selected organization
+    const selectedOrgData = OrgPlaces.find(org => Object.keys(org)[0] === selectedOrg);
+    if (selectedOrgData) {
+      const places = Object.values(selectedOrgData)[0]; // Get places array
+      setPlaceOptions(places);
+      setValue("place", ""); // Reset the selected place
+    } else {
+      setPlaceOptions([]); // Reset places if no organization is selected
+    }
+  };
+
+  // Set default place options on mount or when the organization changes
+  useEffect(() => {
+    if (organization) {
+      const selectedOrgData = OrgPlaces.find(org => Object.keys(org)[0] === organization);
+      if (selectedOrgData) {
+        const places = Object.values(selectedOrgData)[0]; // Get places array
+        setPlaceOptions(places);
+      }
+    }
+  }, [organization]);
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-10">
@@ -156,23 +185,46 @@ export default function ReportFoundItem() {
           {errors.image && <p className="mt-2 text-xs text-red-500">{errors.image.message}</p>}
         </div>
 
-        {/* Select Organization */}
+       {/* Select Organization */}
         <div>
           <label htmlFor="orgnization" className="block text-lg font-semibold text-gray-700">Organization</label>
           <select
             id="orgnization"
+            value={organization} // Bind to the organization state
             {...register("orgnization", { required: "Please select an organization" })}
+            onChange={handleOrganizationChange} // Trigger handleOrganizationChange on selection
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
+            {/* Display "Select Organization" first */}
             <option value="" disabled>Select Organization</option>
-            <option value="SQU">SQU</option>
-            <option value="UTAS Muscat">UTAS Muscat</option>
-            <option value="UTAS Nizwa">UTAS Nizwa</option>
-            <option value="UTAS Ibra">UTAS Ibra</option>
-            <option value="NIZWA Uni">NIZWA Uni</option>
+            {OrgPlaces.map((org, index) => {
+              const orgName = Object.keys(org)[0];
+              return (
+                <option key={index} value={orgName}>{orgName}</option>
+              );
+            })}
           </select>
           {errors.orgnization && <p className="mt-2 text-xs text-red-500">{errors.orgnization.message}</p>}
         </div>
+
+
+        {/* Select Place */}
+        {placeOptions.length > 0 && (
+          <div>
+            <label htmlFor="place" className="block text-lg font-semibold text-gray-700">Place</label>
+            <select
+              id="place"
+              {...register("place", { required: "Please select a place" })}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              <option value="" disabled>Select Place</option>
+              {placeOptions.map((place, index) => (
+                <option key={index} value={place}>{place}</option>
+              ))}
+            </select>
+            {errors.place && <p className="mt-2 text-xs text-red-500">{errors.place.message}</p>}
+          </div>
+        )}
 
         {/* Select Country */}
         <div>

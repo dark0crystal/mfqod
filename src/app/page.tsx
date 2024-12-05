@@ -10,7 +10,7 @@ export default async function Home() {
       <Suspense fallback={<p>Loading feed...</p>}>
   
         <div>
-        <Image alt="image" width={500} height={500} src="https://ggrrwpwyqbblxoxidpmn.supabase.co/storage/v1/object/public/mfqodFiles/images"/>
+        {/* <Image alt="image" width={500} height={500} src="https://ggrrwpwyqbblxoxidpmn.supabase.co/storage/v1/object/public/mfqodFiles/images"/> */}
 
         </div>
       </Suspense>
