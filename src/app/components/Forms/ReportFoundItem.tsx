@@ -3,6 +3,7 @@
 import { supabase } from "@/lib/supabase";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
+import ReactConfetti from 'react-confetti'; // Importing the ReactConfetti component
 
 type ItemFormFields = {
   title: string;
@@ -18,6 +19,7 @@ export default function ReportFoundItem() {
   const { register, handleSubmit, formState: { errors, isSubmitting }, reset, setValue } = useForm<ItemFormFields>();
   const [organization, setOrganization] = useState<string>(''); // State for organization
   const [placeOptions, setPlaceOptions] = useState<string[]>([]); // State for dynamically updating place options
+  const [confetti, setConfetti] = useState(false); // State to trigger confetti animation
 
   const OrgPlaces = [
     { "SQU": ["SQU Library", "SQU Lost and Found Department"] },
@@ -48,6 +50,7 @@ export default function ReportFoundItem() {
 
       if (response.ok) {
         console.log("Item uploaded successfully.");
+        setConfetti(true); // Trigger confetti animation
 
         if (data.image && data.image.length > 0) {
           const uploadPromises = Array.from(data.image).map((file) => {
@@ -78,7 +81,7 @@ export default function ReportFoundItem() {
             }
             return null;
           }).filter(Boolean);
-          console.log("the images url in client before sending :", imageUrls);
+          console.log("The image URLs in client before sending:", imageUrls);
 
           await fetch("/api/save-post-images", {
             method: "POST",
@@ -92,7 +95,7 @@ export default function ReportFoundItem() {
           console.log("All images uploaded and URLs saved to the database:", imageUrls);
         }
 
-        reset(); // Reset the form
+        reset(); // Reset the form after submission
       } else {
         console.error("Failed to upload item.");
       }
@@ -128,8 +131,23 @@ export default function ReportFoundItem() {
     }
   }, [organization]);
 
+  // Reset the confetti animation after a few seconds
+  useEffect(() => {
+    if (confetti) {
+      setTimeout(() => {
+        setConfetti(false);
+      }, 7000); // Hide the confetti after 3 seconds
+    }
+  }, [confetti]);
+
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-10">
+      {confetti && (
+        <ReactConfetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+        />
+      )}
       <h2 className="text-2xl font-bold text-center text-indigo-600 mb-6">Report Found Item</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -185,7 +203,7 @@ export default function ReportFoundItem() {
           {errors.image && <p className="mt-2 text-xs text-red-500">{errors.image.message}</p>}
         </div>
 
-       {/* Select Organization */}
+        {/* Select Organization */}
         <div>
           <label htmlFor="orgnization" className="block text-lg font-semibold text-gray-700">Organization</label>
           <select
@@ -206,7 +224,6 @@ export default function ReportFoundItem() {
           </select>
           {errors.orgnization && <p className="mt-2 text-xs text-red-500">{errors.orgnization.message}</p>}
         </div>
-
 
         {/* Select Place */}
         {placeOptions.length > 0 && (
