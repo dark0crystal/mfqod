@@ -19,6 +19,7 @@ export default async function NavBar() {
     { direction: "/search", name: "Search" },
     { direction: "/", name: "Main" },
     { direction: "/report-found-item", name:"report-found-item" },
+    { direction: "/dashboard", name:"dashboard" },
     
   ];
 
