@@ -100,22 +100,21 @@ export default function Search() {
       </form>
 
       {/* Display the fetched posts */}
-      <div className="w-full max-w-2xl p-6 mt-6 bg-violet-100 rounded-lg shadow-lg">
+      <div className=" w-screen p-6 mt-6  rounded-lg shadow-lg">
         <h3 className="text-xl font-semibold mb-6 text-indigo-800">Fetched Items</h3>
-        <div className="space-y-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1">
           {items.length > 0 ? (
             items.map((item: any, index: number) => (
-              <div key={index} className="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 h-[450px]">
+              <div key={index} className=" bg-white max-w-[430px]  m-4 rounded-md shadow-md hover:shadow-xl transition-shadow duration-300 h-[480px]">
+                {/* card side design color */}
+              
                 <button
                   onClick={() => handlePostClick(item.id)}
                   className="w-full text-left text-indigo-600 hover:text-indigo-800"
                 >
-                  <h4 className="text-lg font-semibold">{item.title}</h4>
-                  <p className="text-gray-600">{item.content}</p>
-                  <p className="text-sm text-gray-500">Location: {item.address?.place}, {item.address?.country}</p>
-
+                  
                   {/* Display images */}
-                  <div className="mt-4 h-[300px] relative">
+                  <div className=" h-[300px] relative">
                     {item.imageUrls.length > 0 ? (
                       item.imageUrls.map((url: string, idx: number) => (
                         <Image
@@ -124,7 +123,7 @@ export default function Search() {
                           alt={`Image ${idx}`}
                           layout="fill" // Cover the available space
                           objectFit="cover" // Ensure image covers the space without distortion
-                          className="rounded-md shadow-sm"
+                          className="rounded-t-md shadow-sm"
                         />
                       ))
                     ) : (
@@ -137,8 +136,17 @@ export default function Search() {
                       />
                     )}
                   </div>
+                  {/* end image section */}
+                  <div className="p-6">
+                      <h4 className="text-lg font-semibold">{item.title}</h4>
+                      <p className="text-gray-600">{item.content}</p>
+                  </div>
+                  <div className="p-6">
+                     <p className="text-sm text-gray-500">Location: {item.address?.place}, {item.address?.country}</p>
+                  </div>
                 </button>
-              </div>
+                </div>
+          
             ))
           ) : (
             <p className="text-gray-500">No items found.</p>
