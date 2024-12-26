@@ -1,5 +1,6 @@
 "use client";
 import Image1 from "../../../public/img1.jpeg"
+import { MdArrowOutward } from "react-icons/md";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";  // Import Zod for validation
@@ -59,7 +60,12 @@ export default function Search() {
   };
 
   return (
-    <div className="flex flex-col mt-6 items-center">
+    <div className="relative h-full w-full bg-white">
+    {/* Dotted Background */}
+    <div className="absolute h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] z-0"></div>
+  
+    {/* Foreground Content */}
+    <div className="relative z-10 flex flex-col mt-6 items-center">
       <h1>{session.data?.user?.id}</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-row justify-center">
         <div>
@@ -67,7 +73,7 @@ export default function Search() {
             id="item"
             {...register("item")}
             type="text"
-            placeholder="هيش مغيّب ؟ "
+            placeholder="هيش مغيّب ؟"
             className="p-3 border text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
           {errors.item && <p className="mt-2 text-xs text-red-500">{errors.item.message}</p>}
@@ -98,55 +104,69 @@ export default function Search() {
           </button>
         </div>
       </form>
-
+  
       {/* Display the fetched posts */}
-      <div className=" w-screen p-6 mt-6  rounded-lg shadow-lg">
+      <div className="w-screen p-6 mt-6 flex items-center flex-col">
         <h3 className="text-xl font-semibold mb-6 text-indigo-800">Fetched Items</h3>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-12">
           {items.length > 0 ? (
             items.map((item: any, index: number) => (
-              <div key={index} className=" bg-white max-w-[430px]  m-4 rounded-md shadow-md hover:shadow-xl transition-shadow duration-300 h-[480px]">
-                {/* card side design color */}
-              
-                <button
-                  onClick={() => handlePostClick(item.id)}
-                  className="w-full text-left text-indigo-600 hover:text-indigo-800"
-                >
-                  
-                  {/* Display images */}
-                  <div className=" h-[300px] relative">
-                    {item.imageUrls.length > 0 ? (
-                      item.imageUrls.map((url: string, idx: number) => (
-                        <Image
-                          key={idx}
-                          src={url}
-                          alt={`Image ${idx}`}
-                          layout="fill" // Cover the available space
-                          objectFit="cover" // Ensure image covers the space without distortion
-                          className="rounded-t-md shadow-sm"
-                        />
-                      ))
-                    ) : (
-                      <Image
-                        src="/images/image1.jpg"
-                        alt="Default Image"
-                        layout="fill" // Cover the available space
-                        objectFit="cover" // Ensure image covers the space without distortion
-                        className="rounded-md shadow-sm"
-                      />
-                    )}
-                  </div>
-                  {/* end image section */}
-                  <div className="p-6">
-                      <h4 className="text-lg font-semibold">{item.title}</h4>
-                      <p className="text-gray-600">{item.content}</p>
-                  </div>
-                  <div className="p-6">
-                     <p className="text-sm text-gray-500">Location: {item.address?.place}, {item.address?.country}</p>
-                  </div>
-                </button>
+              <div
+                key={index}
+                className="bg-white min-w-[350px] rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+              >
+                {/* Content Section */}
+                <div className="p-4">
+                  <h4 className="text-lg font-semibold text-gray-800">{item.title}</h4>
+                  <p className="text-gray-500 text-sm">{item.content}</p>
                 </div>
-          
+  
+                {/* Footer Section */}
+                <div className="flex items-center justify-between py-2 px-4">
+                  <p className="text-gray-600 text-sm">
+                    Location: {item.address?.place}, {item.address?.country}
+                  </p>
+                </div>
+  
+                {/* Image Section */}
+                <div className="relative h-[250px] m-3">
+                  {item.imageUrls.length > 0 ? (
+                    <div>
+                      <button
+                        title="arrow to detailed page"
+                        onClick={() => handlePostClick(item.id)}
+                        className="absolute bottom-2 right-2 p-3 bg-white z-20 text-black text-xl rounded-full hover:bg-indigo-200 transition-colors shadow-md"
+                      >
+                        <MdArrowOutward />
+                      </button>
+                      <Image
+                        src={item.imageUrls[0]} // Display the first image
+                        alt={`Image ${index}`}
+                        layout="fill"
+                        objectFit="cover"
+                        className="rounded-2xl"
+                      />
+                    </div>
+                  ) : (
+                    <>
+                      <button
+                        title="arrow to detailed page"
+                        onClick={() => handlePostClick(item.id)}
+                        className="absolute bottom-2 right-2 p-3 bg-white z-20 text-black text-xl rounded-full hover:bg-indigo-200 transition-colors shadow-md"
+                      >
+                        <MdArrowOutward />
+                      </button>
+                      <Image
+                        src="/images/default-image.jpg"
+                        alt="Default Image"
+                        layout="fill"
+                        objectFit="cover"
+                        className="rounded-2xl"
+                      />
+                    </>
+                  )}
+                </div>
+              </div>
             ))
           ) : (
             <p className="text-gray-500">No items found.</p>
@@ -154,6 +174,9 @@ export default function Search() {
         </div>
       </div>
     </div>
+  </div>
+  
+  
   );
 }
 
