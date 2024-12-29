@@ -1,74 +1,67 @@
-// pages/index.tsx
-import React from 'react';
+'use client'
+import { useScroll, useTransform, motion } from 'framer-motion';
+import img1 from "../../public/img1.jpeg"
+import img2 from "../../public/img2.jpeg"
+import img3 from "../../public/img3.jpeg"
+import img4 from "../../public/img4.jpeg"
+import img5 from "../../public/img5.jpeg"
+import Lenis from 'lenis';
 
-const IndexPage = () => {
+import Image from 'next/image';
+import { useEffect, useRef } from 'react';
+
+export default function Home() {
+
+  const container = useRef();
+  const { scrollYProgress } = useScroll({
+    target: container,
+    offset: ['start end', 'end start']
+  })
+
+  useEffect( () => {
+    const lenis = new Lenis()
+
+    function raf(time:any) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+
+    requestAnimationFrame(raf)
+  }, [])
+
   return (
-    <div className="bg-gray-100 text-gray-900 font-sans min-h-screen">
-      
-      
-
-      {/* Hero Section */}
-      <section className="relative bg-cover bg-center h-96 flex items-center justify-center text-center text-white" style={{ backgroundImage: 'url(https://source.unsplash.com/random/1920x1080)' }}>
-        <div className="bg-black bg-opacity-50 p-6 rounded-lg">
-          <h2 className="text-4xl font-bold mb-4">Welcome to Our Website</h2>
-          <p className="text-lg mb-6">Discover the best services we offer to help you achieve your goals</p>
-          <a href="#" className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-6 rounded-lg text-lg">Get Started</a>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-semibold mb-12">Our Features</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-gray-100 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
-              <h3 className="text-xl font-bold mb-4">Feature One</h3>
-              <p className="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet lorem turpis.</p>
-            </div>
-            <div className="bg-gray-100 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
-              <h3 className="text-xl font-bold mb-4">Feature Two</h3>
-              <p className="text-gray-700">Curabitur malesuada dolor at urna auctor, in facilisis nunc fringilla.</p>
-            </div>
-            <div className="bg-gray-100 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
-              <h3 className="text-xl font-bold mb-4">Feature Three</h3>
-              <p className="text-gray-700">Nulla facilisi. Fusce auctor felis orci, id vestibulum lectus suscipit ac.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="bg-indigo-600 text-white py-16">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-semibold mb-12">What Our Clients Say</h2>
-          <div className="flex flex-wrap justify-center gap-8">
-            <div className="max-w-xs bg-white text-gray-900 p-6 rounded-lg shadow-lg">
-              <p className="italic mb-4">"This service is amazing! It has completely changed the way I work."</p>
-              <p className="font-semibold">Jane Doe</p>
-              <p className="text-gray-500">CEO, Example Co.</p>
-            </div>
-            <div className="max-w-xs bg-white text-gray-900 p-6 rounded-lg shadow-lg">
-              <p className="italic mb-4">"Fantastic customer service and great features. Highly recommended!"</p>
-              <p className="font-semibold">John Smith</p>
-              <p className="text-gray-500">Founder, Smith Ventures</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer Section */}
-      <footer className="bg-gray-900 text-white py-8">
-        <div className="container mx-auto text-center">
-          <p>&copy; 2024 Your Company. All Rights Reserved.</p>
-          <p className="mt-4">
-            <a href="#" className="hover:text-indigo-300">Privacy Policy</a> | 
-            <a href="#" className="hover:text-indigo-300"> Terms of Service</a>
-          </p>
-        </div>
-      </footer>
-    </div>
+    <main className="overflow-hidden">
+      <div className='h-[100vh]'/>
+      <div ref={container}>
+        <Slide src={img5} direction={'left'} left={"-40%"} progress={scrollYProgress}/>
+        <Slide src={img2} direction={'right'} left={"-25%"} progress={scrollYProgress}/>
+        <Slide src={img3} direction={'left'}  left={"-75%"} progress={scrollYProgress}/>
+      </div>
+      <div className='h-[100vh]' />
+    </main>
   );
-};
+}
 
-export default IndexPage;
+const Slide = (props:any) => {
+  const direction = props.direction == 'left' ? -1 : 1;
+  const translateX = useTransform(props.progress, [0, 1], [150 * direction, -150 * direction])
+  return (
+    <motion.div style={{x: translateX, left: props.left}} className="relative flex whitespace-nowrap">
+      <Phrase src={props.src}/>
+      <Phrase src={props.src}/>
+      <Phrase src={props.src}/>
+    </motion.div>
+  )
+}
 
+const Phrase = ({src}:any) => {
+
+  return (
+    <div className={'px-5 flex gap-5 items-center'}>
+      <p className='text-[7.5vw]'>مغيب شي ؟ مفقود بيساعدك</p>
+      <span className="relative h-[7.5vw] aspect-[4/2] rounded-full overflow-hidden">
+        <Image style={{objectFit: "cover"}} src={src} alt="image" fill/>
+      </span>
+    </div>
+  )
+}

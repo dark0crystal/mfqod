@@ -38,7 +38,9 @@ export default function PostDetails({ params }: { params: { id: string } }) {
       try {
         const response = await fetch(`/api/get-items/${id}`);
         if (response.ok) {
+          console.log("before",response)
           const data = await response.json();
+          console.log("after",data)
           setPost(data.post);  // Set the fetched post data
         } else {
           console.error('Failed to fetch post details');
