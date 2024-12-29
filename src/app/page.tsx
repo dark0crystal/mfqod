@@ -4,20 +4,8 @@ import React from 'react';
 const IndexPage = () => {
   return (
     <div className="bg-gray-100 text-gray-900 font-sans min-h-screen">
-      {/* Navbar */}
-      <header className="bg-indigo-600 text-white py-4">
-        <div className="container mx-auto flex justify-between items-center px-6">
-          <h1 className="text-2xl font-bold">Next.js & Tailwind</h1>
-          <nav>
-            <ul className="flex space-x-6">
-              <li><a href="#" className="hover:text-indigo-300">Home</a></li>
-              <li><a href="#" className="hover:text-indigo-300">About</a></li>
-              <li><a href="#" className="hover:text-indigo-300">Services</a></li>
-              <li><a href="#" className="hover:text-indigo-300">Contact</a></li>
-            </ul>
-          </nav>
-        </div>
-      </header>
+      
+      
 
       {/* Hero Section */}
       <section className="relative bg-cover bg-center h-96 flex items-center justify-center text-center text-white" style={{ backgroundImage: 'url(https://source.unsplash.com/random/1920x1080)' }}>
