@@ -1,13 +1,7 @@
 "use client"
 import { useRef } from "react";
-import {motion ,useScroll} from "framer-motion"
-  const container = useRef();
+import {motion} from "framer-motion"
 
-  const { scrollYProgress } = useScroll({
 
-    target: container,
 
-    offset: ['start end', 'end start']
-
-  })
 export const MotionDiv = motion.div ;

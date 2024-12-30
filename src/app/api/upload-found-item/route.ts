@@ -55,3 +55,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Failed to create post" }, { status: 500 });
   }
 }
+
+
+//Note : when the user requests to update or modify his post , then 
+// don't forget to search the cache for any similar post using the postId
