@@ -58,7 +58,7 @@ const Phrase = ({src}:any) => {
 
   return (
     <div className={'px-5 flex gap-5 items-center'}>
-      <p className='text-[7.5vw]'>مغيب شي ؟ مفقود بيساعدك</p>
+      <p className='text-[6vw] font-bold'>مغيب شي ؟ مفقود بيساعدك</p>
       <span className="relative h-[7.5vw] aspect-[4/2] rounded-full overflow-hidden">
         <Image style={{objectFit: "cover"}} src={src} alt="image" fill/>
       </span>

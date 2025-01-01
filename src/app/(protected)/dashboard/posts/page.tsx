@@ -17,7 +17,7 @@ export default function Posts() {
         try {
           const response = await fetch(`/api/get-verified-posts?id=${userId}`);
           const data = await response.json();
-          setRole(data.role)
+          setRole(data.role);
           setPosts(data.posts);
         } catch (error) {
           console.error('Error fetching posts:', error);
@@ -30,7 +30,6 @@ export default function Posts() {
     }
   }, [userId]);
 
-  // To allow verified user to hide the post from the website.
   function handleDelete(postId: string) {
     if (postId) {
       const updatePost = async () => {
@@ -47,9 +46,8 @@ export default function Posts() {
 
           const data = await response.json();
           if (data) {
-            // Update the UI to hide the post immediately after the response
-            setPosts((prevPosts:any) =>
-              prevPosts.map((post:any) =>
+            setPosts((prevPosts: any) =>
+              prevPosts.map((post: any) =>
                 post.id === postId ? { ...post, temporaryDeletion: true } : post
               )
             );
@@ -64,29 +62,49 @@ export default function Posts() {
   }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="text-center text-xl mt-8">Loading...</div>;
   }
 
   return (
-    <div>
-      <h1>User's Posts</h1>
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h1 className="text-2xl font-bold text-center mb-6">User's Posts</h1>
       {posts.length === 0 ? (
-        <p>No posts available</p>
+        <p className="text-center text-gray-600">No posts available</p>
       ) : (
-        <ul>
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post) => (
-            <div className='mt-2 p-4 bg-green-300' key={post.id} style={{ display: post.temporaryDeletion ? 'none' : 'block' }}>
-            { role=="VERIFIED" ?(<button onClick={() => handleDelete(post.id)}>Hide</button>):(
-                <>
-                <button onClick={() => handleDelete(post.id)}>Hide</button>
-                <button onClick={() => handleDelete(post.id)}>Delete</button>
-                </>
-            )
-            }
-              
-              <li>{post.title}</li>
-              <li>{post.content}</li>
-              <li>{post.type}</li>
+            <div
+              key={post.id}
+              className={`relative bg-white rounded-lg shadow-lg p-6 ${
+                post.temporaryDeletion ? 'hidden' : 'block'
+              }`}
+            >
+              {role === "VERIFIED" ? (
+                <button
+                  onClick={() => handleDelete(post.id)}
+                  className="absolute top-2 right-2 text-sm text-white bg-red-500 hover:bg-red-600 px-2 py-1 rounded"
+                >
+                  Hide
+                </button>
+              ) : (
+                <div className="absolute top-2 right-2 flex gap-2">
+                  <button
+                    onClick={() => handleDelete(post.id)}
+                    className="text-sm text-white bg-yellow-500 hover:bg-yellow-600 px-2 py-1 rounded"
+                  >
+                    Hide
+                  </button>
+                  <button
+                    onClick={() => handleDelete(post.id)}
+                    className="text-sm text-white bg-red-500 hover:bg-red-600 px-2 py-1 rounded"
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+              <h2 className="text-lg font-bold mb-2">{post.title}</h2>
+              <p className="text-gray-700 mb-4">{post.content}</p>
+              <span className="text-sm text-gray-500">{post.type}</span>
             </div>
           ))}
         </ul>
@@ -94,5 +112,6 @@ export default function Posts() {
     </div>
   );
 }
+
 
 

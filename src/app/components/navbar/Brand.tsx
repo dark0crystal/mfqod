@@ -15,8 +15,8 @@ export default async function Brand(){
     // const locale = (await getLocale()).substring(0,2)
     // const t = await getTranslations("HomePage")
     return(
-        <div className="mx-6 text-4xl ">
-            <Link   className={lalezarFont.className} href='/'>Mfqod</Link>
+        <div className="mx-6 text-6xl ">
+            <Link   className={lalezarFont.className} href='/'>مفقود</Link>
         </div>
     )
 }

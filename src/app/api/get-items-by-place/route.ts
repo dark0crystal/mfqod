@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
               mode: "insensitive", // Case-insensitive search
             },
           },
-        },
+        },    
         approval: true, // Only fetch approved posts
         temporaryDeletion: false, // Exclude posts marked for deletion
       },
