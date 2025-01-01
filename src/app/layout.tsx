@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Alexandria } from "next/font/google";
+
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "../../auth";
 import NavBar from "./components/navbar/Navbar";
 
-const inter = Inter({ subsets: ["latin"] });
+const alexandria = Alexandria({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,7 +24,7 @@ export default async function RootLayout({
     <SessionProvider session={session}>
     <html lang="en">
 
-      <body className={inter.className}>
+      <body className={alexandria.className}>
         <NavBar/>
         {children}</body>
     </html>
