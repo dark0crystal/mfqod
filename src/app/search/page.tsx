@@ -8,6 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";  // Import Zod resolver
 import { useRouter } from "next/navigation";  // Import useRouter for page navigation
 import { useSession } from "next-auth/react";  // Import useSession for user session
 import Image from "next/image";
+import SliderBar from "./Slider";
+import DisplayPosts from "./DisplayPosts";
 
 // Define Zod validation schema
 const schema = z.object({
@@ -20,10 +22,19 @@ type FormFields = {
   place: string;
 };
 
+const orgName = ["SQU","UTAS Muscat", "UTAS Ibra","Bin Omair Library" , "UTAS Nizwa"]
+
 export default function Search() {
   const [items, setItems] = useState<any[]>([]);  // State to hold fetched items
   const router = useRouter();  // To navigate to the details page
   const session = useSession();
+
+   const [currentName, setCurrentName] = useState(orgName[0]); // Set initial name
+  
+    const handleClick =async(name:string) => {
+      setCurrentName(name);
+      await fetchItemByPlace(name)
+    };
 
   // Fetch posts based on item and place
   const fetchItems = async (item: string, place: string) => {
@@ -40,6 +51,21 @@ export default function Search() {
     }
   };
 
+    // Fetch posts based place only 
+    const fetchItemByPlace = async ( place: string) => {
+      try {
+        const response = await fetch(`/api/get-items-by-place?place=${place}`);
+        if (response.ok) {
+          const data = await response.json();
+          setItems(data); // Set the fetched data to state
+        } else {
+          console.error("Failed to fetch items");
+        }
+      } catch (error) {
+        console.error("Error fetching items:", error);
+      }
+    };
+
   // UseForm hook with Zod for form validation
   const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<FormFields>({
     resolver: zodResolver(schema),
@@ -55,15 +81,13 @@ export default function Search() {
   };
 
   // Handle post click to navigate to details
-  const handlePostClick = (postId: string) => {
-    router.push(`/find/${postId}`);
-  };
+  // const handlePostClick = (postId: string) => {
+  //   router.push(`/find/${postId}`);
+  // };
 
   return (
-    <div className="relative h-full w-full bg-indigo-300">
-    {/* Dotted Background */}
-    <div className="absolute h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] z-0"></div>
-  
+    <div>
+ 
     {/* Foreground Content */}
     <div className="relative z-10 flex flex-col mt-6 items-center">
       <h1>{session.data?.user?.id}</h1>
@@ -106,76 +130,35 @@ export default function Search() {
       </form>
   
       {/* Display the fetched posts */}
-      <div className="w-screen p-6 mt-6 flex items-center flex-col">
-        <h3 className="text-xl font-semibold mb-6 text-indigo-800">Fetched Items</h3>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-12">
-          {items.length > 0 ? (
-            items.map((item: any, index: number) => (
-              <div
-                key={index}
-                className="bg-white min-w-[350px] rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
-              >
-                {/* Content Section */}
-                <div className="p-4">
-                  <h4 className="text-lg font-semibold text-gray-800">{item.title}</h4>
-                  <p className="text-gray-500 text-sm">{item.content}</p>
-                </div>
-  
-                {/* Footer Section */}
-                <div className="flex items-center justify-between py-2 px-4">
-                  <p className="text-gray-600 text-sm">
-                    Location: {item.address?.place}, {item.address?.country}
-                  </p>
-                </div>
-  
-                {/* Image Section */}
-                <div className="relative h-[250px] m-3">
-                  {item.imageUrls.length > 0 ? (
-                    <div>
-                      <button
-                        title="arrow to detailed page"
-                        onClick={() => handlePostClick(item.id)}
-                        className="absolute bottom-2 right-2 p-3 bg-white z-20 text-black text-xl rounded-full hover:bg-indigo-200 transition-colors shadow-md"
-                      >
-                        <MdArrowOutward />
-                      </button>
-                      <Image
-                        src={item.imageUrls[0]} // Display the first image
-                        alt={`Image ${index}`}
-                        layout="fill"
-                        objectFit="cover"
-                        className="rounded-2xl"
-                      />
-                    </div>
-                  ) : (
-                    <>
-                      <button
-                        title="arrow to detailed page"
-                        onClick={() => handlePostClick(item.id)}
-                        className="absolute bottom-2 right-2 p-3 bg-white z-20 text-black text-xl rounded-full hover:bg-indigo-200 transition-colors shadow-md"
-                      >
-                        <MdArrowOutward />
-                      </button>
-                      <Image
-                        src="/images/default-image.jpg"
-                        alt="Default Image"
-                        layout="fill"
-                        objectFit="cover"
-                        className="rounded-2xl"
-                      />
-                    </>
-                  )}
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="text-gray-500">No items found.</p>
-          )}
-        </div>
+
+     
+      
+    </div>
+        <DisplayPosts items={items}/>
+
+        <div className="flex items-center bottom-0 fixed z-40 w-screen h-[10vh] bg-slate-300">
+      <div
+        className="flex overflow-x-auto scrollbar-none w-full px-4 snap-x snap-mandatory"
+        style={{
+          scrollSnapType: "x mandatory",
+          WebkitOverflowScrolling: "touch",
+        }}
+      >
+        {orgName.map((name:string, index:any) => (
+          <button
+            key={index}
+            onClick={() => handleClick(name)}
+            className={`snap-center whitespace-nowrap bg-violet-300 rounded-full m-2 p-3 text-sm transition-transform duration-300 ${
+              currentName === name ? "scale-125 bg-violet-500 text-white" : ""
+            }`}
+          >
+            {name}
+          </button>
+        ))}
       </div>
     </div>
-  </div>
-  
+
+   </div>
   
   );
 }

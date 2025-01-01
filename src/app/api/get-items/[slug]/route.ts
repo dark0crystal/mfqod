@@ -45,11 +45,3 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
   }
 }
 
-// Additional feature : is to allow the user to get all the posts in his orgnization , 
-// Using the place name , also use cache for that.
-
-
-// 1- fetching all posts related to place name .
-// 2- cache all the posts 
-// 3- if there is a place added , then add it to the cache DB
-// 4- Don't forget to put a period for termination
