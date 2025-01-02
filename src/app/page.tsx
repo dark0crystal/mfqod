@@ -10,6 +10,8 @@ import Lenis from 'lenis';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import TimeBasedWords from './components/framer/TimeBaseWords';
+import CardsSection from './components/CardSection';
+import TrustedBy from './components/TrustedBy';
 
 export default function Home() {
 
@@ -31,111 +33,59 @@ export default function Home() {
   }, [])
 
   return (
-    <main className="overflow-hidden"> 
-<div className="relative h-[80vh] w-screen  grid grid-cols-3 grid-rows-3 gap-4 p-4 overflow-hidden">
-  {/* Top Left Card */}
-  <div className="flex items-center justify-center">
-    <div className="w-[160px] h-[190px] rounded-2xl bg-white/30 backdrop-blur-lg shadow-lg border border-white/20 flex flex-col items-center justify-center p-4">
-      <div className="w-[90px] h-[90px] rounded-full overflow-hidden border-4 border-white shadow-md">
-        <Image
-          src={img5}
-          alt="profile"
-          className="w-full h-full object-cover"
-        />
+    <main className="overflow-hidden flex flex-col justify-center "> 
+      <div className="relative h-[58vh] w-screen  mt-20 p-4 overflow-hidden">
+        <div className='flex justify-center my-2 items-center'>
+        <TimeBasedWords/>
+        </div>
+        {/* Central Text */}
+        <p className="text-center text-4xl font-extrabold text-black">
+          مغيّب شي ؟ مفقود بيساعدك 
+          
+
+          </p>
+        <div className="flex flex-col items-center justify-center mt-2 rounded-lg  ">
+          <p className="text-center text-lg font-semibold text-black">
+          مغيّب شي ؟ مفقود بيساعدك 
+          مغيّب شي ؟ مفقود بيساعدك 
+          </p>
+          <p className="text-center text-lg font-semibold text-black">
+          مغيّب شي ؟ مفقود بيساعدك 
+          </p>
+          
+        </div>
+
+        {/* Bottom Center Card */}
+        <div className='flex flex-row gap-4 items-center justify-center mt-16'>
+          <FoundButton/>
+        
+          <SearchButton/>
+        </div>
+      
+
+        {/* Bottom Right Card */}
+        
       </div>
-      <p className="mt-4 text-lg font-semibold text-black/55">baseclub.eth</p>
-      <p className="text-sm text-black/55">23 422 points</p>
+
+     
+    <div>
+    <CardsSection/>
     </div>
-  </div>
 
-  {/* Top Center Placeholder */}
-  <div className='flex items-center justify-center'>
-  <TimeBasedWords/>
-  </div>
-  
 
-  {/* Top Right Card */}
-  <div className="flex items-center justify-center">
-    <div className="w-[160px] h-[190px] rounded-2xl bg-white/30 backdrop-blur-lg shadow-lg border border-white/20 flex flex-col items-center justify-center p-4">
-      <div className="w-[90px] h-[90px] rounded-full overflow-hidden border-4 border-white shadow-md">
-        <Image
-          src={img4}
-          alt="profile"
-          className="w-full h-full object-cover"
-        />
+    <div>
+      <TrustedBy/>
+    </div>
+      <div className='h-[20vh]'/>
+      <div className='h-[15vh] w-screen bg-blue-500'>
+
       </div>
-      <p className="mt-4 text-lg font-semibold text-black/55">baseclub.eth</p>
-      <p className="text-sm text-black/55">23 422 points</p>
-    </div>
-  </div>
-
-  {/* Left Middle Card */}
-  {/* <div className="flex items-center justify-center">
-    <div className="w-[160px] h-[190px] rounded-2xl bg-white/30 backdrop-blur-lg shadow-lg border border-white/20 flex flex-col items-center justify-center p-4">
-      <div className="w-[90px] h-[90px] rounded-full overflow-hidden border-4 border-white shadow-md">
-        <Image
-          src={img3}
-          alt="profile"
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <p className="mt-4 text-lg font-semibold text-black/55">baseclub.eth</p>
-      <p className="text-sm text-black/55">23 422 points</p>
-    </div>
-  </div> */}
- 
-  {/* Central Text */}
-  <div className="flex items-center justify-center   rounded-lg col-span-3 row-span-1 mx-[20vw]">
-    <p className="text-center text-lg font-semibold text-black">
-      Lorem ipsumluk مtمعنا بتحصلs ullam nesciunt asperiores!
-    </p>
-  </div>
-
-  {/* Right Middle Placeholder */}
- 
-
-  {/* Bottom Center Card */}
-  <div></div>
-  {/* <div className="flex items-center justify-center">
-    <div className="w-[160px] h-[190px] rounded-2xl bg-white/30 backdrop-blur-lg shadow-lg border border-white/20 flex flex-col items-center justify-center p-4">
-      <div className="w-[90px] h-[90px] rounded-full overflow-hidden border-4 border-white shadow-md">
-        <Image
-          src={img5}
-          alt="profile"
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <p className="mt-4 text-lg font-semibold text-white">baseclub.eth</p>
-      <p className="text-sm text-white/70">23 422 points</p>
-    </div>
-  </div> */}
-
-  {/* Bottom Right Card */}
-  <div className="flex items-center justify-center">
-    <div className="w-[160px] h-[190px] rounded-2xl bg-white/30 backdrop-blur-lg shadow-lg border border-white/20 flex flex-col items-center justify-center p-4">
-      <div className="w-[90px] h-[90px] rounded-full overflow-hidden border-4 border-white shadow-md">
-        <Image
-          src={img4}
-          alt="profile"
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <p className="mt-4 text-lg font-semibold text-white">baseclub.eth</p>
-      <p className="text-sm text-white/70">23 422 points</p>
-    </div>
-  </div>
-</div>
-
-
-
-
-      <div className='h-[100vh]'/>
       <div ref={container}>
         <Slide src={img5} direction={'left'} left={"-40%"} progress={scrollYProgress}/>
         <Slide src={img2} direction={'right'} left={"-25%"} progress={scrollYProgress}/>
         <Slide src={img3} direction={'left'}  left={"-75%"} progress={scrollYProgress}/>
       </div>
-      <div className='h-[100vh]' />
+      <div className='h-[20vh]' />
     </main>
   );
 }
@@ -156,10 +106,27 @@ const Phrase = ({src}:any) => {
 
   return (
     <div className={'px-5 flex gap-5 items-center'}>
-      <p className='text-[6vw] font-bold'>مغيب شي ؟ مفقود بيساعدك</p>
+      <p className='text-[6vw] text-black/44 font-bold'>مغيب شي ؟ مفقود بيساعدك</p>
       <span className="relative h-[7.5vw] aspect-[4/2] rounded-full overflow-hidden">
         <Image style={{objectFit: "cover"}} src={src} alt="image" fill/>
       </span>
     </div>
   )
+}
+
+
+function FoundButton() {
+  return (
+    <div className="bg-gradient-to-r from-[#ff5722] to-[#f44336] p-4 rounded-xl text-white font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
+      <h1>بلغ عن شيء مفقود</h1>
+    </div>
+  );
+}
+
+function SearchButton() {
+  return (
+    <div className="bg-gradient-to-r from-[#2196f3] to-[#4caf50] p-4 rounded-xl text-white font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
+      إبحث عن شيء مفقود
+    </div>
+  );
 }
