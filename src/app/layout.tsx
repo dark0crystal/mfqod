@@ -6,6 +6,7 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "../../auth";
 import NavBar from "./components/navbar/Navbar";
+// import Footer from "./components/Footer";
 
 const alexandria = Alexandria({ subsets: ["latin"] });
 
@@ -23,10 +24,12 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
     <html lang="en">
-
+    <div className="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
       <body className={alexandria.className}>
         <NavBar/>
-        {children}</body>
+        {children}
+        {/* <Footer/> */}
+        </body>
     </html>
     </SessionProvider>
   );
