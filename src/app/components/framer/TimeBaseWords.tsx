@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const ChangingWords = () => {
-  const words = ["Hello", "Welcome", "Enjoy", "Explore"]; // List of words
+  const words = ["فاقد شي؟", "نقدر نساعدك", "محصل شي؟", "ساعد صاحبه"]; // List of words
   const [currentWord, setCurrentWord] = useState(words[0]);
 
   useEffect(() => {
@@ -22,9 +22,10 @@ const ChangingWords = () => {
     <motion.h1
       key={currentWord} // This ensures the animation is triggered each time the word changes
       initial={{ opacity: 0, y: 0 }}
-      animate={{ opacity: 1, y: -30 }} // Moves the word up by 30px
+      animate={{ opacity: 1, y: -20 }} // Moves the word up by 30px
       exit={{ opacity: 0, y: 0 }} // Returns to the original position
       transition={{ duration: 1, ease: 'easeInOut' }} // Animation duration
+      className='text-xl'
     >
       {currentWord}
     </motion.h1>
