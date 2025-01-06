@@ -27,21 +27,22 @@ export default async function NavBar() {
     <nav  className="flex items-center justify-center mt-6">
       
       <div className='flex items-center justify-between p-2 lg:p-2 rounded-full w-[90vw] md:w-[80vw]  '>
-        <div className="flex items-center">
-          <Brand />
-        </div>
+        
         <div className="hidden lg:flex items-center  bg-red-50 p-3 rounded-lg">
           {navLinks.map((navLink, index) => (
             <Link href={navLink.direction} key={index}>
               <h1 className="text-lg  mx-4 font-normal">{navLink.name}</h1>
             </Link>
             
-          ))}
+          ))} 
           
           <NavMenu />
          <SignIn/>
           <SignOut/>
          
+        </div>
+        <div className="flex items-center">
+          <Brand />
         </div>
         {/* <LanguageChange /> */}
         {/* <MobileMenu navLinks={navLinks} /> */}
