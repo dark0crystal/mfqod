@@ -10,7 +10,7 @@ export default async function Dashboard(){
         <div >
             <div className="grid grid-cols-3 h-screen">
             <div className="bg-violet-200 flex flex-col  items-center px-4">
-            <div className="flex flex-col justify-center items-center w-full h-fit p-8 mt-12 rounded-3xl bg-slate-400">
+            <div className="flex flex-col justify-center items-center w-full h-fit p-8 mt-12 rounded-3xl bg-slate-400/40">
                 <div>
                
               
@@ -30,7 +30,7 @@ export default async function Dashboard(){
                     <p className="text-sm md:text-xl ">{session.user?.name}</p>
                 </div>
                 <div>
-                    <p className="text-sm md:text-xl ">{session.user?.email}</p>
+                    <p className="text-sm text-black/70 md:text-lg ">{session.user?.email}</p>
                 </div>
                 
                 </div>
