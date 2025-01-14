@@ -1,19 +1,87 @@
 import { Link } from "@/i18n/routing";
 import { auth } from "../../../../../auth";
+import prisma from "@/lib/db";
 
-export default async function NavBar() {
-  const session = await auth();
-  if (!session) return null;
+export default async function NavBar(params : any) {
+
+  const {userId} = params;
+  if (!userId) return null;
+  const result =await getUserRoleAndManagedPlaces(userId)
+
 
   return (
     <div>
       <Link href={{
         pathname: "/dashboard/posts",
-        query: { id: `${session.user?.id}` }, // Pass user id in query
+        query: { id: `${userId}` }, // Pass user id in query
       }}>
         Posts
       </Link>
-      <Link href="/dashboard/claims">Claims</Link>
+
+      
+      {/* For the CTO */}
+      {result.role == "TECHADMIN" &&
+          <div>
+            <h1>Hello my CO-Founder & CTO </h1>
+          </div>
+      }
+      {/* for admin  */}
+      {result.role == "ADMIN" &&
+          <div>
+            <h1>Welcome Admin, Thank For Your Great Job </h1>
+          </div>
+      }
+      {/* for verified */}
+      {result.role == "ADMIN" &&
+          <div>
+            <h1>Welcome Admin, Thank For Your Great Job </h1>
+          </div>
+      }
+      
+
+      <div>
+        <h1> you are an admin in {result?.managedPlaces.map((manage ,index)=>(
+          <div key={index}>
+            <p>{manage.place}</p>
+            <p>{manage.orgnization}</p>
+          </div>
+        ))}</h1>
+        <h1> you are an admin in {result?.role}</h1>
+      </div>
+
     </div>
   );
+}
+
+
+
+export async function getUserRoleAndManagedPlaces(userId: string) {
+  try {
+    const userWithManage = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+      select: {
+        role: true,
+        manage: {
+          select: {
+            place: true,
+            orgnization: true,
+          },
+        },
+      },
+    });
+
+    if (!userWithManage) {
+      throw new Error('User not found');
+    }
+
+    return {
+      role: userWithManage.role,
+      managedPlaces: userWithManage.manage,
+    };
+  } catch (error) {
+    console.error('Error fetching user role and managed places:', error);
+    throw error;
+  }
 }
