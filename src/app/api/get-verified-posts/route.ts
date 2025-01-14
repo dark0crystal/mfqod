@@ -48,9 +48,9 @@ console.log(role)
         postAddress: true, // Include related address details in the result
       }
     });
-    console.log({role, posts}); // Optional for debugging
-    return NextResponse.json({role, posts});
-    }else if(role =="ADMIN"){
+    console.log({ userAddress,role, posts}); // Optional for debugging
+    return NextResponse.json({userAddress, role, posts});
+    }else if(role =="ADMIN" || role=="TECHADMIN" ){
         const posts= await prisma.post.findMany({
             where:{
                 userId:userId
