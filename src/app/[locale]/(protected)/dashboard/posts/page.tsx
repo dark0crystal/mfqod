@@ -11,6 +11,10 @@ export default function Posts() {
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState("");
 
+  // according the given userId the API endpoint will return the appropiate posts for that user 
+  // the endpoit will check for the user address , and show the posts that have the same address
+  // For Admin will show all the posts
+  // For manager , first will check the manager given address , then will get the posts related 
   useEffect(() => {
     if (userId) {
       const fetchPosts = async () => {

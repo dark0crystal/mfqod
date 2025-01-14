@@ -1,4 +1,4 @@
-import ReportFoundItem from "../components/Forms/ReportFoundItem";
+import ReportFoundItem from "../../components/Forms/ReportFoundItem";
 import {auth} from '../../../../auth'
 import { redirect } from "next/navigation";
 
