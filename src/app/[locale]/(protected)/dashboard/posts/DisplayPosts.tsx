@@ -15,6 +15,7 @@ type Post = {
   type:string
 
 }
+
 export default function DisplayPosts(){
 
     const router = useRouter();  // To navigate to the details page
@@ -26,6 +27,7 @@ export default function DisplayPosts(){
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [role, setRole] = useState("");
+    const [address, setAddress] = useState("");
   
     // according the given userId the API endpoint will return the appropiate posts for that user 
     // the endpoit will check for the user address , and show the posts that have the same address
@@ -37,6 +39,7 @@ export default function DisplayPosts(){
           try {
             const response = await fetch(`/api/get-verified-posts?id=${userId}`);
             const data = await response.json();
+
             setRole(data.role);
             setPosts(data.posts);
           } catch (error) {
