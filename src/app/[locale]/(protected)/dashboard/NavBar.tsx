@@ -18,7 +18,7 @@ export default async function NavBar(params : any) {
         Posts
       </Link>
 
-      
+
       {/* For the CTO */}
       {result.role == "TECHADMIN" &&
           <div>
@@ -32,21 +32,26 @@ export default async function NavBar(params : any) {
           </div>
       }
       {/* for verified */}
-      {result.role == "ADMIN" &&
+      {result.role == "VERIFIED" &&
           <div>
-            <h1>Welcome Admin, Thank For Your Great Job </h1>
-          </div>
-      }
-      
-
-      <div>
-        <h1> you are an admin in {result?.managedPlaces.map((manage ,index)=>(
+            <h1>Welcome { <h1> you are an admin in {result?.managedPlaces.map((manage ,index)=>(
           <div key={index}>
             <p>{manage.place}</p>
             <p>{manage.orgnization}</p>
           </div>
-        ))}</h1>
-        <h1> you are an admin in {result?.role}</h1>
+        ))}</h1>}, Thank For Your Great Job </h1>
+          </div>
+      }
+       {/* for Basic */}
+      {result.role == "BASIC" &&
+          <div>
+            <h1>Welcome Admin, Thank For Your Great Job </h1>
+          </div>
+      }
+
+      <div>
+       
+        <h1> you are  {result?.role}</h1>
       </div>
 
     </div>
