@@ -1,5 +1,5 @@
 import { Link } from "@/i18n/routing";
-import { auth } from "../../../../../auth";
+
 import prisma from "@/lib/db";
 
 export default async function NavBar(params : any) {
