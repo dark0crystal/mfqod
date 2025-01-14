@@ -28,7 +28,7 @@ export default async function NavBar() {
       
       <div className='flex items-center justify-between p-2 lg:p-2 rounded-full w-[90vw] md:w-[80vw]  '>
         
-        <div className="hidden lg:flex items-center  bg-red-50 p-3 rounded-lg">
+        <div className="hidden lg:flex items-center  bg-red-50/60 p-3 rounded-lg">
           {navLinks.map((navLink, index) => (
             <Link href={navLink.direction} key={index}>
               <h1 className="text-lg  mx-4 font-normal">{navLink.name}</h1>
