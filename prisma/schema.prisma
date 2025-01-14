@@ -38,6 +38,7 @@ model User {
   BASIC
   VERIFIED
   ADMIN
+  TECHADMIN
 }
 model Manage{
   id String  @id @default(cuid())
