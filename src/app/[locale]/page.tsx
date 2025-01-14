@@ -9,9 +9,9 @@ import img5 from "../../../public/img5.jpeg"
 
 import Image from 'next/image';
 // import { useEffect, useRef } from 'react';
-import TimeBasedWords from './components/framer/TimeBaseWords';
-import CardsSection from './components/CardSection';
-import TrustedBy from './components/trusted-by/TrustedBy';
+import TimeBasedWords from '../components/framer/TimeBaseWords';
+import CardsSection from '../components/CardSection';
+import TrustedBy from '../components/trusted-by/TrustedBy';
 
 export default function Home() {
 
