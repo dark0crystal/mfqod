@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Brand from "./Brand";
 // import LanguageChange from "./LangChange";
 // import MobileMenu from "./MobileNavbar";
