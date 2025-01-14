@@ -11,13 +11,7 @@ export default async function NavBar(params : any) {
 
   return (
     <div>
-      <Link href={{
-        pathname: "/dashboard/posts",
-        query: { id: `${userId}` }, // Pass user id in query
-      }}>
-        Posts
-      </Link>
-
+     
 
       {/* For the CTO */}
       {result.role == "TECHADMIN" &&
@@ -53,6 +47,17 @@ export default async function NavBar(params : any) {
        
         <h1> you are  {result?.role}</h1>
       </div>
+
+      <div  >
+        <Link 
+        href={{
+          pathname: "/dashboard/posts",
+          query: { id: `${userId}` }, // Pass user id in query
+        }}>
+          <h1 className="bg-sky-400 rounded-3xl py-3 px-4 text-center">Show Posts</h1>
+        </Link>
+      </div>
+
 
     </div>
   );
