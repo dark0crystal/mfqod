@@ -1,5 +1,5 @@
 import Image from "next/image";
-import img4 from "../../../public/img4.jpeg";
+import img4 from "../../../../public/img4.jpeg";
 
 export default function CardsSection() {
   return (
