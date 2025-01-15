@@ -1,6 +1,7 @@
 import { Link } from "@/i18n/routing";
-
+import { orgName } from "../../search/page";
 import prisma from "@/lib/db";
+import NavbarSlider from "./NavbarSlider";
 
 export default async function NavBar(params : any) {
 
@@ -17,6 +18,7 @@ export default async function NavBar(params : any) {
       {result.role == "TECHADMIN" &&
           <div>
             <h1>Hello my CO-Founder & CTO </h1>
+            <NavbarSlider userRole ={result.role} /> 
           </div>
       }
       {/* for admin  */}
@@ -59,7 +61,7 @@ export default async function NavBar(params : any) {
       </div>
 
       <div>
-        
+
       </div>
 
 
