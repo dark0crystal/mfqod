@@ -8,7 +8,7 @@ export default async function UserInfo(){
 
     return(
        <>
-        <div className="bg-violet-200 flex flex-col  items-center px-4">
+       
         <div className="flex flex-col justify-center items-center w-full h-fit p-8 mt-12 rounded-3xl bg-slate-400/40">
             <div>
            
@@ -33,13 +33,7 @@ export default async function UserInfo(){
             </div>
             
             </div>
-          
-        </div>
-       
-        <div className="bg-orange-200 col-span-2 flex flex-col items-center p-4">
-            
-            
-        </div>
+        
         </>
         
 
