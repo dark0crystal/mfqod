@@ -71,7 +71,7 @@ export default function DisplayPosts() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-2xl font-bold text-center mb-6">User's Posts</h1>
+      <h1 className="text-2xl font-bold text-center mb-6">User Posts</h1>
       {posts.length === 0 ? (
         <p className="text-center text-gray-600">No posts available</p>
       ) : (
