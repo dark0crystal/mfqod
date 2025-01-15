@@ -22,7 +22,7 @@ type FormFields = {
   place: string;
 };
 
-const orgName = ["SQU","UTAS Muscat", "UTAS Ibra","Bin Omair Library" , "UTAS Nizwa"]
+export const orgName = ["SQU","UTAS Muscat", "UTAS Ibra","Bin Omair Library" , "UTAS Nizwa"]
 
 export default function Search() {
   const [items, setItems] = useState<any[]>([]);  // State to hold fetched items
