@@ -1,8 +1,6 @@
 import NavBar from "./NavBar";
 import { auth } from "../../../../../auth";
-import img2 from "../../../../../public/img2.jpeg"
 import UserInfo from "./UserInfo";
-import NavbarSlider from "./NavbarSlider";
 export default async function Layout({children}: Readonly<{ children: React.ReactNode;}>)  {
     const session = await auth();
     if (!session) return null;
