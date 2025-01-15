@@ -15,10 +15,7 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
     if (cachedValue) {
       console.log("Cache hit in details:", cachedValue);
 
-      // Parse the cached value and return it
-      const cachedPost = JSON.parse(cachedValue);
-      console.log("first find" ,cachedValue)
-      return NextResponse.json({ post: cachedPost });
+      return NextResponse.json(JSON.parse(cachedValue));
     }
 
     // Fetch the post from the database with additional details
@@ -70,13 +67,13 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
     };
 
     // Cache the formatted response
-    await redis.set(itemId, JSON.stringify(responseData));
+    await redis.set(itemId, JSON.stringify(responseData), 'EX', 3600);
 
     // Return the response as JSON
     console.log("Fetched from database:", responseData.title);
     console.log("not cached",responseData
     )
-    return NextResponse.json({ post: responseData });
+    return NextResponse.json( responseData );
   } catch (error) {
     console.error("Error fetching post:", error);
     return new Response("Internal server error", { status: 500 });
