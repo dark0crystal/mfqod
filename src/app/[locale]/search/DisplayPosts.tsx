@@ -1,14 +1,14 @@
 "use client"
-
+import { useRouter } from "@/i18n/routing";
 import { MdArrowOutward } from "react-icons/md";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 export default function DisplayPosts({items}:any){
     console.log(items)
     const router = useRouter();  // To navigate to the details page
  // Handle post click to navigate to details
  const handlePostClick = (postId: string) => {
     router.push(`/find/${postId}`);
+
   };
 
     return(
