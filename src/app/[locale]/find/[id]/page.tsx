@@ -39,7 +39,7 @@ export default function PostDetails({ params }: { params: { id: string } }) {
         if (response.ok) {
           const data = await response.json();
           console.log("from details",data)
-          setPost(data.post);
+          setPost(data);
         } else {
           console.error('Failed to fetch post details');
         }
