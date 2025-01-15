@@ -9,7 +9,7 @@ import {getMessages} from 'next-intl/server';
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "../../../auth";
-import NavBar from "./components/navbar/Navbar";
+import NavBar from "../components/navbar/Navbar";
 // import Footer from "./components/Footer";
 
 const alexandria = Alexandria({ subsets: ["latin"] });
