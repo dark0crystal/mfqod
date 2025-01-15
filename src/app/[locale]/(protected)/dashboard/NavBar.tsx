@@ -1,5 +1,4 @@
 import { Link } from "@/i18n/routing";
-import { orgName } from "../../search/page";
 import prisma from "@/lib/db";
 import NavbarSlider from "./NavbarSlider";
 
@@ -25,6 +24,7 @@ export default async function NavBar(params : any) {
       {result.role == "ADMIN" &&
           <div>
             <h1>Welcome Admin, Thank For Your Great Job </h1>
+            <NavbarSlider userRole ={result.role} /> 
           </div>
       }
       {/* for verified */}
@@ -36,12 +36,14 @@ export default async function NavBar(params : any) {
             <p>{manage.orgnization}</p>
           </div>
         ))}</h1>}, Thank For Your Great Job </h1>
+        <NavbarSlider userRole ={result.role} /> 
           </div>
       }
        {/* for Basic */}
       {result.role == "BASIC" &&
           <div>
             <h1>Welcome Admin, Thank For Your Great Job </h1>
+            <NavbarSlider userRole ={result.role} /> 
           </div>
       }
 
