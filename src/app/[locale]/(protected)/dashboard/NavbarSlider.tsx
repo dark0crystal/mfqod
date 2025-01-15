@@ -1,9 +1,13 @@
+"use Client"
+
+export default function NavbarSlider(params:any){
+
+    const {userRole} = params;
 
 
-export default function NavbarSlider(){
     return(
         <div>
-            
+
         </div>
     )
 }
