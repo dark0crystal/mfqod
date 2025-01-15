@@ -4,7 +4,7 @@ import { redis } from "@/lib/redis";
 
 export async function GET(req: NextRequest, { params }: { params: { slug: string } }) {
   const itemId = params.slug;
-
+  console.log("newe fora ",itemId)
   // Validate the itemId
   if (!itemId || typeof itemId !== "string") {
     return new Response("Invalid or missing itemId", { status: 400 });
