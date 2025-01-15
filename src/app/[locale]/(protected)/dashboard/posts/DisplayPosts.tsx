@@ -1,8 +1,8 @@
 'use client'; // Add this to ensure the component runs on the client side
-
+import {useRouter} from '@/i18n/routing';
 import { useSearchParams } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+
 
 type Post = {
   id: string;
@@ -82,7 +82,7 @@ export default function DisplayPosts() {
               className={`relative bg-white rounded-lg shadow-lg overflow-hidden ${
                 post.temporaryDeletion ? 'hidden' : 'block'
               } cursor-pointer`}
-              onClick={() => router.push(`/dashboard/posts/${post.id}`)}
+              onClick={() => router.push({ pathname: `/dashboard/posts/${post.id}` }) }
             >
               {/* Image Section */}
               {post.imageUrl ? (
