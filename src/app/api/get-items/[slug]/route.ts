@@ -4,8 +4,7 @@ import { redis } from "@/lib/redis";
 
 export async function GET(req: NextRequest, { params }: { params: { slug: string } }) {
   const itemId = params.slug;
-  console.log("newe fora ",itemId)
-  // Validate the itemId
+
   if (!itemId || typeof itemId !== "string") {
     return new Response("Invalid or missing itemId", { status: 400 });
   }
@@ -18,27 +17,66 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
 
       // Parse the cached value and return it
       const cachedPost = JSON.parse(cachedValue);
+      console.log("first find" ,cachedValue)
       return NextResponse.json({ post: cachedPost });
     }
 
-    // Fetch the post from the database
+    // Fetch the post from the database with additional details
     const post = await prisma.post.findUnique({
       where: {
         id: itemId,
       },
+      include: {
+        author: {
+          select: {
+            email: true,
+          },
+        },
+        uploadedPostPhotos: {
+          select: {
+            postUrl: true,
+          },
+        },
+        postAddress: {
+          select: {
+            place: true,
+            country: true,
+            orgnization: true,
+          },
+        },
+      },
     });
 
-    // If no post is found, return a 404 response
     if (!post) {
       return new Response("Post not found", { status: 404 });
     }
 
-    // Cache the fetched post as a string
-    await redis.set(itemId, JSON.stringify(post));
+    // Format the response
+    const responseData = {
+      id: post.id,
+      title: post.title,
+      content: post.content,
+      type: post.type,
+      temporaryDeletion: post.temporaryDeletion,
+      approval: post.approval,
+      createdAt: post.createdAt,
+      authorEmail: post.author.email,
+      images: post.uploadedPostPhotos.map((photo) => photo.postUrl),
+      address: post.postAddress.map((address) => ({
+        place: address.place,
+        country: address.country,
+        orgnization: address.orgnization,
+      })),
+    };
 
-    // Return the post as JSON
-    console.log("Fetched from database:", post.title);
-    return NextResponse.json({ post });
+    // Cache the formatted response
+    await redis.set(itemId, JSON.stringify(responseData));
+
+    // Return the response as JSON
+    console.log("Fetched from database:", responseData.title);
+    console.log("not cached",responseData
+    )
+    return NextResponse.json({ post: responseData });
   } catch (error) {
     console.error("Error fetching post:", error);
     return new Response("Internal server error", { status: 500 });
