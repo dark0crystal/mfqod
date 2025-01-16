@@ -4,17 +4,17 @@ import { redis } from "@/lib/redis";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const place = searchParams.get("place") ?? ""; // Place name parameter for filtering posts
+  const orgName = searchParams.get("orgName") ?? ""; // Place name parameter for filtering posts
 
   try {
     // Check if posts for the given place are already cached
-    const cachedValue = await redis.get(place);
+    const cachedValue = await redis.get(orgName);
     if (cachedValue) {
-      console.log("Cache hit:", place);
+      console.log("Cache hit:", orgName);
       return NextResponse.json(JSON.parse(cachedValue));
     }
 
-    console.log("Cache miss. Fetching from database:", place);
+    console.log("Cache miss. Fetching from database:", orgName);
 
     // Fetch posts from the database
     const posts = await prisma.post.findMany({
@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
         postAddress: {
           some: {
             place: {
-              contains: place, // Filter posts by place name
+              contains: orgName, // Filter posts by place name
               mode: "insensitive", // Case-insensitive search
             },
           },
@@ -66,9 +66,9 @@ export async function GET(req: NextRequest) {
     });
 
     // Cache the results
-    await redis.set(place, JSON.stringify(postsWithImages), 'EX', 3600); // Cache expires in 1 hour
+    await redis.set(orgName, JSON.stringify(postsWithImages), 'EX', 3600); // Cache expires in 1 hour
 
-    console.log("Fetched from database and cached:", place);
+    console.log("Fetched from database and cached:", orgName);
 
     return NextResponse.json(postsWithImages);
 
