@@ -29,7 +29,7 @@ export default function DisplayPosts() {
     if (orgName) {
       const fetchPosts = async () => {
         try {
-          const response = await fetch(`/api/get-verified-posts?orgName=${orgName}`);
+          const response = await fetch(`/api/get-verified-posts?orgName=${orgName}?placeName=${placeName}`);
           const data = await response.json();
 
           setRole(data.role);
@@ -44,24 +44,8 @@ export default function DisplayPosts() {
       fetchPosts();
 
     }
-    // placeName fetch
-    else if(placeName){
-      const fetchPosts = async () => {
-        try {
-          const response = await fetch(`/api/get-verified-posts?placeName=${placeName}`);
-          const data = await response.json();
-
-          setRole(data.role);
-          setPosts(data.posts);
-        } catch (error) {
-          console.error('Error fetching posts:', error);
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchPosts();
-    }
-  }, []);
+   
+  }, [orgName]);
 
   const handleDelete = async (postId: string) => {
     if (postId) {
