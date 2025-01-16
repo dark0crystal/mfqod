@@ -5,6 +5,7 @@ import { NextResponse, NextRequest } from "next/server";
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const postId = searchParams.get('postId');
+    console.log(postId)
     if(postId == null) return null;
 
 
@@ -52,7 +53,7 @@ export async function GET(req: NextRequest) {
       user: claim.user,
       images: claim.uploadedClaimPhotos.map((photo) => photo.photoUrl),
     }));
-
+console.log("fsdafads fdasf dsfas dsfafads fasdf-asdf asdf-asdf-asd-fasd-f-",claims)
     // Cache the formatted claims
     await redis.set(postId, JSON.stringify(formattedClaims), "EX", 3600); // Cache for 1 hour
 
