@@ -12,7 +12,6 @@ export default async function NavBar(params : any) {
   return (
     <div>
      
-
       {/* For the CTO */}
       {result.role == "TECHADMIN" &&
           <div>
