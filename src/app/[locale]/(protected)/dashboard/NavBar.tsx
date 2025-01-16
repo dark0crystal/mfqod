@@ -53,7 +53,7 @@ export default async function NavBar() {
         <h1> you are  {result?.role}</h1>
       </div>
 
-      <div  >
+      {/* <div  >
         <Link 
         href={{
           pathname: "/dashboard/posts",
@@ -61,7 +61,7 @@ export default async function NavBar() {
         }}>
           <h1 className="bg-sky-400 rounded-3xl py-3 px-4 text-center">Show Posts</h1>
         </Link>
-      </div>
+      </div> */}
 
       <div>
 
