@@ -16,17 +16,26 @@ type Post = {
 export default function DisplayPosts() {
   const router = useRouter(); // To navigate to the details page
   const searchParams = useSearchParams();
-  const userId = searchParams.get('id'); // Retrieve user ID from the query string
-
+  const userId  = searchParams.get('userId'); // Retrieve orgName from the query string
+  const orgName  = searchParams.get('orgName'); // Retrieve orgName from the query string
+  const placeName  = searchParams.get('placeName'); // Retrieve orgName from the query string
+  var name ="";
+  if(orgName){
+     name =orgName
+  }else if(placeName){
+     name =placeName
+  }
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState('');
 
+
+
   useEffect(() => {
-    if (userId) {
+    if (orgName) {
       const fetchPosts = async () => {
         try {
-          const response = await fetch(`/api/get-verified-posts?id=${userId}`);
+          const response = await fetch(`/api/get-verified-posts?name=${name}`);
           const data = await response.json();
 
           setRole(data.role);
