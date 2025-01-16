@@ -43,9 +43,11 @@ console.log(role)
       return NextResponse.json({ error: 'User address (place) not found' }, { status: 404 });
     }
     console.log(userManage.place)
+    console.log(placeName)
     console.log(userManage.orgnization)
+    console.log(orgName)
     if(orgName == userManage.orgnization){
-        if(placeName && orgName){       
+        if(placeName == userManage.place && orgName !=null){       
           const posts = await prisma.post.findMany({
             where: {
               postAddress: {
@@ -63,7 +65,7 @@ console.log(role)
           console.log({ userAddress,role, posts}); // Optional for debugging
           return NextResponse.json({userAddress, role, posts});
 
-    }else if(orgName && placeName == null){
+    }else if(orgName !=null ){
       const posts = await prisma.post.findMany({
         where: {
           postAddress: {
@@ -83,7 +85,7 @@ console.log(role)
 
     }
     }else{
-      return NextResponse.json({ error: 'You are not allowed to access' }, { status: 500 });
+      return NextResponse.json({ error: 'You are not allowed to access VERIFIED' }, { status: 500 });
     }
 
 
