@@ -6,6 +6,7 @@ import {auth} from "../../../../auth"
   // For Admin will show all the posts
   // For manager , first will check the manager given address , then will get the posts related 
 export async function GET(req: NextRequest) {
+  
   const session = await auth();
   const userId = session?.user?.id
   if (!userId) {
@@ -21,9 +22,12 @@ export async function GET(req: NextRequest) {
     })
  const role = userRole?.role
 console.log(role)
+//after gitting the user role 
   try {
     if(role =="VERIFIED"){
     // Fetch the user's address (place) from the Manage table (using findUnique, not findMany)
+
+    //Here we should check user managed place again for security purpose 
     const userManage = await prisma.manage.findFirst({
       where: { userId: userId }, // Match by userId in the Manage table
       select: { place: true } // Select the 'place' field (address)
@@ -31,7 +35,7 @@ console.log(role)
 
     if (!userManage || !userManage.place) {
       return NextResponse.json({ error: 'User address (place) not found' }, { status: 404 });
-    }
+    }else if(userManage != )
 
     const userAddress = userManage.place; // Extract the address from the first result
 
