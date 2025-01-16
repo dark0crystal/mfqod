@@ -90,13 +90,34 @@ console.log(role)
 
 
     }else if(role =="ADMIN" || role=="TECHADMIN" ){
-        const posts= await prisma.post.findMany({
-            where:{
-                userId:userId
-            }
-        })
-        console.log({role, posts});
-       return NextResponse.json({role, posts})
+      // 
+      if (orgName) {
+        const posts = await prisma.post.findMany({
+          where: {
+            postAddress: {
+              some: {
+                orgnization: orgName, // Filter posts where `orgnization` matches the given `orgName`
+              },
+            },
+          },
+          include: {
+            postAddress: true, // Include address data
+            uploadedPostPhotos: true, // Include related photos
+            author: {
+              select: {
+                id: true,
+                name: true,
+              },
+            }, // Include author details if needed
+          },
+        });
+      
+        console.log({ posts});
+        return NextResponse.json({posts})
+      }else{
+        return NextResponse.json("Not Allowed To Access admin org")
+      }
+        
     }else{
        return NextResponse.json("Not Allowed To Access")
     }
