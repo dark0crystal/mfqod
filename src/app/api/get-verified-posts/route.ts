@@ -42,14 +42,15 @@ console.log(role)
     if (!userManage || !userManage.place) {
       return NextResponse.json({ error: 'User address (place) not found' }, { status: 404 });
     }
-    
+    console.log(userManage.place)
+    console.log(userManage.orgnization)
     if(orgName == userManage.orgnization){
-        if(placeName){       
+        if(placeName && orgName){       
           const posts = await prisma.post.findMany({
             where: {
               postAddress: {
                 some: {
-                  place: userAddress // Match the 'place' field in Address with the user's address
+                  place: placeName // Match the 'place' field in Address with the user's address
                 }
               }
             },
@@ -57,16 +58,35 @@ console.log(role)
               postAddress: true, // Include related address details in the result
             }
           })
+
+          const userAddress = userManage.place; // Extract the address from the first result
+          console.log({ userAddress,role, posts}); // Optional for debugging
+          return NextResponse.json({userAddress, role, posts});
+
+    }else if(orgName && placeName == null){
+      const posts = await prisma.post.findMany({
+        where: {
+          postAddress: {
+            some: {
+              orgnization: orgName // Match the 'place' field in Address with the user's address
+            }
+          }
+        },
+        include: {
+          postAddress: true, // Include related address details in the result
+        }
+      })
+
+      const userAddress = userManage.place; // Extract the address from the first result
+      console.log("server posts",posts)
+      return NextResponse.json({userAddress, role, posts});
+
     }
     }else{
       return NextResponse.json({ error: 'You are not allowed to access' }, { status: 500 });
     }
 
-    const userAddress = userManage.place; // Extract the address from the first result
 
-   
-    console.log({ userAddress,role, posts}); // Optional for debugging
-    return NextResponse.json({userAddress, role, posts});
     }else if(role =="ADMIN" || role=="TECHADMIN" ){
         const posts= await prisma.post.findMany({
             where:{
