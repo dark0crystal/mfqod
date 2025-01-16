@@ -4,13 +4,19 @@ import prisma from "@/lib/db";
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const title = searchParams.get("item") ?? ""; // Assuming 'item' is the search parameter for title
-  const place = searchParams.get("place") ?? ""; // Assuming 'place' is the search parameter for place
-
+  const orgName = searchParams.get("orgName") ?? ""; // Assuming 'place' is the search parameter for place
+console.log(orgName)
   // Fetch posts from the database with related postPhotos and addresses
   const posts = await prisma.post.findMany({
     where: {
       title: {
         contains: title, // Filter posts by title (if provided)
+
+      },
+      postAddress: {
+        some: {
+          orgnization: orgName // Match the 'org' field in Address with the user's address
+        }
       },
       approval: true, // Only fetch posts that are approved
       temporaryDeletion: false, // Only fetch posts that are not marked for deletion
