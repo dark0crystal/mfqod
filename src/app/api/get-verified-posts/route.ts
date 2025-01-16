@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import prisma from "@/lib/db";
-
+import {auth} from "../../../../auth"
   // according the given userId the API endpoint will return the appropiate posts for that user 
   // the endpoit will check for the user address , and show the posts that have the same address
   // For Admin will show all the posts
