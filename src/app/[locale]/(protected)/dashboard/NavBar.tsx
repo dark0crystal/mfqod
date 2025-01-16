@@ -29,15 +29,13 @@ export default async function NavBar() {
           </div>
       }
       {/* for verified */}
-      {result.role == "VERIFIED" &&
+      {result.role == "VERIFIED" && 
+          
           <div>
-            <h1>Welcome { <h1> you are an admin in {result?.managedPlaces.map((manage ,index)=>(
-          <div key={index}>
-            <p>{manage.place}</p>
-            <p>{manage.orgnization}</p>
-          </div>
-        ))}</h1>}, Thank For Your Great Job </h1>
-        <NavbarSlider userRole ={result.role} /> 
+            <div>
+              <h1>Welcome manager </h1>
+            </div>
+            <NavbarSlider userRole ={result.role} managedOrg={result.managedOrg} managedPlace={result.managedPlace} /> 
           </div>
       }
        {/* for Basic */}
@@ -77,12 +75,11 @@ export default async function NavBar() {
 export async function getUserRoleAndManagedPlaces(userId: string) {
   try {
     const userWithManage = await prisma.user.findFirst({
-      where: {
-        id: userId,
-      },
+      where: { id: userId },
       select: {
         role: true,
         manage: {
+          take: 1, // Limit to only one record
           select: {
             place: true,
             orgnization: true,
@@ -92,15 +89,19 @@ export async function getUserRoleAndManagedPlaces(userId: string) {
     });
 
     if (!userWithManage) {
-      throw new Error('User not found');
+      throw new Error("User not found");
     }
+
+    // Extract the first (and only) item from `manage`
+    const [firstManage] = userWithManage.manage;
 
     return {
       role: userWithManage.role,
-      managedPlaces: userWithManage.manage,
+      managedPlace: firstManage?.place ?? null,
+      managedOrg: firstManage?.orgnization ?? null,
     };
   } catch (error) {
-    console.error('Error fetching user role and managed places:', error);
+    console.error("Error fetching user role and managed places:", error);
     throw error;
   }
 }
