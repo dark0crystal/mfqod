@@ -29,11 +29,12 @@ export default function DisplayPosts() {
     if (orgName) {
       const fetchPosts = async () => {
         try {
-          const response = await fetch(`/api/get-verified-posts?orgName=${orgName}?placeName=${placeName}`);
+          const response = await fetch(`/api/get-verified-posts?orgName=${orgName}&placeName=${placeName}`);
           const data = await response.json();
 
           setRole(data.role);
-          setPosts(data);
+          console.log(data)
+          setPosts(data.posts);
         } catch (error) {
           console.error('Error fetching posts:', error);
         } finally {
