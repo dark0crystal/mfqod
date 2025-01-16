@@ -35,7 +35,7 @@ export default function NavbarSlider({ userRole, managedOrgs }: { userRole: stri
             </div>
           </Link>
         ));
-      case "MANAGER":
+      case "VERIFIED":
         // Access only to managed organizations
         return managedOrgs?.map((org, index) => (
           <Link
