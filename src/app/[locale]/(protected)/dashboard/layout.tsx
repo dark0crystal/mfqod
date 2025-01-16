@@ -1,9 +1,9 @@
 import NavBar from "./NavBar";
-import { auth } from "../../../../../auth";
+
 import UserInfo from "./UserInfo";
 export default async function Layout({children}: Readonly<{ children: React.ReactNode;}>)  {
-    const session = await auth();
-    if (!session) return null;
+  
+   
   return (
     <>
 
@@ -11,7 +11,7 @@ export default async function Layout({children}: Readonly<{ children: React.Reac
       <div className="grid grid-cols-3 h-screen">
          <div className="bg-violet-200 flex flex-col  items-center px-4 col-span-1">
             <UserInfo/>
-            <NavBar userId={session.user?.id}/>
+            <NavBar />
         </div>
         <div className="bg-red-200 flex flex-col  items-center px-4  col-span-2">
             {children}
