@@ -6,8 +6,8 @@ import {auth} from "../../../../auth"
   // For Admin will show all the posts
   // For manager , first will check the manager given address , then will get the posts related 
 export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url); // Get query parameters from the request URL
-  const userId = searchParams.get('id');
+  const session = await auth();
+  const userId = session?.user?.id
   if (!userId) {
     return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
   }
