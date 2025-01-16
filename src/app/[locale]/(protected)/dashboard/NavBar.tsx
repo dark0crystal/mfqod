@@ -1,11 +1,13 @@
 import { Link } from "@/i18n/routing";
 import prisma from "@/lib/db";
 import NavbarSlider from "./NavbarSlider";
-
-export default async function NavBar(params : any) {
-
-  const {userId} = params;
+import { auth } from "../../../../../auth";
+export default async function NavBar() {
+  const session = await auth();
+  if (!session) return null;
+  const userId = session.user?.id
   if (!userId) return null;
+
   const result =await getUserRoleAndManagedPlaces(userId)
 
 
@@ -23,7 +25,7 @@ export default async function NavBar(params : any) {
       {result.role == "ADMIN" &&
           <div>
             <h1>Welcome Admin, Thank For Your Great Job </h1>
-            <NavbarSlider userRole ={result.role} /> 
+            <NavbarSlider userRole ={result.role}  /> 
           </div>
       }
       {/* for verified */}
@@ -42,7 +44,7 @@ export default async function NavBar(params : any) {
       {result.role == "BASIC" &&
           <div>
             <h1>Welcome Admin, Thank For Your Great Job </h1>
-            <NavbarSlider userRole ={result.role} /> 
+            <NavbarSlider userRole ={result.role}/> 
           </div>
       }
 
