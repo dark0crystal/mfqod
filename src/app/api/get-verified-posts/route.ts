@@ -6,7 +6,10 @@ import {auth} from "../../../../auth"
   // For Admin will show all the posts
   // For manager , first will check the manager given address , then will get the posts related 
 export async function GET(req: NextRequest) {
-  
+   // Extract query parameters from the request URL
+   const { searchParams } = new URL(req.url);
+   const placeName = searchParams.get('placeName');
+   const orgName = searchParams.get('orgName');
   const session = await auth();
   const userId = session?.user?.id
   if (!userId) {
@@ -30,28 +33,38 @@ console.log(role)
     //Here we should check user managed place again for security purpose 
     const userManage = await prisma.manage.findFirst({
       where: { userId: userId }, // Match by userId in the Manage table
-      select: { place: true } // Select the 'place' field (address)
+      select: { 
+        place: true ,
+        orgnization:true
+      } // Select the 'place' field (address)
     });
 
     if (!userManage || !userManage.place) {
       return NextResponse.json({ error: 'User address (place) not found' }, { status: 404 });
-    }else if(userManage != )
+    }
+    
+    if(orgName == userManage.orgnization){
+        if(placeName){       
+          const posts = await prisma.post.findMany({
+            where: {
+              postAddress: {
+                some: {
+                  place: userAddress // Match the 'place' field in Address with the user's address
+                }
+              }
+            },
+            include: {
+              postAddress: true, // Include related address details in the result
+            }
+          })
+    }
+    }else{
+      return NextResponse.json({ error: 'You are not allowed to access' }, { status: 500 });
+    }
 
     const userAddress = userManage.place; // Extract the address from the first result
 
-    // Find posts that have the same address as the user's address
-    const posts = await prisma.post.findMany({
-      where: {
-        postAddress: {
-          some: {
-            place: userAddress // Match the 'place' field in Address with the user's address
-          }
-        }
-      },
-      include: {
-        postAddress: true, // Include related address details in the result
-      }
-    });
+   
     console.log({ userAddress,role, posts}); // Optional for debugging
     return NextResponse.json({userAddress, role, posts});
     }else if(role =="ADMIN" || role=="TECHADMIN" ){
