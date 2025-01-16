@@ -39,7 +39,7 @@ export default function Search() {
   // Fetch posts based on item and place
   const fetchItems = async (item: string, place: string) => {
     try {
-      const response = await fetch(`/api/get-items?item=${item}&place=${place}`);
+      const response = await fetch(`/api/get-items?item=${item}&orgName=${place}`);
       if (response.ok) {
         const data = await response.json();
         setItems(data); // Set the fetched data to state
@@ -54,7 +54,7 @@ export default function Search() {
     // Fetch posts based place only 
     const fetchItemByPlace = async ( place: string) => {
       try {
-        const response = await fetch(`/api/get-items-by-place?place=${place}`);
+        const response = await fetch(`/api/get-items-by-place?orgName=${place}`);
         if (response.ok) {
           const data = await response.json();
           setItems(data); // Set the fetched data to state
