@@ -1,9 +1,7 @@
-export default function Dashboard(){
-    
-
+export default function Claims(){
     return(
         <div>
-Claims
+            
         </div>
     )
 }
