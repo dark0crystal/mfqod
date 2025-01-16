@@ -12,7 +12,7 @@ export default function NavbarSlider({ userRole, managedOrgs }: { userRole: stri
             key={index}
             href={{
               pathname: "/dashboard/posts",
-              query: { orgName: org }, // Pass orgName as a query
+              query: { orgName: org}, // Pass orgName as a query
             }}
           >
             <div className="p-4 bg-blue-500 text-white rounded-lg my-2 cursor-pointer">
@@ -27,7 +27,7 @@ export default function NavbarSlider({ userRole, managedOrgs }: { userRole: stri
             key={index}
             href={{
               pathname: "/dashboard/posts",
-              query: { orgName: org }, // Pass orgName as a query
+              query: { orgName: org  }, // Pass orgName as a query
             }}
           >
             <div className="p-4 bg-green-500 text-white rounded-lg my-2 cursor-pointer">
