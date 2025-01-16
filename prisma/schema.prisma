@@ -109,6 +109,7 @@ model Post{
   title String
   content String?
   type String? 
+  claimsCount Int     @default(0) // Pre-aggregated claims count
   temporaryDeletion Boolean @default(false)
   approval Boolean @default(true)
   author User @relation(fields: [userId],references: [id])
