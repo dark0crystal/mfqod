@@ -10,12 +10,12 @@ export async function GET(req: NextRequest) {
 
 
   try {
-    // Check the cache for claims
-    const cachedClaims = await redis.get(postId);
-    if (cachedClaims) {
-      console.log("Cache hit:", cachedClaims);
-      return NextResponse.json(JSON.parse(cachedClaims));
-    }
+    // // Check the cache for claims
+    // const cachedClaims = await redis.get(postId);
+    // if (cachedClaims) {
+    //   console.log("Cache hit:", cachedClaims);
+    //   return NextResponse.json(JSON.parse(cachedClaims));
+    // }
 
     // Fetch claims and their images from the database
     const claims = await prisma.claim.findMany({
@@ -55,10 +55,10 @@ export async function GET(req: NextRequest) {
     }));
 console.log("fsdafads fdasf dsfas dsfafads fasdf-asdf asdf-asdf-asd-fasd-f-",claims)
     // Cache the formatted claims
-    await redis.set(postId, JSON.stringify(formattedClaims), "EX", 3600); // Cache for 1 hour
+    // await redis.set(postId, JSON.stringify(formattedClaims), "EX", 3600); // Cache for 1 hour
 
     console.log("Fetched claims from database");
-    return NextResponse.json(formattedClaims);
+    return NextResponse.json(claims);
   } catch (error) {
     console.error("Error fetching claims:", error);
     return new Response("Internal server error", { status: 500 });
