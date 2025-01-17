@@ -1,11 +1,15 @@
 "use client"
+import {z} from "zod"
 import { useForm } from "react-hook-form"
 
 
-type FormFields ={
-    place:string
-    org:string
-}
+const schema = z.object({
+    place:z.string() ,
+    org:z.string()
+});
+
+type FormFields = z.infer<typeof schema>;
+
 
 export default function AddUserManagement(){
 
