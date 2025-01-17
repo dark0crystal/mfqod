@@ -52,7 +52,10 @@ export default function Claims({ postId }: { postId: string }){
                   <strong>Claim ID:</strong> {claim.id}
                 </p>
                 <p>
-                  <strong>Description:</strong> {claim.description}
+                  <strong>Description:</strong> {claim.claimTitle}
+                </p>
+                <p>
+                  <strong>claimContent:</strong> {claim.claimContent}
                 </p>
                 <p>
                   <strong>Date:</strong> {new Date(claim.createdAt).toLocaleDateString()}
