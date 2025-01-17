@@ -1,19 +1,16 @@
-"use client"
-import { useForm } from "react-hook-form"
+import AddUserManagement from "./AddUserManagement";
+import EditUserManagement from "./EditUserManagement";
+import EditUserRole from "./EditUserRole";
 
-
-type FormFields ={
-    role:string
-    managePlace:string
-    manageOrg:string
-    
-}
-export default function EditUserProfile(){
+export default function EditUserProfile({ params }: { params: { userId: string } }){
 
 
 
     return(
         <div>
+            <AddUserManagement userId={params.userId}/>
+            {/* <EditUserManagement userId={params.userId}/>
+            <EditUserRole userId={params.userId}/> */}
 
         </div>
     )
