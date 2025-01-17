@@ -1,4 +1,5 @@
 "use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -10,7 +11,7 @@ const schema = z.object({
 type FormFields = z.infer<typeof schema>;
 
 export default function ManageUsers() {
-  const { register, reset, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<FormFields>({
+  const { register, reset, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormFields>({
     resolver: zodResolver(schema),
   });
   const [users, setUsers] = useState<any[]>([]); // State to store fetched users
@@ -67,9 +68,44 @@ export default function ManageUsers() {
           <h2 className="text-lg font-bold mb-2">Results:</h2>
           <ul className="list-disc pl-5">
             {users.map((user) => (
-              <li key={user.id}>
+              <li key={user.id} className="mb-4">
                 <p><strong>Email:</strong> {user.email}</p>
                 <p><strong>Name:</strong> {user.name || "N/A"}</p>
+                <p><strong>Role:</strong> {user.role || "N/A"}</p>
+
+                {/* Managed Places */}
+                {user.manage?.place?.length > 0 ? (
+                  <div>
+                    <h3 className="text-md font-bold mt-2">Managed Places:</h3>
+                    <ul className="list-disc pl-5">
+                      {user.manage.place.map((place: any) => (
+                        <li key={place.id}>
+                          <p><strong>Title:</strong> {place.title}</p>
+                          <p><strong>Description:</strong> {place.description}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <p className="text-gray-500">No managed places.</p>
+                )}
+
+                {/* Managed Organizations */}
+                {user.manage?.organization?.length > 0 ? (
+                  <div>
+                    <h3 className="text-md font-bold mt-2">Managed Organizations:</h3>
+                    <ul className="list-disc pl-5">
+                      {user.manage.organization.map((org: any) => (
+                        <li key={org.id}>
+                          <p><strong>Name:</strong> {org.name}</p>
+                          <p><strong>Description:</strong> {org.description}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <p className="text-gray-500">No managed organizations.</p>
+                )}
               </li>
             ))}
           </ul>
