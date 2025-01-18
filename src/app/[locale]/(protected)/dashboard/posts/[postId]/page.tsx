@@ -8,8 +8,8 @@ import img4 from "../../../../../../../public/img4.jpeg";
 export default function PostDetails({ params }: { params: { postId: string } }) {
   const [post, setPost] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
-  const [showClaims, setShowClaims] = useState(false); // State to toggle Claims component
-  const [approval, setApproval] = useState<boolean>();
+  const [showClaims, setShowClaims] = useState(false);
+  const [loading, setLoading] = useState(false); // To show loading state
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,10 +20,6 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
         }
         const data = await response.json();
         setPost(data);
-        console.log(data.approval)
-        setApproval(data.approval)
-        
-        
       } catch (err) {
         setError("Error fetching post details.");
       }
@@ -34,39 +30,36 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
 
   const handleApprovalChange = async () => {
     if (!post) return;
-    console.log("i am inside handleApprovalChange")
 
-    if(post.approval == true){
-      setApproval(!(post.approval))
-      console.log(approval)
-      const response = await fetch( `/api/edit-post?postId=${params.postId}&approval=false`);
-      if (!response.ok) {
-        throw new Error("Failed to update approval status");
-      }
-
-    }else if(post.approval == false){
-      setApproval(!(post.approval))
-      console.log(approval)
-      const response = await fetch( `/api/edit-post?postId=${params.postId}&approval=true`);
-      if (!response.ok) {
-        throw new Error("Failed to update approval status");
-      }
-
-    }
-   console.log(approval)
     try {
-     
-    
-      
+      setLoading(true);
+      const newApprovalStatus = !post.approval;
 
-     
-      // const updatedPost = await response.json();
-      // setPost((prevPost: any) => ({
-      //   ...prevPost,
-      //   approval: updatedPost.response.approval,
-      // }));
+      const response = await fetch(`/api/edit-post`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          postId: params.postId,
+          approval: newApprovalStatus,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update approval status");
+      }
+
+      const updatedPost = await response.json();
+      setPost((prevPost: any) => ({
+        ...prevPost,
+        approval: updatedPost.approval,
+      }));
     } catch (err) {
       console.error("Error updating approval status:", err);
+      setError("Failed to update approval status.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -98,9 +91,9 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
                 <input
                   type="checkbox"
                   id="approval"
-                  checked={approval}
+                  checked={post.approval}
                   onChange={handleApprovalChange}
-                  // disabled={approval}
+                  disabled={loading}
                   className="sr-only"
                 />
                 <div
