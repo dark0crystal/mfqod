@@ -8,9 +8,9 @@ export default function EditUserProfile({ params }: { params: { userId: string }
 
     return(
         <div>
-            <AddUserManagement userId={params.userId}/>
-            {/* <EditUserManagement userId={params.userId}/>
-            <EditUserRole userId={params.userId}/> */}
+            {/* <AddUserManagement userId={params.userId}/> */}
+            {/* <EditUserManagement userId={params.userId}/> */}
+            <EditUserRole userId={params.userId}/> 
 
         </div>
     )
