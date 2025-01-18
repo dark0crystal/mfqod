@@ -9,7 +9,7 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
   const [post, setPost] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [showClaims, setShowClaims] = useState(false); // State to toggle Claims component
-  const [isApproving, setIsApproving] = useState(false);
+  const [approval, setApproval] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,6 +20,7 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
         }
         const data = await response.json();
         setPost(data);
+        setApproval(data.approval);
       } catch (err) {
         setError("Error fetching post details.");
       }
@@ -29,17 +30,14 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
   }, [params.postId]);
 
   const handleApprovalChange = async () => {
-    if (!post) return;
+    if (approval === undefined) return;
 
-    setIsApproving(true);
     try {
-      const newApprovalStatus = !post.approval;
-
+      const newApproval = !approval; // Toggle approval state
       const response = await fetch(
-        `/api/edit-post?postId=${params.postId}&approval=${newApprovalStatus}`,
-        {
-          method: "PUT",
-        }
+        `/api/edit-post?postId=${params.postId}&approval=${newApproval}`, { 
+          method: "PUT"
+         }
       );
 
       if (!response.ok) {
@@ -51,10 +49,9 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
         ...prevPost,
         approval: updatedPost.response.approval,
       }));
+      setApproval(updatedPost.response.approval); // Update the local state
     } catch (err) {
       console.error("Error updating approval status:", err);
-    } finally {
-      setIsApproving(false);
     }
   };
 
@@ -86,19 +83,18 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
                 <input
                   type="checkbox"
                   id="approval"
-                  checked={post.approval}
+                  checked={approval || false}
                   onChange={handleApprovalChange}
-                  disabled={isApproving}
                   className="sr-only"
                 />
                 <div
                   className={`w-10 h-5 bg-gray-300 rounded-full shadow-inner ${
-                    post.approval ? "bg-blue-500" : ""
+                    approval ? "bg-blue-500" : ""
                   }`}
                 ></div>
                 <div
                   className={`absolute w-4 h-4 bg-white rounded-full shadow transform transition-transform ${
-                    post.approval ? "translate-x-5" : "translate-x-0"
+                    approval ? "translate-x-5" : "translate-x-0"
                   }`}
                 ></div>
               </div>
