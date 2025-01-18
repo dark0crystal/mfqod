@@ -1,28 +1,24 @@
 "use client";
-import Image1 from "../../../public/img1.jpeg"
-import { MdArrowOutward } from "react-icons/md";
+
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";  // Import Zod for validation
 import { zodResolver } from "@hookform/resolvers/zod";  // Import Zod resolver
 import { useRouter } from "next/navigation";  // Import useRouter for page navigation
 import { useSession } from "next-auth/react";  // Import useSession for user session
-import Image from "next/image";
-import SliderBar from "./Slider";
 import DisplayPosts from "./DisplayPosts";
-
+import { orgName } from "../../storage";
 // Define Zod validation schema
 const schema = z.object({
   item: z.string().min(1, { message: "The Field is required!" }),
   place: z.string().min(1, { message: "Please select a place" }),
 });
 
-type FormFields = {
-  item: string;
-  place: string;
-};
 
-export const orgName = ["SQU","UTAS Muscat", "UTAS Ibra","Bin Omair Library" , "UTAS Nizwa"]
+
+type FormFields =z.infer<typeof schema>;
+
+
 
 export default function Search() {
   const [items, setItems] = useState<any[]>([]);  // State to hold fetched items
