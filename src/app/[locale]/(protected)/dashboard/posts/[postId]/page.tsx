@@ -2,12 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import Claims from "./Claims";
+import Image from "next/image";
+import img4 from "../../../../../../../public/img4.jpeg";
 
 export default function PostDetails({ params }: { params: { postId: string } }) {
   const [post, setPost] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
-  const [showClaims, setShowClaims] = useState(false);
-  const [isApproving, setIsApproving] = useState<boolean>(false);
+  const [showClaims, setShowClaims] = useState(false); // State to toggle Claims component
+  const [isApproving, setIsApproving] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,22 +28,31 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
     fetchData();
   }, [params.postId]);
 
-  const handleApprovalChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const approvalStatus = e.target.checked;
+  const handleApprovalChange = async () => {
+    if (!post) return;
 
     setIsApproving(true);
     try {
+      const newApprovalStatus = !post.approval;
+
       const response = await fetch(
-        `/api/edit-post?postId=${params.postId}&approval=${approvalStatus}`,
-        { method: "PUT" }
+        `/api/edit-post?postId=${params.postId}&approval=${newApprovalStatus}`,
+        {
+          method: "PUT",
+        }
       );
+
       if (!response.ok) {
         throw new Error("Failed to update approval status");
       }
+
       const updatedPost = await response.json();
-      setPost(updatedPost.response);
+      setPost((prevPost: any) => ({
+        ...prevPost,
+        approval: updatedPost.response.approval,
+      }));
     } catch (err) {
-      setError("Error updating approval status.");
+      console.error("Error updating approval status:", err);
     } finally {
       setIsApproving(false);
     }
@@ -56,39 +67,54 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-        <div className="p-6">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">
-            {post.title || "Untitled Post"}
-          </h1>
-          <p className="text-gray-700 mb-4">{post.content || "No content available"}</p>
-
-          {/* Approval Checkbox */}
-          <div className="flex items-center mb-4">
-            <label htmlFor="approval" className="text-gray-800 font-medium mr-2">
-              Approve Post
-            </label>
-            <input
-              type="checkbox"
-              id="approval"
-              checked={post.approval}
-              onChange={handleApprovalChange}
-              disabled={isApproving}
-              className="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-            />
+    <div className="w-full h-[500px] mx-auto p-6">
+      <div className="bg-white h-full shadow-lg rounded-lg overflow-hidden">
+        <div className="p-6 flex h-full flex-col">
+          <div className="w-full h-80 bg-yellow-100 flex flex-row">
+            <div className="w-[50%] relative overflow-hidden rounded-2xl">
+              <Image alt="sora" src={img4} fill objectFit="cover" />
+            </div>
+            <div className="w-[50%]">
+              <h1 className="text-2xl font-bold text-gray-800 mb-4">{post.title || "Untitled Post"}</h1>
+              <p className="text-gray-700 mb-4">{post.content || "No content available"}</p>
+            </div>
           </div>
-
-          {/* Button to show Claims */}
-          {!showClaims && (
-            <button
-              onClick={() => setShowClaims(true)}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            >
-              Show Claims
-            </button>
-          )}
-          {showClaims && <Claims postId={params.postId} />}
+          <div className="mt-4">
+            <label htmlFor="approval" className="inline-flex items-center cursor-pointer">
+              <span className="mr-2 text-gray-700">Approval:</span>
+              <div className="relative">
+                <input
+                  type="checkbox"
+                  id="approval"
+                  checked={post.approval}
+                  onChange={handleApprovalChange}
+                  disabled={isApproving}
+                  className="sr-only"
+                />
+                <div
+                  className={`w-10 h-5 bg-gray-300 rounded-full shadow-inner ${
+                    post.approval ? "bg-blue-500" : ""
+                  }`}
+                ></div>
+                <div
+                  className={`absolute w-4 h-4 bg-white rounded-full shadow transform transition-transform ${
+                    post.approval ? "translate-x-5" : "translate-x-0"
+                  }`}
+                ></div>
+              </div>
+            </label>
+          </div>
+          <div>
+            {!showClaims && (
+              <button
+                onClick={() => setShowClaims(true)}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              >
+                Show Claims
+              </button>
+            )}
+            {showClaims && <Claims postId={params.postId} />}
+          </div>
         </div>
       </div>
     </div>
