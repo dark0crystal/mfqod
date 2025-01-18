@@ -4,6 +4,7 @@ import { supabase } from "@/lib/supabase";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import ReactConfetti from 'react-confetti'; // Importing the ReactConfetti component
+import { OrgPlaces } from "@/app/storage";
 
 type ItemFormFields = {
   title: string;
@@ -21,11 +22,7 @@ export default function ReportFoundItem() {
   const [placeOptions, setPlaceOptions] = useState<string[]>([]); // State for dynamically updating place options
   const [confetti, setConfetti] = useState(false); // State to trigger confetti animation
 
-  const OrgPlaces = [
-    { "SQU": ["SQU Library", "SQU Lost and Found Department"] },
-    { "UTAS Muscat": ["UTAS Library", "UTAS Lost and Found Department"] },
-    { "Bin Omair": ["Bin Omair Library", "Bin Omair Lost and Found Department"] },
-  ];
+
 
   // Handle form submission
   const onSubmit: SubmitHandler<ItemFormFields> = async (data) => {
