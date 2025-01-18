@@ -13,11 +13,15 @@ export default async function NavBar() {
 
   return (
     <div>
+      <div>
+       
+       <h1> you are  {result?.role}</h1>
+     </div>
      
       {/* For the CTO */}
       {result.role == "TECHADMIN" &&
           <div>
-            <h1>Hello my CO-Founder & CTO </h1>
+            <h1>Hello my Founder & CTO </h1>
             <NavbarSlider userRole ={result.role} /> 
           </div>
       }
@@ -46,10 +50,7 @@ export default async function NavBar() {
           </div>
       }
 
-      <div>
-       
-        <h1> you are  {result?.role}</h1>
-      </div>
+      
 
       {/* <div  >
         <Link 
