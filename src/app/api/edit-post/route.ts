@@ -1,32 +1,28 @@
 import prisma from "@/lib/db";
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
-export default async function GET(req:NextRequest){
+export async function PATCH(req: Request) {
+  try {
+    const { postId, approval } = await req.json();
 
-    const { searchParams } = new URL(req.url);
-    const postId = searchParams.get('postId');
-    const approval = searchParams.get('approval')
-    console.log("inside api" ,approval ,postId)
-
-    try {
-    if(postId && approval==="true"){
-       console.log("inside true")
-        const response = await  prisma.post.update({
-        where:{ id:postId },
-        data:{ approval :true}
-        });
-        return NextResponse.json({response});
-     }else if(postId && approval==="false"){
-        console.log("inside false")
-        const response = await  prisma.post.update({
-            where:{ id:postId },
-            data:{ approval :false}
-          });
-          return NextResponse.json({response});
-        
+    if (!postId || approval === undefined) {
+      return NextResponse.json(
+        { error: "Invalid request payload" },
+        { status: 400 }
+      );
     }
-    } catch (error) {
-        console.error("Error fetching data:", error);
-        return NextResponse.json({ error: "Failed to fetch data" }, { status: 500 });   
-    }
+
+    const updatedPost = await prisma.post.update({
+      where: { id: postId },
+      data: { approval },
+    });
+
+    return NextResponse.json(updatedPost);
+  } catch (error) {
+    console.error("Error updating post approval:", error);
+    return NextResponse.json(
+      { error: "Failed to update post approval" },
+      { status: 500 }
+    );
+  }
 }
