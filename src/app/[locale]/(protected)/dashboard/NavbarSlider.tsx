@@ -1,7 +1,6 @@
 "use client"
 import { Link } from "@/i18n/routing";
-import { orgName } from "../../search/page"; // Assuming orgName contains a list of organization names
-
+import { orgName } from "@/app/storage";
 export default function NavbarSlider({ userRole, managedOrg , managedPlace }: { userRole: string; managedOrg?: any ,managedPlace?: any }) {
   const renderLinks = () => {
     switch (userRole) {
@@ -15,7 +14,7 @@ export default function NavbarSlider({ userRole, managedOrg , managedPlace }: { 
               query: { orgName: org}, // Pass orgName as a query
             }}
           >
-            <div className="p-4 bg-blue-500 text-white rounded-lg my-2 cursor-pointer">
+            <div className="p-3 bg-blue-500 text-white rounded-lg my-1 cursor-pointer">
               {org}
             </div>
           </Link>
