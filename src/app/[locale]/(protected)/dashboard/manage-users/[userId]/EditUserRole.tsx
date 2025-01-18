@@ -1,4 +1,4 @@
-export default function EditUserRole(){
+export default function EditUserRole({ userId }: { userId: string }){
     return(
         <div>
             add user management
