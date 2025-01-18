@@ -1,10 +1,22 @@
-import { NextResponse , NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import prisma from "@/lib/db"; // Adjust the path to your Prisma instance
 
+export async function POST(req: Request) {
+  try {
+    const { userId, body } = await req.json();
 
-export default async function POST(req:NextRequest , res:NextResponse){
+    // Insert into the `manage` table
+    await prisma.manage.create({
+      data: {
+        userId,
+        orgnization: body.org,
+        place: body.place,
+      },
+    });
 
-    const {userId , body} = await req.json();
-
-
-    return NextResponse.json({massage: "User is goog" }, { status: 200 });
+    return NextResponse.json({ message: "User management added successfully" });
+  } catch (error) {
+    console.error("Error adding user management:", error);
+    return NextResponse.json({ error: "Failed to add user management" }, { status: 500 });
+  }
 }
