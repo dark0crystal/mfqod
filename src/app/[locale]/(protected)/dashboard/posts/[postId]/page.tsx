@@ -97,13 +97,13 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
                   className="sr-only "
                 />
                 <div
-                  className={`w-10 h-5 bg-gray-300 rounded-full shadow-inner absolute ${
-                    post.approval ? "bg-blue-500" : ""
+                  className={`w-[5.3rem] h-8  rounded-full shadow-inner absolute ${
+                    post.approval ? "bg-green-400" : "bg-red-300"
                   }`}
                 ></div>
                 <div
-                  className={`absolute w-4 h-4 bg-white rounded-full shadow transform transition-transform  ${
-                    post.approval ? "translate-x-5" : "translate-x-0"
+                  className={`absolute w-6 h-6 bg-white rounded-full mt-1  shadow transform transition-transform  ${
+                    post.approval ? "translate-x-14" : "translate-x-1"
                   }`}
                 ></div>
               </div>
