@@ -9,3 +9,6 @@ export const orgName = ["SQU","UTAS Muscat", "UTAS Ibra","Bin Omair Library" , "
     { "UTAS Muscat": ["UTAS Library", "UTAS Lost and Found Department"] },
     { "Bin Omair": ["Bin Omair Library", "Bin Omair Lost and Found Department"] },
   ];
+
+
+  export const roles =[ "BASIC","VERIFIED","ADMIN", "TECHADMIN"]
