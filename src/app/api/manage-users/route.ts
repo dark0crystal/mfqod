@@ -18,7 +18,13 @@ export async function GET(req: NextRequest) {
         id: true,
         email: true,
         name: true,
-        role:true
+        role:true,
+        manage:{
+            select:{
+                place:true,
+                orgnization:true,
+            }
+        }
       },
     });
 
