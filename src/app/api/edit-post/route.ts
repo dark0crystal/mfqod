@@ -1,11 +1,12 @@
 import prisma from "@/lib/db";
 import { NextResponse, NextRequest } from "next/server";
 
-export default async function PUT(req:NextRequest){
+export default async function GET(req:NextRequest){
 
     const { searchParams } = new URL(req.url);
     const postId = searchParams.get('postId');
     const approval = searchParams.get('approval')
+    console.log("inside api" ,approval ,postId)
 
     try {
     if(postId && approval==="true"){
