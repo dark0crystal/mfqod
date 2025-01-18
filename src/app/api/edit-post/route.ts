@@ -9,13 +9,14 @@ export default async function PUT(req:NextRequest){
 
     try {
     if(postId && approval==="true"){
-       
+       console.log("inside true")
         const response = await  prisma.post.update({
         where:{ id:postId },
         data:{ approval :true}
         });
         return NextResponse.json({response});
      }else if(postId && approval==="false"){
+        console.log("inside false")
         const response = await  prisma.post.update({
             where:{ id:postId },
             data:{ approval :false}
