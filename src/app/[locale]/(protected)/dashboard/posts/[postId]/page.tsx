@@ -85,7 +85,7 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
             </div>
           </div>
           <div className="mt-4">
-            <label htmlFor="approval" className="inline-flex items-center cursor-pointer">
+            <label htmlFor="approval" className="inline-flex items-center  cursor-pointer">
               <span className="mr-2 text-gray-700">Approval:</span>
               <div className="relative">
                 <input
@@ -94,15 +94,15 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
                   checked={post.approval}
                   onChange={handleApprovalChange}
                   disabled={loading}
-                  className="sr-only"
+                  className="sr-only "
                 />
                 <div
-                  className={`w-10 h-5 bg-gray-300 rounded-full shadow-inner ${
+                  className={`w-10 h-5 bg-gray-300 rounded-full shadow-inner absolute ${
                     post.approval ? "bg-blue-500" : ""
                   }`}
                 ></div>
                 <div
-                  className={`absolute w-4 h-4 bg-white rounded-full shadow transform transition-transform ${
+                  className={`absolute w-4 h-4 bg-white rounded-full shadow transform transition-transform  ${
                     post.approval ? "translate-x-5" : "translate-x-0"
                   }`}
                 ></div>
