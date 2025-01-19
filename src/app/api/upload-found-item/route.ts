@@ -66,6 +66,6 @@ export async function POST(req: NextRequest) {
 //  PUT is used to replace the entire resource with a new representation,
 //  meaning that all the fields of the resource are sent in the request body, even if they 
 
-export async function PATCH(req: NextRequest){
+  export async function PATCH(req: NextRequest){
 
-}
+  }
