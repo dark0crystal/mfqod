@@ -84,13 +84,12 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
     <div>
 
     
-    <div className="w-[700px] h-[500px] mx-auto p-6">
+    <div className="w-[700px] h-[900px] mx-auto p-6">
       <div className="bg-white h-full shadow-lg rounded-lg overflow-hidden">
         <div className="p-6 flex h-full flex-col">
           <button onClick={handlePostEdit}>Edit Post</button>
           {showPost == true ? (
       
-          
           <div className="w-full h-80 bg-yellow-100 flex flex-row">
             <div className="w-[50%] relative overflow-hidden rounded-2xl">
               <Image alt="sora" src={img4} fill objectFit="cover" />
