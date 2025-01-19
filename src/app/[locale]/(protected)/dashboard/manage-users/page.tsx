@@ -72,7 +72,7 @@ export default function ManageUsers() {
                 <p><strong>Email:</strong> {user.email}</p>
                 <p><strong>Name:</strong> {user.name || "N/A"}</p>
                 <p><strong>Role:</strong> {user.role || "N/A"}</p>
-
+                <p><strong>User Id:</strong> {user.id || "N/A"}</p>
                 {/* Managed Places */}
                 {user.manage?.place?.length > 0 ? (
                   <div>
@@ -99,6 +99,7 @@ export default function ManageUsers() {
                         <li key={org.id}>
                           <p><strong>Name:</strong> {org.name}</p>
                           <p><strong>Description:</strong> {org.description}</p>
+                          
                         </li>
                       ))}
                     </ul>
