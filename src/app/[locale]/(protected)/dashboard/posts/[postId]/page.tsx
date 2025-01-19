@@ -10,6 +10,7 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
   const [error, setError] = useState<string | null>(null);
   const [showClaims, setShowClaims] = useState(false);
   const [loading, setLoading] = useState(false); // To show loading state
+  const [showPost , setShowPost] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,6 +28,13 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
 
     fetchData();
   }, [params.postId]);
+
+  function handlePostEdit(){
+   
+    setShowPost(!showPost)
+    
+  }
+  console.log(showPost)
 
   const handleApprovalChange = async () => {
     if (!post) return;
@@ -72,9 +80,16 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
   }
 
   return (
-    <div className="w-full h-[500px] mx-auto p-6">
+    <div>
+
+    
+    <div className="w-[700px] h-[500px] mx-auto p-6">
       <div className="bg-white h-full shadow-lg rounded-lg overflow-hidden">
         <div className="p-6 flex h-full flex-col">
+          <button onClick={handlePostEdit}>Edit Post</button>
+          {showPost == true ? (
+      
+          
           <div className="w-full h-80 bg-yellow-100 flex flex-row">
             <div className="w-[50%] relative overflow-hidden rounded-2xl">
               <Image alt="sora" src={img4} fill objectFit="cover" />
@@ -84,8 +99,21 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
               <p className="text-gray-700 mb-4">{post.content || "No content available"}</p>
             </div>
           </div>
-          <div className="flex flex-row items-center w-full mt-4">
-          <div className=" w-[50%]">
+         
+
+          ):(
+          
+          <div className="w-full h-80 bg-yellow-100 flex flex-row">
+            <div className="w-[50%] relative overflow-hidden rounded-2xl">
+                Edit post Form
+            </div>
+            </div>
+     
+       ) }
+          
+        </div>
+      </div>
+      <div className="">
             <label htmlFor="approval" className="inline-flex  cursor-pointer">
               <span className="mr-2 text-gray-700">Approval:</span>
               <div className="relative">
@@ -110,6 +138,11 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
               </div>
             </label>
           </div>
+    </div>
+
+
+<div className="flex flex-row items-center w-full mt-4">
+          
           <div className=" w-[50%]">
             {!showClaims && (
               <button
@@ -122,8 +155,6 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
             {showClaims && <Claims postId={params.postId} />}
           </div>
           </div>
-        </div>
-      </div>
-    </div>
+          </div>
   );
 }
