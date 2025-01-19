@@ -104,7 +104,7 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
 
           ):(
           
-          <div className="w-full h-80 bg-yellow-100 flex flex-row">
+          <div className="w-full h-fit bg-yellow-100 flex flex-row">
             <div className="w-[50%] relative overflow-hidden rounded-2xl">
                <EditPost/>
             </div>
