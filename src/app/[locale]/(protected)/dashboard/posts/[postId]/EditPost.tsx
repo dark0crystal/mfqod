@@ -37,8 +37,8 @@ export default function EditPost() {
     formData.append("orgnization", data.orgnization);
 
     try {
-      const response = await fetch("/;ldksf adl;fksa", {
-        method: "POST",
+      const response = await fetch("/api/upload-found-item", {
+        method: "PATCH",
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' }
       });
