@@ -15,13 +15,25 @@ type ItemFormFields = {
   orgnization: string;
   image: FileList;
 };
+type EditPostProps = {
+    postData: {
+      id: string;
+      title: string;
+      content: string;
+      type: string;
+      place: string;
+      country: string;
+      orgnization: string;
+      images: string[]; // Array of image URLs
+    };
+  };
 
-export default function EditPost() {
+export default function EditPost({postData}:EditPostProps) {
   const { register, handleSubmit, formState: { errors, isSubmitting }, reset, setValue } = useForm<ItemFormFields>();
   const [organization, setOrganization] = useState<string>(''); // State for organization
   const [placeOptions, setPlaceOptions] = useState<string[]>([]); // State for dynamically updating place options
   const [confetti, setConfetti] = useState(false); // State to trigger confetti animation
-
+    console.log(postData.title);
 
 
   // Handle form submission
@@ -154,6 +166,7 @@ export default function EditPost() {
           <input
             type="text"
             id="title"
+            value={postData.title}
             {...register("title", { required: "This field is required" })}
             placeholder="e.g., Key, Wallet, etc."
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -167,6 +180,7 @@ export default function EditPost() {
           <input
             type="text"
             id="content"
+            value={postData.content}
             {...register("content", { required: "Please provide additional details" })}
             placeholder="Provide additional details about the item"
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -180,6 +194,7 @@ export default function EditPost() {
           <input
             type="text"
             id="type"
+            value={postData.type}
             {...register("type", { required: "This field is required" })}
             placeholder="Type of item (e.g., Wallet, Phone)"
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -193,6 +208,7 @@ export default function EditPost() {
           <input
             type="file"
             id="image"
+            // value={postData.images}
             multiple // Allow multiple image selection
             {...register("image", { required: "This field is required" })}
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -205,7 +221,8 @@ export default function EditPost() {
           <label htmlFor="orgnization" className="block text-lg font-semibold text-gray-700">Organization</label>
           <select
             id="orgnization"
-            value={organization} // Bind to the organization state
+            // value={organization} // Bind to the organization state
+            value={postData.orgnization}
             {...register("orgnization", { required: "Please select an organization" })}
             onChange={handleOrganizationChange} // Trigger handleOrganizationChange on selection
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -228,6 +245,7 @@ export default function EditPost() {
             <label htmlFor="place" className="block text-lg font-semibold text-gray-700">Place</label>
             <select
               id="place"
+            //   value={postData.place}
               {...register("place", { required: "Please select a place" })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
@@ -245,6 +263,7 @@ export default function EditPost() {
           <label htmlFor="country" className="block text-lg font-semibold text-gray-700">Country</label>
           <select
             id="country"
+            value={postData.country}
             {...register("country", { required: "Please select a country" })}
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
