@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Claims from "./Claims";
 import Image from "next/image";
 import img4 from "../../../../../../../public/img4.jpeg";
+import EditPost from "./EditPost";
 
 export default function PostDetails({ params }: { params: { postId: string } }) {
   const [post, setPost] = useState<any>(null);
@@ -105,7 +106,7 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
           
           <div className="w-full h-80 bg-yellow-100 flex flex-row">
             <div className="w-[50%] relative overflow-hidden rounded-2xl">
-                Edit post Form
+               <EditPost/>
             </div>
             </div>
      
