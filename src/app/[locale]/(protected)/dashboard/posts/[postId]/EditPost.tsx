@@ -34,7 +34,7 @@ export default function EditPost({postData}:EditPostProps) {
   const [placeOptions, setPlaceOptions] = useState<string[]>([]); // State for dynamically updating place options
   const [confetti, setConfetti] = useState(false); // State to trigger confetti animation
     console.log(postData.title);
-
+    
 
   // Handle form submission
   const onSubmit: SubmitHandler<ItemFormFields> = async (data) => {
@@ -112,7 +112,7 @@ export default function EditPost({postData}:EditPostProps) {
       console.error("Error submitting form:", error);
     }
   };
-
+  
   // Handle organization change and update places
   const handleOrganizationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOrg = e.target.value;
@@ -128,6 +128,7 @@ export default function EditPost({postData}:EditPostProps) {
       setPlaceOptions([]); // Reset places if no organization is selected
     }
   };
+
 
   // Set default place options on mount or when the organization changes
   useEffect(() => {
@@ -245,7 +246,7 @@ export default function EditPost({postData}:EditPostProps) {
             <label htmlFor="place" className="block text-lg font-semibold text-gray-700">Place</label>
             <select
               id="place"
-            //   value={postData.place}
+              value={postData.place}
               {...register("place", { required: "Please select a place" })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
