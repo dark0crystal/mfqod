@@ -84,8 +84,9 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
               <p className="text-gray-700 mb-4">{post.content || "No content available"}</p>
             </div>
           </div>
-          <div className="mt-4">
-            <label htmlFor="approval" className="inline-flex items-center  cursor-pointer">
+          <div className="flex flex-row items-center w-full mt-4">
+          <div className=" w-[50%]">
+            <label htmlFor="approval" className="inline-flex  cursor-pointer">
               <span className="mr-2 text-gray-700">Approval:</span>
               <div className="relative">
                 <input
@@ -109,7 +110,7 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
               </div>
             </label>
           </div>
-          <div>
+          <div className=" w-[50%]">
             {!showClaims && (
               <button
                 onClick={() => setShowClaims(true)}
@@ -119,6 +120,7 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
               </button>
             )}
             {showClaims && <Claims postId={params.postId} />}
+          </div>
           </div>
         </div>
       </div>
