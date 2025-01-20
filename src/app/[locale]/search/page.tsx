@@ -113,7 +113,7 @@ export default function Search() {
               id="place"
               {...register("place")}
               defaultValue=""
-              className="w-full p-3 border bg-white/70 text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-3 border bg-white/70 text-black/50 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               <option value="" disabled>هين تدرس؟</option>
               <option value="SQU">جامعة السلطان قابوس</option>
