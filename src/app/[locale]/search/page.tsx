@@ -10,6 +10,10 @@ import { orgName } from "../../storage";
 import Footer from "@/app/components/Footer";
 import Image from "next/image";
 import ad from "../../../../public/ad.png"
+import bg1 from "../../../../public/bg1.jpg"
+import bg2 from "../../../../public/bg2.jpg"
+import bg3 from "../../../../public/bg3.jpg"
+import bg4 from "../../../../public/bg4.jpg"
 
 const schema = z.object({
   item: z.string().min(1, { message: "The Field is required!" }),
@@ -80,6 +84,10 @@ export default function Search() {
 
       {/* Center Section */}
       <div className="col-span-8 bg-white flex flex-col items-center justify-start p-8 overflow-y-auto">
+        <div>
+        <div>
+          <Image src={} alt="search bg image" fill objectFit="cover"/>
+        </div>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-full max-w-md">
           <div>
             <input
@@ -115,6 +123,7 @@ export default function Search() {
             {isSubmitting ? "Loading..." : "Submit"}
           </button>
         </form>
+        </div>
 
         <div className="w-full mt-6">
           <DisplayPosts items={items} />
