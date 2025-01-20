@@ -14,6 +14,8 @@ import bg1 from "../../../../public/bg1.jpg"
 import bg2 from "../../../../public/bg2.jpg"
 import bg3 from "../../../../public/bg3.jpg"
 import bg4 from "../../../../public/bg4.jpg"
+import { FaSearch } from "react-icons/fa";
+import { RiLoader2Line } from "react-icons/ri";
 
 const schema = z.object({
   item: z.string().min(1, { message: "The Field is required!" }),
@@ -84,7 +86,7 @@ export default function Search() {
 
       {/* Center Section */}
       <div className="col-span-8  flex flex-col items-center  p-4 overflow-y-auto w-full h-full">
-        <div className="relative z-20 w-full flex items-center min-h-[35vh]">
+        <div className="relative z-20 w-full flex items-center min-h-[32vh]">
         <div className="absolute -z-10 w-full  rounded-xl overflow-hidden h-full">
           <Image
            src={bg1}
@@ -125,9 +127,9 @@ export default function Search() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-fit p-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-400"
+            className="w-fit h-fit p-3  bg-indigo-600/70 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-400"
           >
-            {isSubmitting ? "Loading..." : "Submit"}
+            {isSubmitting ? <RiLoader2Line size={26}/> : <FaSearch size={26}/>}
           </button>
         </form>
         </div>
@@ -135,7 +137,7 @@ export default function Search() {
 
         <div className="w-full mt-6">
           <DisplayPosts items={items} />
-          <Footer/>
+          {/* <Footer/> */}
         </div>
       </div>
 
