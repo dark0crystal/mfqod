@@ -69,94 +69,43 @@ export async function POST(req: NextRequest) {
 // import { prisma } from "@/lib/prisma"; // Adjust the path to your Prisma instance
 // import { supabase } from "@/lib/supabase";
 
-// import { NextRequest, NextResponse } from "next/server";
-// import { prisma } from "@/lib/prisma";
+// export async function PATCH(req: NextRequest) {
+//   try {
+//     const { data, postId } = await req.json();
 
-export async function PATCH(req: NextRequest) {
-  try {
-    // Parse the incoming request body
-    const body = await req.json();
-    console.log("from the back end",body)
-    const { 
-      id, // Post ID
-      title, 
-      content, 
-      type, 
-      place, 
-      country, 
-      orgnization, 
-      imageUrls 
-    } = body;
+//     if (!postId || !data.title) {
+//       return NextResponse.json({ error: "Post ID and title are required" }, { status: 400 });
+//     }
 
-    // Validate required fields
-    if (!id || !title) {
-      return NextResponse.json({ error: "Post ID and title are required" }, { status: 400 });
-    }
+//     const updatedPost = await prisma.post.update({
+//       where: { id: postId },
+//       data: {
+//         title: data.title,
+//         content: data.content,
+//         type: data.type,
+//       },
+//     });
 
-    // Update the post data
-    const updatedPost = await prisma.post.update({
-      where: { id },
-      data: {
-        title,
-        content,
-        type,
-      },
-    });
+//     if (data.place || data.country || data.orgnization) {
+//       await prisma.address.upsert({
+//         where: { postId },
+//         update: {
+//           place: data.place,
+//           country: data.country,
+//           orgnization: data.orgnization,
+//         },
+//         create: {
+//           postId,
+//           place: data.place,
+//           country: data.country,
+//           orgnization: data.orgnization,
+//         },
+//       });
+//     }
 
-    // Update the address if provided
-    if (place || country || orgnization) {
-      const existingAddress = await prisma.address.findFirst({
-        where: { postId: id },
-      });
-
-      if (existingAddress) {
-        // Update the existing address
-        await prisma.address.update({
-          where: { id: existingAddress.id },
-          data: {
-            place,
-            country,
-            orgnization,
-          },
-        });
-      } else {
-        // Create a new address if it doesn't exist
-        await prisma.address.create({
-          data: {
-            place,
-            country,
-            orgnization,
-            postId: id,
-          },
-        });
-      }
-    }
-
-    // Update post photos if imageUrls are provided
-    if (imageUrls && Array.isArray(imageUrls)) {
-      // Delete existing photos for the post
-      await prisma.postPhotos.deleteMany({
-        where: { postId: id },
-      });
-
-      // Add new photos
-      const photoPromises = imageUrls.map((url: string) =>
-        prisma.postPhotos.create({
-          data: {
-            postId: id,
-            postUrl: url,
-          },
-        })
-      );
-      await Promise.all(photoPromises);
-    }
-
-    return NextResponse.json(
-      { message: "Post updated successfully", updatedPost },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.error("Error updating post:", error);
-    return NextResponse.json({ error: "Failed to update post" }, { status: 500 });
-  }
-}
+//     return NextResponse.json({ message: "Post updated successfully" }, { status: 200 });
+//   } catch (error) {
+//     console.error("Error updating post:", error);
+//     return NextResponse.json({ error: "Failed to update post" }, { status: 500 });
+//   }
+// }
