@@ -7,6 +7,8 @@ export const orgName = ["SQU","UTAS Muscat", "UTAS Ibra","Bin Omair Library" , "
   export const OrgPlaces = [
     { "SQU": ["SQU Library", "SQU Lost and Found Department"] },
     { "UTAS Muscat": ["UTAS Library", "UTAS Lost and Found Department"] },
+    { "UTAS Ibra": ["UTAS Library", "UTAS Lost and Found Department"] },
+    { "UTAS Nizwa": ["UTAS Library", "UTAS Lost and Found Department"] },
     { "Bin Omair": ["Bin Omair Library", "Bin Omair Lost and Found Department"] },
   ];
 
