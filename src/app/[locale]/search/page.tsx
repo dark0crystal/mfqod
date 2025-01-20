@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";  // Import Zod for validation
 import { zodResolver } from "@hookform/resolvers/zod";  // Import Zod resolver
 import { useRouter } from "next/navigation";  // Import useRouter for page navigation
-import { useSession } from "next-auth/react";  // Import useSession for user session
+// import { useSession } from "next-auth/react";  // Import useSession for user session
 import DisplayPosts from "./DisplayPosts";
 import { orgName } from "../../storage";
 // Define Zod validation schema
@@ -23,7 +23,7 @@ type FormFields =z.infer<typeof schema>;
 export default function Search() {
   const [items, setItems] = useState<any[]>([]);  // State to hold fetched items
   const router = useRouter();  // To navigate to the details page
-  const session = useSession();
+  // const session = useSession();
 
    const [currentName, setCurrentName] = useState(orgName[0]); // Set initial name
   
@@ -86,7 +86,7 @@ export default function Search() {
  
     {/* Foreground Content */}
     <div className="relative z-10 flex flex-col mt-6 items-center">
-      <h1>{session.data?.user?.id}</h1>
+
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-row justify-center">
         <div>
           <input
@@ -130,6 +130,7 @@ export default function Search() {
      
       
     </div>
+
         <DisplayPosts items={items}/>
 
         <div className="flex items-center bottom-0 fixed z-40 w-screen h-[10vh] bg-slate-300">
