@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import DisplayPosts from "./DisplayPosts";
 import { orgName } from "../../storage";
 import Footer from "@/app/components/Footer";
+import Image from "next/image";
+import ad from "../../../../public/ad.png"
 
 const schema = z.object({
   item: z.string().min(1, { message: "The Field is required!" }),
@@ -67,8 +69,13 @@ export default function Search() {
   return (
     <div className="grid grid-cols-12 h-[85vh] bg-gray-100">
       {/* Left Section */}
-      <div className="col-span-2 bg-red-100 p-4">
-        
+      <div className="col-span-2  p-4 flex flex-col justify-center items-center">
+         <div className="relative h-full w-full rounded-2xl overflow-hidden">
+          <Image alt="ad" src={ad} fill objectFit="cover"/>
+         <div className="absolute bottom-0 bg-gray-300/20 text-center w-full rounded-t-2xl h-10"> 
+            <h1 className="text-lg text-white  font-normal">Fake Sponsorship</h1>
+          </div>
+         </div>
       </div>
 
       {/* Center Section */}
