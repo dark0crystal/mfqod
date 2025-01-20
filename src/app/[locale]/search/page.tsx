@@ -64,7 +64,7 @@ export default function Search() {
   };
 
   return (
-    <div className="grid grid-cols-12 h-screen bg-gray-100">
+    <div className="grid grid-cols-12 h-[85vh] bg-gray-100">
       {/* Left Section */}
       <div className="col-span-2 bg-red-100 p-4">Left Section</div>
 
