@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import DisplayPosts from "./DisplayPosts";
 import { orgName } from "../../storage";
+import Footer from "@/app/components/Footer";
 
 const schema = z.object({
   item: z.string().min(1, { message: "The Field is required!" }),
@@ -108,6 +109,7 @@ export default function Search() {
 
         <div className="w-full mt-6">
           <DisplayPosts items={items} />
+          <Footer/>
         </div>
       </div>
 
