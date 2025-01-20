@@ -84,7 +84,7 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
     <div>
 
     
-    <div className="w-[700px] h-[900px] mx-auto p-6">
+    <div className="w-[700px] h-[120vh] mx-auto p-6">
       <div className="bg-white h-full shadow-lg rounded-lg overflow-hidden">
         <div className="p-6 flex h-full flex-col">
           <button onClick={handlePostEdit}>Edit Post</button>
