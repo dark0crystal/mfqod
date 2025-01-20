@@ -12,9 +12,9 @@ export default function DisplayPosts({items}:any){
   };
 
     return(
-        <div className="w-screen p-6 mt-6 flex items-center flex-col">
+        <div className="w-full p-6 mt-6 flex items-center flex-col">
                 <h3 className="text-xl font-semibold mb-6 text-indigo-800">Fetched Items</h3>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-12">
+                <div className="grid md:grid-cols-1 lg:grid-cols-2 grid-cols-1 gap-12">
                   {items.length > 0 ? (
                     items.map((item: any, index: number) => (
                       <div
