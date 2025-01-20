@@ -4,14 +4,14 @@ import React, { useState, useEffect } from "react";
 import Claims from "./Claims";
 import Image from "next/image";
 import img4 from "../../../../../../../public/img4.jpeg";
-import EditPost from "./EditPost";
+// import EditPost from "./EditPost";
 
 export default function PostDetails({ params }: { params: { postId: string } }) {
   const [post, setPost] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [showClaims, setShowClaims] = useState(false);
-  const [loading, setLoading] = useState(false); // To show loading state
-  const [showPost , setShowPost] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [showPost, setShowPost] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,12 +30,9 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
     fetchData();
   }, [params.postId]);
 
-  function handlePostEdit(){
-   
-    setShowPost(!showPost)
-    
-  }
-  console.log(showPost)
+  const handlePostEdit = () => {
+    setShowPost(!showPost);
+  };
 
   const handleApprovalChange = async () => {
     if (!post) return;
@@ -65,7 +62,6 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
         approval: updatedPost.approval,
       }));
     } catch (err) {
-      console.error("Error updating approval status:", err);
       setError("Failed to update approval status.");
     } finally {
       setLoading(false);
@@ -81,80 +77,71 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
   }
 
   return (
-    <div>
-
-    
     <div className="w-[700px] h-[120vh] mx-auto p-6">
       <div className="bg-white h-full shadow-lg rounded-lg overflow-hidden">
         <div className="p-6 flex h-full flex-col">
-          <button onClick={handlePostEdit}>Edit Post</button>
-          {showPost == true ? (
-      
-          <div className="w-full h-80 bg-yellow-100 flex flex-row">
-            <div className="w-[50%] relative overflow-hidden rounded-2xl">
-              <Image alt="sora" src={img4} fill objectFit="cover" />
-            </div>
-            <div className="w-[50%]">
-              <h1 className="text-2xl font-bold text-gray-800 mb-4">{post.title || "Untitled Post"}</h1>
-              <p className="text-gray-700 mb-4">{post.content || "No content available"}</p>
-            </div>
-          </div>
-         
+          <button onClick={handlePostEdit} className="mb-4 px-4 py-2 bg-blue-500 text-white rounded">
+            {showPost ? "Edit Post" : "View Post"}
+          </button>
 
-          ):(
-          
-          <div className="w-full h-fit bg-yellow-100 flex flex-row">
-            <div className="w-[50%] relative overflow-hidden rounded-2xl">
-               <EditPost postData={post}/>
+          {showPost ? (
+            <div className="w-full h-80 bg-yellow-100 flex flex-row">
+              <div className="w-[50%] relative overflow-hidden rounded-2xl">
+                <Image alt="Post Image" src={img4} fill objectFit="cover" />
+              </div>
+              <div className="w-[50%] p-4">
+                <h1 className="text-2xl font-bold text-gray-800 mb-4">{post.title || "Untitled Post"}</h1>
+                <p className="text-gray-700">{post.content || "No content available"}</p>
+              </div>
             </div>
-            </div>
-     
-       ) }
-          
+          ) : (
+            <div>
+              post edit
+              </div>
+            // <EditPost postData={post} />
+          )}
         </div>
       </div>
-      <div className="">
-            <label htmlFor="approval" className="inline-flex  cursor-pointer">
-              <span className="mr-2 text-gray-700">Approval:</span>
-              <div className="relative">
-                <input
-                  type="checkbox"
-                  id="approval"
-                  checked={post.approval}
-                  onChange={handleApprovalChange}
-                  disabled={loading}
-                  className="sr-only "
-                />
-                <div
-                  className={`w-[5.3rem] h-8  rounded-full shadow-inner absolute ${
-                    post.approval ? "bg-green-400" : "bg-red-300"
-                  }`}
-                ></div>
-                <div
-                  className={`absolute w-6 h-6 bg-white rounded-full mt-1  shadow transform transition-transform  ${
-                    post.approval ? "translate-x-14" : "translate-x-1"
-                  }`}
-                ></div>
-              </div>
-            </label>
+
+      <div className="mt-4">
+        <label htmlFor="approval" className="inline-flex cursor-pointer">
+          <span className="mr-2 text-gray-700">Approval:</span>
+          <div className="relative">
+            <input
+              type="checkbox"
+              id="approval"
+              checked={post.approval}
+              onChange={handleApprovalChange}
+              disabled={loading}
+              className="sr-only"
+            />
+            <div
+              className={`w-[5.3rem] h-8 rounded-full shadow-inner ${
+                post.approval ? "bg-green-400" : "bg-red-300"
+              }`}
+            ></div>
+            <div
+              className={`absolute w-6 h-6 bg-white rounded-full mt-1 shadow transform transition-transform ${
+                post.approval ? "translate-x-14" : "translate-x-1"
+              }`}
+            ></div>
           </div>
+        </label>
+      </div>
+
+      <div className="flex flex-row items-center w-full mt-4">
+        <div className="w-[50%]">
+          {!showClaims && (
+            <button
+              onClick={() => setShowClaims(true)}
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              Show Claims
+            </button>
+          )}
+          {showClaims && <Claims postId={params.postId} />}
+        </div>
+      </div>
     </div>
-
-
-<div className="flex flex-row items-center w-full mt-4">
-          
-          <div className=" w-[50%]">
-            {!showClaims && (
-              <button
-                onClick={() => setShowClaims(true)}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-              >
-                Show Claims
-              </button>
-            )}
-            {showClaims && <Claims postId={params.postId} />}
-          </div>
-          </div>
-          </div>
   );
 }
