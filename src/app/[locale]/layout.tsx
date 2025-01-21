@@ -4,7 +4,7 @@ import { Alexandria } from "next/font/google";
 import {routing} from '@/i18n/routing';
 import {NextIntlClientProvider} from 'next-intl';
 import {notFound} from 'next/navigation';
-
+import Splash from "../components/Splash";
 import {getMessages} from 'next-intl/server';
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
@@ -49,6 +49,7 @@ export default async function LocaleLayout({
       <body className={alexandria.className}>
       <NextIntlClientProvider messages={messages}>
         <NavBar/>
+        <Splash/>
         {children}
         {/* <Footer/> */}
         </NextIntlClientProvider>
