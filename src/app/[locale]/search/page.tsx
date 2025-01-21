@@ -74,15 +74,24 @@ export default function Search() {
 
   return (
     <div className="grid grid-cols-12 h-[85vh] ">
-      {/* Left Section */}
-      <div className="col-span-2  p-4 flex flex-col justify-center items-center">
-         <div className="relative h-full w-full rounded-2xl overflow-hidden">
-          <Image alt="ad" src={ad} fill objectFit="cover"/>
-         <div className="absolute bottom-0 bg-gray-300/20 text-center w-full rounded-t-2xl h-10"> 
-            <h1 className="text-lg text-white  font-normal">Fake Sponsorship</h1>
-          </div>
-         </div>
+
+        {/* left Section */}
+        <div className="col-span-2  flex flex-col items-center overflow-y-auto p-4">
+        <div className="flex flex-col gap-4">
+          {orgName.map((name: string, index: any) => (
+            <button
+              key={index}
+              onClick={() => handleClick(name)}
+              className={`p-3 rounded-full transition-transform duration-300 ${
+                currentName === name ? "bg-indigo-200/40 shadow-sm text-black scale-110" : "bg-violet-300"
+              }`}
+            >
+              {name}
+            </button>
+          ))}
+        </div>
       </div>
+      
 
       {/* Center Section */}
       <div className="col-span-8  flex flex-col items-center  p-4 overflow-y-auto w-full h-full">
@@ -142,21 +151,16 @@ export default function Search() {
         </div>
       </div>
 
+    
+
       {/* Right Section */}
-      <div className="col-span-2  flex flex-col items-center overflow-y-auto p-4">
-        <div className="flex flex-col gap-4">
-          {orgName.map((name: string, index: any) => (
-            <button
-              key={index}
-              onClick={() => handleClick(name)}
-              className={`p-3 rounded-full transition-transform duration-300 ${
-                currentName === name ? "bg-indigo-200/40 shadow-sm text-black scale-110" : "bg-violet-300"
-              }`}
-            >
-              {name}
-            </button>
-          ))}
-        </div>
+      <div className="col-span-2  p-4 flex flex-col justify-center items-center">
+         <div className="relative h-full w-full rounded-2xl overflow-hidden">
+          <Image alt="ad" src={ad} fill objectFit="cover"/>
+         <div className="absolute bottom-0 bg-gray-300/20 text-center w-full rounded-t-2xl h-10"> 
+            <h1 className="text-lg text-white  font-normal">Fake Sponsorship</h1>
+          </div>
+         </div>
       </div>
     </div>
   );
