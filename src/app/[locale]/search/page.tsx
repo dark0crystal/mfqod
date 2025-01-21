@@ -13,7 +13,8 @@ import ad from "../../../../public/ad.png"
 import bg1 from "../../../../public/bg1.jpg"
 import bg2 from "../../../../public/bg2.jpg"
 import bg3 from "../../../../public/bg3.jpg"
-import bg4 from "../../../../public/bg4.jpg"
+import bg9 from "../../../../public/bg9.jpg"
+import bg10 from "../../../../public/bg10.jpg"
 import { FaSearch } from "react-icons/fa";
 import { RiLoader2Line } from "react-icons/ri";
 
@@ -98,7 +99,7 @@ export default function Search() {
         <div className="relative z-20 w-full flex items-center min-h-[30vh]">
         <div className="absolute -z-10 w-full  rounded-xl overflow-hidden h-full">
           <Image
-           src={bg1}
+           src={bg9}
             alt="search bg image"
              fill 
              objectFit="cover"
