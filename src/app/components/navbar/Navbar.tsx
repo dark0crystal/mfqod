@@ -4,7 +4,7 @@ import Brand from "./Brand";
 // import MobileMenu from "./MobileNavbar";
 // import { getLocale, getTranslations } from "next-intl/server";
 // import { Link } from "@/i18n/routing";
-import NavMenu from "./NavMenu";
+// import NavMenu from ".7/NavMenu";
 import  {SignIn}  from "../auth/sign-in"
 import { SignOut } from "../auth/sign-out";
 
@@ -40,7 +40,7 @@ export default async function NavBar() {
             
           ))} 
           
-          <NavMenu />
+          {/* <NavMenu /> */}
          <SignIn/>
           <SignOut/>
          
