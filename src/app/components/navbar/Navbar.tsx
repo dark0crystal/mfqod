@@ -7,6 +7,7 @@ import Brand from "./Brand";
 // import NavMenu from "./NavMenu";
 import  {SignIn}  from "../auth/sign-in"
 import { SignOut } from "../auth/sign-out";
+import Profile from "./Profile";
 
 
 
@@ -19,38 +20,40 @@ export default async function NavBar() {
     { direction: "/search", name: "Search" },
     { direction: "/", name: "Main" },
     { direction: "/report-found-item", name:"report-found-item" },
-    { direction: "/dashboard", name:"dashboard" },
+    // { direction: "/dashboard", name:"dashboard" },
     
   ];
 
   return (
     <nav  className="flex items-center justify-center h-[15vh] max-h-[15vh]">
       
-      <div className='flex items-center justify-between p-2 lg:p-2 rounded-full w-[90vw] md:w-[80vw]  '>
-        {/* Center Section Brand */}
-      <div className="flex items-center">
-          <Brand />
-      </div>
+      <div className='grid grid-cols-12  p-2 lg:p-2 rounded-full w-full   '>
+      
 
 
         {/* right section ar links */}
-        <div className="flex items-center  p-3 rounded-lg">
+        <div className="flex items-center justify-center p-3 rounded-lg col-span-5 ">
           {navLinks.map((navLink, index) => (
             <Link href={navLink.direction} key={index}>
               <h1 className="text-lg  mx-4 font-normal">{navLink.name}</h1>
             </Link>
             
           ))} 
-          
-          {/* <NavMenu /> */}
-        
-         
         </div>
 
+
+          {/* Center Section Brand */}
+        <div className="flex items-center justify-center col-span-2">
+            <Brand />
+        </div>
+
+
         {/* left section ar */}
-        <div >
-          <SignIn/>
-          <SignOut/>
+        <div className="flex items-center justify-center p-3 rounded-lg col-span-5 ">
+          <div>
+          <Profile/>
+          </div>
+         
         </div>
         
         {/* <LanguageChange /> */}
