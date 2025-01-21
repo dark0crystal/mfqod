@@ -31,12 +31,20 @@ export default async function LocaleLayout({
    if (!routing.locales.includes(locale as any)) {
     notFound();
   }
+
+  let direction ="";
+  if(locale == "ar"){
+    direction ="rtl"
+  }else{
+    direction ="ltr"
+  }
    // Providing all messages to the client
   // side is the easiest way to get started
+
   const messages = await getMessages();
   return (
     <SessionProvider session={session}>
-    <html lang={locale}>
+    <html lang={locale} dir={direction}>
     <div className="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
       <body className={alexandria.className}>
       <NextIntlClientProvider messages={messages}>
