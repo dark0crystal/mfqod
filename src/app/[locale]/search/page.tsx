@@ -86,7 +86,7 @@ export default function Search() {
 
       {/* Center Section */}
       <div className="col-span-8  flex flex-col items-center  p-4 overflow-y-auto w-full h-full">
-        <div className="relative z-20 w-full flex items-center min-h-[32vh]">
+        <div className="relative z-20 w-full flex items-center min-h-[30vh]">
         <div className="absolute -z-10 w-full  rounded-xl overflow-hidden h-full">
           <Image
            src={bg1}
@@ -113,7 +113,8 @@ export default function Search() {
               id="place"
               {...register("place")}
               defaultValue=""
-              className="w-full p-3 border bg-white/70 text-black/50 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              
+              className="w-full p-3 border bg-white/70  border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               <option value="" disabled>هين تدرس؟</option>
               <option value="SQU">جامعة السلطان قابوس</option>
@@ -149,7 +150,7 @@ export default function Search() {
               key={index}
               onClick={() => handleClick(name)}
               className={`p-3 rounded-full transition-transform duration-300 ${
-                currentName === name ? "bg-indigo-300 text-white scale-110" : "bg-violet-300"
+                currentName === name ? "bg-indigo-200/40 shadow-sm text-black scale-110" : "bg-violet-300"
               }`}
             >
               {name}
