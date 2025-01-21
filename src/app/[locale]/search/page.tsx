@@ -74,7 +74,7 @@ export default function Search() {
   };
 
   return (
-    <div className="grid grid-cols-12 h-[85vh] ">
+    <div className="grid grid-cols-12 h-[88vh] ">
 
         {/* left Section */}
         <div className="col-span-2  flex flex-col items-center overflow-y-auto p-4">
