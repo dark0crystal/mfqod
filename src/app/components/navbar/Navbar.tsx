@@ -22,15 +22,15 @@ export default async function NavBar() {
         <div className="flex items-center justify-center p-3 rounded-lg col-span-5 ">
          
             <Link href="/search" >
-              <div className="bg-slate-300/60 rounded-3xl p-2  mx-4">
-                  <h1 className="text-lg  font-normal">{t("search")}</h1>
+              <div className="p-2  mx-4">
+                  <h1 className="text-md text-gray-700 font-normal hover:text-blue-600">{t("search")}</h1>
                   
               </div>
             </Link>
 
             <Link href="/report-found-item" >
-              <div className="bg-slate-300/60 rounded-3xl p-2  mx-4">
-                  <h1 className="text-lg  font-normal">{t("report")}</h1>
+              <div className="p-2  mx-4">
+                  <h1 className="text-md text-gray-700 font-normal hover:text-blue-600">{t("report")}</h1>
               </div>
             </Link>
       
