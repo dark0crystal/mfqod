@@ -10,7 +10,7 @@ export default function Splash() {
     // Hide the splash screen after 3 seconds
     const timer = setTimeout(() => {
       setIsVisible(false);
-    }, 3000);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
