@@ -5,9 +5,11 @@
     },
     "navbar":{
         "brand":"مفقود",
-        "search":"ابحث عن شيء",
+        "search":"ابحث عن مفقود",
+        "searchBtn":"Search Something",
         "dashboard":"لوحة الإعدادات",
-        "report":"وجدت شيئًا ؟"
+        "report":"وجدت مفقودًا",
+        "reportBtn":"Found Something ?"
 
     }
   }
