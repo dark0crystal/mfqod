@@ -17,8 +17,8 @@ export default  function Brand(){
     // const locale = (await getLocale()).substring(0,2)
     // const t = await getTranslations("HomePage")
     return(
-        <div className="mx-6 text-gray-700 text-5xl ">
-            <Link   className={lalezarFont.className} href='/'>{t("brand")}</Link>
+        <div className="mx-6 text-black text-[20px] md:text-[30px] lg:text-[40px] ">
+            <Link   className={lalezarFont.className} href='/'><p>{t("brand")} </p><span>{t("brand-duplicate")}</span></Link>
         </div>
     )
 }
