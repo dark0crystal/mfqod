@@ -42,7 +42,7 @@ export default function Profile() {
 
            {/* Username and Email */}
            <div className="flex flex-col">
-            <p className="text-sm font-semibold">{session?.user?.name || "Guest"}</p>
+            <p className="text-sm font-medium">{session?.user?.name || "Guest"}</p>
             <p className="text-sm text-gray-600">{session?.user?.email || "No email provided"}</p>
           </div>
 
