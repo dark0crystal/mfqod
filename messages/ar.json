@@ -4,6 +4,10 @@
       "about": "Go to the about page"
     },
     "navbar":{
-        "brand":"مفقود"
+        "brand":"مفقود",
+        "search":"ابحث عن شيء",
+        "dashboard":"لوحة الإعدادات",
+        "report":"وجدت شيئًا ؟"
+
     }
   }
