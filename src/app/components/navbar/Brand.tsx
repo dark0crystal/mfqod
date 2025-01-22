@@ -17,7 +17,7 @@ export default  function Brand(){
     // const locale = (await getLocale()).substring(0,2)
     // const t = await getTranslations("HomePage")
     return(
-        <div className="mx-6 text-5xl ">
+        <div className="mx-6 text-blue-900 text-5xl ">
             <Link   className={lalezarFont.className} href='/'>{t("brand")}</Link>
         </div>
     )
