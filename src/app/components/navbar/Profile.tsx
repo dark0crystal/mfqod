@@ -23,11 +23,11 @@ export default function Profile() {
           <SignIn />
         </div>
       ) : (
-        <div className="relative">
+        <div className="relative flex items-center gap-2"> 
           {/* Profile Button */}
           <button
             onClick={handleProfile}
-            className="relative w-[40px] h-[40px] rounded-xl overflow-hidden border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-violet-500"
+            className="relative w-[43px] h-[43px] rounded-xl overflow-hidden border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-violet-500"
             aria-label="Toggle profile menu"
           >
             <Image
@@ -37,7 +37,14 @@ export default function Profile() {
               objectFit="cover"
               className="rounded-xl"
             />
+        
           </button>
+
+           {/* Username and Email */}
+           <div className="flex flex-col">
+            <p className="text-sm font-semibold">{session?.user?.name || "Guest"}</p>
+            <p className="text-sm text-gray-600">{session?.user?.email || "No email provided"}</p>
+          </div>
 
           {/* Dropdown Menu */}
           {show && (
