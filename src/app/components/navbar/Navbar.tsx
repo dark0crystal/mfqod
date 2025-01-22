@@ -13,7 +13,7 @@ export default async function NavBar() {
 
 
   return (
-    <nav  className="flex items-center justify-center h-[12vh] max-h-[12vh] bg-white/40 mx-[4vw]  rounded-b-3xl ">
+    <nav  className="flex items-center justify-center h-[12vh] max-h-[12vh]  ">
       
       <div className='grid grid-cols-12  p-2 lg:p-2  w-full '>
       
