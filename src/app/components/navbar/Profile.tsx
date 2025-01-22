@@ -11,7 +11,7 @@ export default  function Profile(){
     const [show , setShow] = useState(false)
     const session =useSession();
     function handleProfile(){
-
+        setShow(!show)
     }
 
     return(
@@ -27,7 +27,21 @@ export default  function Profile(){
                         pro
                         <Image fill objectFit="cover" alt="profile image" src={session.data?.user?.image || defaultProfileImage }/>
                     </button>
-                     <SignOut/>
+                    {show &&(
+                       <div className="flex flex-col items-center"> 
+                            <div className="">
+                                    Dashboard
+                            </div>
+                            <div className="">
+                                user email
+                            </div>  
+                            <div className="">
+                                <SignOut/>
+                            </div>
+
+                       </div> 
+                    )}
+                  
                 </div>
                  
                 
