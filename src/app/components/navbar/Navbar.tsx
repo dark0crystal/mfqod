@@ -2,14 +2,13 @@ import { Link } from "@/i18n/routing";
 import Brand from "./Brand";
 import Profile from "./Profile";
 import { FaSearch } from "react-icons/fa";
-
-
+import { getTranslations } from "next-intl/server";
 
 
 export default async function NavBar() {
   // const locale = (await getLocale()).substring(0, 2); // This will give you "ar" or "en"
 
-  // const t = await getTranslations("Links");
+  const t = await getTranslations("navbar");
 
 
   return (
@@ -24,15 +23,14 @@ export default async function NavBar() {
          
             <Link href="/search" >
               <div className="bg-slate-300/60 rounded-3xl p-2  mx-4">
-                  <h1 className="text-lg  font-normal">Search</h1>
+                  <h1 className="text-lg  font-normal">{t("search")}</h1>
                   
               </div>
             </Link>
 
             <Link href="/report-found-item" >
               <div className="bg-slate-300/60 rounded-3xl p-2  mx-4">
-                  <h1 className="text-lg  font-normal">Report</h1>
-                
+                  <h1 className="text-lg  font-normal">{t("report")}</h1>
               </div>
             </Link>
       
