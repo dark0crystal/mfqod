@@ -45,13 +45,20 @@
 "use client"
 import { Link } from "@/i18n/routing"
 import { useTranslations } from "next-intl"
+import { useState } from "react"
+import Brand from "./Brand"
 export default function MobileNavbar(){
     const t = useTranslations("navbar")
+    const [show , setShow] = useState(false);
     return(
-        <nav  className="flex items-center justify-center h-[12vh] max-h-[12vh] md:hidden ">
-            <div>
-                 {/* right section ar links */}
-                        <div className="flex items-center justify-center p-3 rounded-lg col-span-5 ">
+        <nav  className="flex items-center justify-center h-[12vh] max-h-[12vh] lg:hidden ">
+            <div className="flex justify-between">
+                <Brand/>
+
+                <button onClick={handleNavbar}>
+                    <div>{show ==false ? (<span>close</span>):(<span>open</span>)}</div>
+                </button>
+                        {/* <div className="flex items-center justify-center p-3 rounded-lg col-span-5 ">
                          
                             <Link href="/search" >
                               <div className="p-2  mx-4">
@@ -66,7 +73,7 @@ export default function MobileNavbar(){
                               </div>
                             </Link>
                       
-                        </div>
+                        </div> */}
             </div>
         </nav>
     )
