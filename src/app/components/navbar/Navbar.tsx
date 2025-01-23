@@ -3,6 +3,7 @@ import Brand from "./Brand";
 import Profile from "./Profile";
 import { FaSearch } from "react-icons/fa";
 import { getTranslations } from "next-intl/server";
+import MobileNavbar from "./MobileNavbar";
 
 
 export default async function NavBar() {
@@ -12,7 +13,8 @@ export default async function NavBar() {
 
 
   return (
-    <nav  className="flex items-center justify-center h-[12vh] max-h-[12vh]  ">
+    <>
+    <nav  className="md:flex items-center justify-center h-[12vh] max-h-[12vh] hidden ">
       
       <div className='grid grid-cols-12  p-2 lg:p-2  w-full '>
       
@@ -56,5 +58,7 @@ export default async function NavBar() {
         {/* <MobileMenu navLinks={navLinks} /> */}
       </div>
     </nav>
+    <MobileNavbar/>
+    </>
   );
 }
