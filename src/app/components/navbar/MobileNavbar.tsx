@@ -29,7 +29,7 @@ export default function MobileNavbar() {
   }, [show]);
 
   return (
-    <nav className="flex items-center justify-between h-[12vh] max-h-[12vh] px-4 lg:hidden relative">
+    <nav className={`flex items-center justify-between h-[12vh] max-h-[12vh] px-4 lg:hidden relative ${show && "bg-white"}`}>
       {/* Brand Logo */}
       <Brand />
 
@@ -45,7 +45,7 @@ export default function MobileNavbar() {
       {/* Dropdown Menu */}
       {show && (
         <div
-          className={`absolute top-[12vh] left-0 w-full h-screen bg- z-50 flex flex-col  space-y-6 p-6`}
+          className={`absolute top-[12vh] left-0 w-full h-screen bg-white z-50 flex flex-col  space-y-6 p-6`}
         >
           <Link href="/search" onClick={toggleNavbar}>
             <h1 className="text-2xl font-normal text-gray-700 hover:text-blue-600">
