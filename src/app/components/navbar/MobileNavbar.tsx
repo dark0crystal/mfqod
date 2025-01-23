@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import Brand from "./Brand";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoClose } from "react-icons/io5";
+import Profile from "./Profile";
 
 export default function MobileNavbar() {
   const t = useTranslations("navbar");
@@ -58,8 +59,11 @@ export default function MobileNavbar() {
               {t("report")}
             </h1>
           </Link>
+
+          <Profile/>
         </div>
       )}
+
     </nav>
   );
 }
