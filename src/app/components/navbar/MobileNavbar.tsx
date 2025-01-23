@@ -50,15 +50,20 @@ import Brand from "./Brand"
 export default function MobileNavbar(){
     const t = useTranslations("navbar")
     const [show , setShow] = useState(false);
+
+    function handleNavbar(){
+        setShow(!show);
+    }
     return(
         <nav  className="flex items-center justify-center h-[12vh] max-h-[12vh] lg:hidden ">
-            <div className="flex justify-between">
+            <div className="flex justify-between w-full relative">
                 <Brand/>
 
-                <button onClick={handleNavbar}>
+                <button onClick={handleNavbar} className="mx-6">
                     <div>{show ==false ? (<span>close</span>):(<span>open</span>)}</div>
                 </button>
-                        {/* <div className="flex items-center justify-center p-3 rounded-lg col-span-5 ">
+                {show &&
+                        <div className="flex flex-col absolute items-center justify-center p-3 rounded-lg col-span-5 ">
                          
                             <Link href="/search" >
                               <div className="p-2  mx-4">
@@ -73,7 +78,8 @@ export default function MobileNavbar(){
                               </div>
                             </Link>
                       
-                        </div> */}
+                        </div>
+                }
             </div>
         </nav>
     )
