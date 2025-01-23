@@ -49,7 +49,7 @@ export default function Profile() {
           {/* Dropdown Menu */}
           {show && (
             <div
-              className="absolute top-[60px] left-1/2 transform -translate-x-1/2 w-48 bg-white shadow-lg rounded-lg p-4 z-50"
+              className="absolute bottom-[60px] lg:top-[60px] left-1/2 transform -translate-x-1/2 w-48 bg-white shadow-lg rounded-lg p-4 z-50"
               onClick={() => setShow(false)}
             >
               <div className="flex flex-col items-center text-gray-800 space-y-2">
