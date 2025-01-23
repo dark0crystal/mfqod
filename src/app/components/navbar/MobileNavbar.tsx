@@ -2,7 +2,7 @@
 
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Brand from "./Brand";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoClose } from "react-icons/io5";
@@ -11,7 +11,22 @@ export default function MobileNavbar() {
   const t = useTranslations("navbar");
   const [show, setShow] = useState(false);
 
-  const toggleNavbar = () => setShow((prev) => !prev);
+  // Toggle Navbar and Body Scroll
+  const toggleNavbar = () => {
+    setShow((prev) => !prev);
+  };
+
+  // Prevent body scroll when the navbar is open
+  useEffect(() => {
+    if (show) {
+      document.body.style.overflow = "hidden"; // Disable scrolling
+    } else {
+      document.body.style.overflow = ""; // Reset scrolling
+    }
+    return () => {
+      document.body.style.overflow = ""; // Clean up on unmount
+    };
+  }, [show]);
 
   return (
     <nav className="flex items-center justify-between h-[12vh] max-h-[12vh] px-4 lg:hidden relative">
