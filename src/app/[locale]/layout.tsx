@@ -49,7 +49,7 @@ export default async function LocaleLayout({
       <body className={alexandria.className}>
       <NextIntlClientProvider messages={messages}>
         <NavBar/>
-        <Splash/>
+        {/* <Splash/> */}
         {children}
         {/* <Footer/> */}
         </NextIntlClientProvider>
