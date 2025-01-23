@@ -45,16 +45,16 @@ export default function MobileNavbar() {
       {/* Dropdown Menu */}
       {show && (
         <div
-          className={`absolute top-[12vh] left-0 w-full h-screen bg-blue-300 z-50 flex flex-col items-center justify-center space-y-6 p-6`}
+          className={`absolute top-[12vh] left-0 w-full h-screen bg- z-50 flex flex-col  space-y-6 p-6`}
         >
           <Link href="/search" onClick={toggleNavbar}>
-            <h1 className="text-lg font-medium text-gray-700 hover:text-blue-600">
+            <h1 className="text-2xl font-normal text-gray-700 hover:text-blue-600">
               {t("search")}
             </h1>
           </Link>
 
           <Link href="/report-found-item" onClick={toggleNavbar}>
-            <h1 className="text-lg font-medium text-gray-700 hover:text-blue-600">
+            <h1 className="text-2xl font-normal text-gray-700 hover:text-blue-600">
               {t("report")}
             </h1>
           </Link>
