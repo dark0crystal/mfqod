@@ -48,6 +48,29 @@ export default function DisplayPosts() {
    
   }, [orgName]);
 
+  const handleHide =async (postId: string)=>{
+    if (postId) {
+      try {
+        const response = await fetch(`/api/get-verified-posts?postId=${postId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ temporaryDeletion: true }),
+        });
+
+        const data = await response.json();
+        if (data) {
+          setPosts((prevPosts) =>
+            prevPosts.map((post) =>
+              post.id === postId ? { ...post, temporaryDeletion: true } : post
+            )
+          );
+        }
+      } catch (error) {
+        console.error('Error updating post:', error);
+      }
+    }
+  }
+
   const handleDelete = async (postId: string) => {
     if (postId) {
       try {
