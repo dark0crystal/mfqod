@@ -133,8 +133,8 @@ export default function DisplayPosts() {
                 <span className="text-sm text-gray-500">{post.type}</span>
               </div>
 
-              {/* Action Buttons */}
-              {role === 'VERIFIED' ? (
+              {/* Hide Button VERIFIED */}
+              {role === 'VERIFIED' && (
                 <button
                   onClick={(e) => {
                     e.stopPropagation(); // Prevent triggering card click
@@ -144,7 +144,10 @@ export default function DisplayPosts() {
                 >
                   Hide
                 </button>
-              ) : (
+              )}
+
+                {
+
                 <div className="absolute top-2 right-2 flex gap-2">
                   <button
                     onClick={(e) => {
@@ -165,7 +168,7 @@ export default function DisplayPosts() {
                     Delete
                   </button>
                 </div>
-              )}
+                  }
             </li>
           ))}
         </ul>
