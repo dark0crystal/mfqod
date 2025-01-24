@@ -6,20 +6,19 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ReactConfetti from 'react-confetti';
+import CompressorFileInput from "../../../components/CompressorFileInput";
 
 // Define Zod validation schema
 const schema = z.object({
   claimTitle: z.string().min(1, { message: "The Field is required!" }),
   claimContent: z.string().min(1, { message: "Please select a place" }),
-  image: z
-    .any()
-    .refine((files) => files.length > 0, { message: "Please upload at least one image" })
+  image: z.array(z.instanceof(File)).min(1, { message: "Please upload at least one image" })
 });
 
 type FormFields = {
   claimTitle: string;
   claimContent: string;
-  image: FileList;
+  image: File[];
 };
 
 export default function PostDetails({ params }: { params: { id: string } }) {
@@ -28,7 +27,7 @@ export default function PostDetails({ params }: { params: { id: string } }) {
   const [showForm, setShowForm] = useState(false); // State to toggle form visibility
   const { id } = params;
 
-  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<FormFields>({
+  const { register, handleSubmit, formState: { errors, isSubmitting }, setValue, reset } = useForm<FormFields>({
     resolver: zodResolver(schema),
   });
 
@@ -38,7 +37,6 @@ export default function PostDetails({ params }: { params: { id: string } }) {
         const response = await fetch(`/api/get-items/${id}`);
         if (response.ok) {
           const data = await response.json();
-          console.log("from details",data)
           setPost(data);
         } else {
           console.error('Failed to fetch post details');
@@ -51,13 +49,6 @@ export default function PostDetails({ params }: { params: { id: string } }) {
   }, [id]);
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    
-
-    const formData = new FormData();
-    formData.append("claimTitle", data.claimTitle);
-    formData.append("claimContent", data.claimContent);
-    formData.append("postId", id);
-
     try {
       const response = await fetch("/api/upload-claim", {
         method: "POST",
@@ -69,8 +60,9 @@ export default function PostDetails({ params }: { params: { id: string } }) {
 
       if (response.ok) {
         setConfetti(true);
-        if (data.image && data.image.length > 0) {
-          const uploadPromises = Array.from(data.image).map((file) => {
+
+        if (data.image.length > 0) {
+          const uploadPromises = data.image.map((file) => {
             const filePath = `${result.claimId}/${file.name}`;
             return supabase.storage.from("mfqodFiles").upload(filePath, file);
           });
@@ -92,9 +84,6 @@ export default function PostDetails({ params }: { params: { id: string } }) {
   }, [confetti]);
 
   if (!post) return <p>Loading...</p>;
-  <div>
-    {post}
-  </div>
 
   return (
     <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
@@ -136,13 +125,8 @@ export default function PostDetails({ params }: { params: { id: string } }) {
             {errors.claimContent && <p className="mt-2 text-xs text-red-500">{errors.claimContent.message}</p>}
           </div>
           <div>
-            <label htmlFor="image" className="block text-lg font-semibold text-gray-700">Upload Image(s)</label>
-            <input
-              type="file"
-              id="image"
-              multiple
-              {...register("image")}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            <CompressorFileInput
+              onFilesSelected={(compressedFiles) => setValue("image", compressedFiles)}
             />
             {errors.image && <p className="mt-2 text-xs text-red-500">{errors.image.message}</p>}
           </div>
