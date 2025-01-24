@@ -2,8 +2,8 @@
 import {useRouter} from '@/i18n/routing';
 import { useSearchParams } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
-
-
+import img1  from "../../../../../../public/img2.jpeg"
+import Image from 'next/image';
 type Post = {
   id: string;
   temporaryDeletion: boolean;
@@ -105,7 +105,7 @@ console.log("outuuuu",role)
       {posts.length == 0 ? (
         <p className="text-center text-gray-600">No posts available</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2  gap-6">
           {posts.map((post) => (
             <div
               key={post.id}
@@ -116,14 +116,22 @@ console.log("outuuuu",role)
             >
               {/* Image Section */}
               {post.imageUrl ? (
-                <img
-                  src={post.imageUrl}
-                  alt={post.title || 'Post Image'}
+                <Image
+                  src={img1}
+                  alt="Post Image"
+                  width={50}
+                  height={50}
                   className="w-full h-40 object-cover"
                 />
               ) : (
                 <div className="w-full h-40 bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-500">No Image Available</span>
+                   <Image
+                  src={img1}
+                  alt="Post Image"
+                  width={50}
+                  height={50}
+                  className="w-full h-40 object-cover"
+                />
                 </div>
               )}
 
@@ -151,7 +159,7 @@ console.log("outuuuu",role)
 
                 {role ==="TECHADMIN" || role ==="ADMIN" && (
 
-                <div className="absolute top-2 right-2 flex gap-2">
+                <div className="absolute top-2 right-2 ">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
