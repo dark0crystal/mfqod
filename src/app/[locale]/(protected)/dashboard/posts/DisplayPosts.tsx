@@ -138,21 +138,23 @@ export default function DisplayPosts() {
                 <button
                   onClick={(e) => {
                     e.stopPropagation(); // Prevent triggering card click
-                    handleDelete(post.id);
+                    handleHide(post.id);
                   }}
                   className="absolute top-2 right-2 text-sm text-white bg-red-500 hover:bg-red-600 px-2 py-1 rounded shadow"
                 >
                   Hide
                 </button>
               )}
+              
+              {/* Delete and Hide for TECHADMIN & ADMIN*/}
 
-                {
+                {role ==="TECHADMIN" || role ==="ADMIN" && (
 
                 <div className="absolute top-2 right-2 flex gap-2">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleDelete(post.id);
+                      handleHide(post.id);
                     }}
                     className="text-sm text-white bg-yellow-500 hover:bg-yellow-600 px-2 py-1 rounded shadow"
                   >
@@ -168,7 +170,7 @@ export default function DisplayPosts() {
                     Delete
                   </button>
                 </div>
-                  }
+                  )}
             </li>
           ))}
         </ul>
