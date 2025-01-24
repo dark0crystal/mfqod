@@ -158,5 +158,38 @@ console.log(postId)
 
 
 export async function DELETE(req :NextRequest){
+  const { searchParams } = new URL(req.url); // Get query parameters from the request URL
+  const postId = searchParams.get('postId');
+
+  // Checking user Role
+
+  const session = await auth();
+  const userId = session?.user?.id
+  if (!userId) {
+    return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
+  }
+    const userRole = await prisma.user.findUnique({
+        where:{
+            id:userId
+        },
+        select:{
+            role:true
+        }
+    })
+  const role = userRole?.role
+  console.log(role)
+ 
+  console.log(postId)
+  // console.log(temporaryDeletion)
+  if (!postId) {
+    return NextResponse.json({ error: 'Post ID is required' }, { status: 400 });
+  }
+
+  try {
+    
+
+  } catch (error) {
+    
+  }
 
 }   
