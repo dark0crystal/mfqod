@@ -157,49 +157,81 @@ console.log(postId)
 }
 
 
-export async function DELETE(req :NextRequest){
-  const { searchParams } = new URL(req.url); // Get query parameters from the request URL
-  const postId = searchParams.get('postId');
+import { supabase } from "@/lib/supabase";
 
-  // Checking user Role
+// const supabase = createClient(
+//   process.env.NEXT_PUBLIC_SUPABASE_URL!,
+//   process.env.SUPABASE_SERVICE_ROLE_KEY! // Ensure you use the service role key for full access
+// );
 
+export async function DELETE(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const postId = searchParams.get("postId");
+
+  // Checking user role
   const session = await auth();
-  const userId = session?.user?.id
+  const userId = session?.user?.id;
+
   if (!userId) {
-    return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
+    return NextResponse.json({ error: "User ID is required" }, { status: 400 });
   }
-    const userRole = await prisma.user.findUnique({
-        where:{
-            id:userId
-        },
-        select:{
-            role:true
-        }
-    })
-  const role = userRole?.role
-  console.log(role)
- 
-  console.log(postId)
-  // console.log(temporaryDeletion)
+
+  const userRole = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { role: true },
+  });
+
+  const role = userRole?.role;
   if (!postId) {
-    return NextResponse.json({ error: 'Post ID is required' }, { status: 400 });
+    return NextResponse.json({ error: "Post ID is required" }, { status: 400 });
+  }
+
+  if (role !== "ADMIN" && role !== "TECHADMIN") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   }
 
   try {
+    // Fetch associated image paths
+    const postPhotos = await prisma.postPhotos.findMany({
+      where: { postId },
+      select: { postUrl: true },
+    });
 
-    if(role == "ADMIN" || role == "TECHADMIN"){
+    const claimPhotos = await prisma.claimPhotos.findMany({
+      where: { claim: { postId } },
+      select: { photoUrl: true },
+    });
 
+    // Collect all image paths from `postPhotos` and `claimPhotos`
+    const allImagePaths = [
+      ...postPhotos.map((photo) => photo.postUrl),
+      ...claimPhotos.map((photo) => photo.photoUrl),
+    ];
 
-      const response  = await prisma.post.delete({
-        where:{
-          id:postId
-        }
-      })
-    }
-    
+    // Delete images from Supabase storage
+    const deletePromises = allImagePaths.map((url) => {
+      const relativePath = url.split("/storage/v1/object/public/mfqodFiles/")[1]; // Extract the relative path
+      return supabase.storage.from("mfqodFiles").remove([relativePath]);
+    });
 
+    await Promise.all(deletePromises);
+
+    console.log("All associated images deleted from Supabase storage.");
+
+    // Delete associated records
+    await prisma.claimPhotos.deleteMany({ where: { claim: { postId } } });
+    await prisma.claim.deleteMany({ where: { postId } });
+    await prisma.postPhotos.deleteMany({ where: { postId } });
+    await prisma.address.deleteMany({ where: { postId } });
+
+    console.log("Associated records deleted from the database.");
+
+    // Delete the post
+    await prisma.post.delete({ where: { id: postId } });
+
+    return NextResponse.json({ message: "Post and all related records deleted successfully." }, { status: 200 });
   } catch (error) {
-    
+    console.error("Error deleting post and related data:", error);
+    return NextResponse.json({ error: "Failed to delete post." }, { status: 500 });
   }
-
-}   
+}
