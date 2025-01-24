@@ -33,7 +33,7 @@ export default function DisplayPosts() {
           const data = await response.json();
 
           setRole(data.role);
-          console.log(data)
+          console.log("inside the data",data.role)
           setPosts(data.posts);
         } catch (error) {
           console.error('Error fetching posts:', error);
@@ -47,7 +47,7 @@ export default function DisplayPosts() {
     }
    
   }, [orgName]);
-
+console.log("outuuuu",role)
   const handleHide =async (postId: string)=>{
     if (postId) {
       try {
@@ -100,6 +100,7 @@ export default function DisplayPosts() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h1>{role}</h1>
       <h1 className="text-2xl font-bold text-center mb-6">User Posts</h1>
       {posts.length == 0 ? (
         <p className="text-center text-gray-600">No posts available</p>
@@ -134,7 +135,7 @@ export default function DisplayPosts() {
               </div>
 
               {/* Hide Button VERIFIED */}
-              {role == 'VERIFIED' && (
+              {role === 'VERIFIED' && (
                 <button
                   onClick={(e) => {
                     e.stopPropagation(); // Prevent triggering card click
@@ -148,7 +149,7 @@ export default function DisplayPosts() {
               
               {/* Delete and Hide for TECHADMIN & ADMIN*/}
 
-                {role =="TECHADMIN" || role =="ADMIN" && (
+                {role ==="TECHADMIN" || role ==="ADMIN" && (
 
                 <div className="absolute top-2 right-2 flex gap-2">
                   <button
