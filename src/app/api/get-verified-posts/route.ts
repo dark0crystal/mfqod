@@ -186,6 +186,16 @@ export async function DELETE(req :NextRequest){
   }
 
   try {
+
+    if(role == "ADMIN" || role == "TECHADMIN"){
+
+
+      const response  = await prisma.post.delete({
+        where:{
+          id:postId
+        }
+      })
+    }
     
 
   } catch (error) {
