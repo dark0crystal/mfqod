@@ -111,9 +111,9 @@ console.log(role)
             }, // Include author details if needed
           },
         });
-      
+        // const userAddress = userManage.place;
         console.log({ posts});
-        return NextResponse.json({posts})
+        return NextResponse.json({ role, posts});
       }else{
         return NextResponse.json("Not Allowed To Access admin org")
       }
