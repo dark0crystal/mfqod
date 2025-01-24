@@ -11,13 +11,14 @@ const CompressorFileInput: React.FC<CompressorFileInputProps> = ({
   onFilesSelected,
 }) => {
   const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const [compressedFiles, setCompressedFiles] = useState<File[]>([]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
 
     if (!files) return;
 
-    const compressedFiles: File[] = [];
+    const newCompressedFiles: File[] = [];
     const imagePreviews: string[] = [];
 
     Array.from(files).forEach((file) => {
@@ -26,23 +27,35 @@ const CompressorFileInput: React.FC<CompressorFileInputProps> = ({
         quality: 0.6,
         maxWidth: 1024,
         success: (compressedFile: File) => {
-          compressedFiles.push(compressedFile);
+          newCompressedFiles.push(compressedFile);
+
           const reader = new FileReader();
           reader.onload = () => {
             if (reader.result) {
               imagePreviews.push(reader.result.toString());
             }
+
+            // Update state only after all files are processed
+            if (newCompressedFiles.length === files.length) {
+              setCompressedFiles((prevFiles) => [...prevFiles, ...newCompressedFiles]);
+              setPreviewImages((prevImages) => [...prevImages, ...imagePreviews]);
+              onFilesSelected([...compressedFiles, ...newCompressedFiles]);
+            }
           };
           reader.readAsDataURL(compressedFile);
-
-          if (compressedFiles.length === files.length) {
-            setPreviewImages(imagePreviews);
-            onFilesSelected(compressedFiles);
-          }
         },
         error: (err: any) => console.error("Compression error:", err),
       });
     });
+  };
+
+  const handleDeleteImage = (index: number) => {
+    const updatedPreviewImages = previewImages.filter((_, i) => i !== index);
+    const updatedCompressedFiles = compressedFiles.filter((_, i) => i !== index);
+
+    setPreviewImages(updatedPreviewImages);
+    setCompressedFiles(updatedCompressedFiles);
+    onFilesSelected(updatedCompressedFiles); // Update the parent component
   };
 
   return (
@@ -63,12 +76,19 @@ const CompressorFileInput: React.FC<CompressorFileInputProps> = ({
       />
       <div className="mt-4 flex flex-wrap gap-2">
         {previewImages.map((src, index) => (
-          <img
-            key={index}
-            src={src}
-            alt={`Preview ${index}`}
-            className="w-24 h-24 object-cover rounded-lg shadow-md"
-          />
+          <div key={index} className="relative">
+            <img
+              src={src}
+              alt={`Preview ${index}`}
+              className="w-24 h-24 object-cover rounded-lg shadow-md"
+            />
+            <button
+              onClick={() => handleDeleteImage(index)}
+              className="absolute top-1 right-1 bg-red-500 text-white text-sm rounded-full p-1 hover:bg-red-600"
+            >
+              &times;
+            </button>
+          </div>
         ))}
       </div>
     </div>
