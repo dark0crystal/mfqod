@@ -218,9 +218,19 @@ export async function DELETE(req: NextRequest) {
 
     console.log("All associated images deleted from Supabase storage.");
 
+
+    // First, find the claim IDs associated with the postId
+    const claimsToDelete = await prisma.claim.findMany({
+      where: { postId },
+      select: { id: true }, // Only retrieve the IDs
+    });
+
+    // Extract the IDs
+    const claimIds = claimsToDelete.map((claim) => claim.id);
+
     // Delete associated records
-    await prisma.claimPhotos.deleteMany({ where: { claim: { postId } } });
     await prisma.claim.deleteMany({ where: { postId } });
+    await prisma.claimPhotos.deleteMany({ where: { id: { in: claimIds } },});
     await prisma.postPhotos.deleteMany({ where: { postId } });
     await prisma.address.deleteMany({ where: { postId } });
 
