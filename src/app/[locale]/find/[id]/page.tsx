@@ -6,28 +6,34 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ReactConfetti from 'react-confetti';
-import CompressorFileInput from "../../../components/CompressorFileInput";
+import CompressorFileInput from '../../../components/CompressorFileInput';
 
 // Define Zod validation schema
 const schema = z.object({
   claimTitle: z.string().min(1, { message: "The Field is required!" }),
-  claimContent: z.string().min(1, { message: "Please select a place" })
-  
+  claimContent: z.string().min(1, { message: "Please select a place" }),
 });
 
 type FormFields = {
   claimTitle: string;
   claimContent: string;
-  image: File[];
+  images: File[];
 };
 
 export default function PostDetails({ params }: { params: { id: string } }) {
   const [post, setPost] = useState<any | null>(null);
   const [confetti, setConfetti] = useState(false);
   const [showForm, setShowForm] = useState(false); // State to toggle form visibility
+  const [compressedFiles, setCompressedFiles] = useState<File[]>([]);
+
   const { id } = params;
 
-  const { register, handleSubmit, formState: { errors, isSubmitting }, setValue, reset } = useForm<FormFields>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<FormFields>({
     resolver: zodResolver(schema),
   });
 
@@ -49,7 +55,6 @@ export default function PostDetails({ params }: { params: { id: string } }) {
   }, [id]);
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    console.log(data)
     try {
       const response = await fetch("/api/upload-claim", {
         method: "POST",
@@ -62,13 +67,19 @@ export default function PostDetails({ params }: { params: { id: string } }) {
       if (response.ok) {
         setConfetti(true);
 
-        if (data.image.length > 0) {
-          const uploadPromises = data.image.map((file) => {
-            const filePath = `${result.claimId}/${file.name}`;
-            return supabase.storage.from("mfqodFiles").upload(filePath, file);
-          });
-          await Promise.all(uploadPromises);
-        }
+        const imageUrls = compressedFiles.map((file) => {
+          const filePath = `${result.claimId}/${file.name}`;
+          supabase.storage.from("mfqodFiles").upload(filePath, file);
+          return supabase.storage.from("mfqodFiles").getPublicUrl(filePath).data.publicUrl;
+        });
+
+        // Send the image URLs to the backend
+        await fetch("/api/save-claim-image", {
+          method: "POST",
+          body: JSON.stringify({ claimId: result.claimId, imageUrls }),
+          headers: { 'Content-Type': 'application/json' },
+        });
+
         reset();
       } else {
         console.error("Failed to upload item.");
@@ -125,14 +136,8 @@ export default function PostDetails({ params }: { params: { id: string } }) {
             />
             {errors.claimContent && <p className="mt-2 text-xs text-red-500">{errors.claimContent.message}</p>}
           </div>
-          <div>
-            <CompressorFileInput
-              onFilesSelected={(compressedFiles) => {
-              
-                setValue("image", compressedFiles)}}
-            />
-            {errors.image && <p className="mt-2 text-xs text-red-500">{errors.image.message}</p>}
-          </div>
+          <CompressorFileInput onFilesSelected={setCompressedFiles} />
+          {errors.images && <p className="mt-2 text-xs text-red-500">{errors.images.message}</p>}
           <div>
             <button
               type="submit"
