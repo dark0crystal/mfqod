@@ -11,8 +11,8 @@ import CompressorFileInput from "../../../components/CompressorFileInput";
 // Define Zod validation schema
 const schema = z.object({
   claimTitle: z.string().min(1, { message: "The Field is required!" }),
-  claimContent: z.string().min(1, { message: "Please select a place" }),
-  image: z.array(z.instanceof(File)).min(1, { message: "Please upload at least one image" })
+  claimContent: z.string().min(1, { message: "Please select a place" })
+  
 });
 
 type FormFields = {
@@ -49,6 +49,7 @@ export default function PostDetails({ params }: { params: { id: string } }) {
   }, [id]);
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
+    console.log(data)
     try {
       const response = await fetch("/api/upload-claim", {
         method: "POST",
@@ -126,7 +127,9 @@ export default function PostDetails({ params }: { params: { id: string } }) {
           </div>
           <div>
             <CompressorFileInput
-              onFilesSelected={(compressedFiles) => setValue("image", compressedFiles)}
+              onFilesSelected={(compressedFiles) => {
+              
+                setValue("image", compressedFiles)}}
             />
             {errors.image && <p className="mt-2 text-xs text-red-500">{errors.image.message}</p>}
           </div>
