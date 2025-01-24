@@ -104,9 +104,9 @@ export default function DisplayPosts() {
       {posts.length == 0 ? (
         <p className="text-center text-gray-600">No posts available</p>
       ) : (
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post) => (
-            <li
+            <div
               key={post.id}
               className={`relative bg-white rounded-lg shadow-lg overflow-hidden ${
                 post.temporaryDeletion ? 'hidden' : 'block'
@@ -134,7 +134,7 @@ export default function DisplayPosts() {
               </div>
 
               {/* Hide Button VERIFIED */}
-              {role === 'VERIFIED' && (
+              {role == 'VERIFIED' && (
                 <button
                   onClick={(e) => {
                     e.stopPropagation(); // Prevent triggering card click
@@ -148,7 +148,7 @@ export default function DisplayPosts() {
               
               {/* Delete and Hide for TECHADMIN & ADMIN*/}
 
-                {role ==="TECHADMIN" || role ==="ADMIN" && (
+                {role =="TECHADMIN" || role =="ADMIN" && (
 
                 <div className="absolute top-2 right-2 flex gap-2">
                   <button
@@ -171,9 +171,9 @@ export default function DisplayPosts() {
                   </button>
                 </div>
                   )}
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
