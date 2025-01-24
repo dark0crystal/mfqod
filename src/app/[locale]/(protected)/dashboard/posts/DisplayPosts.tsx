@@ -1,9 +1,11 @@
-'use client'; // Add this to ensure the component runs on the client side
-import {useRouter} from '@/i18n/routing';
+'use client';
+
+import { useRouter } from '@/i18n/routing';
 import { useSearchParams } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
-import img1  from "../../../../../../public/img2.jpeg"
 import Image from 'next/image';
+import { MdArrowOutward } from 'react-icons/md';
+
 type Post = {
   id: string;
   temporaryDeletion: boolean;
@@ -14,16 +16,14 @@ type Post = {
 };
 
 export default function DisplayPosts() {
-  const router = useRouter(); // To navigate to the details page
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const orgName  = searchParams.get('orgName'); // Retrieve orgName from the query string
-  const placeName  = searchParams.get('placeName'); // Retrieve orgName from the query string
-  
+  const orgName = searchParams.get('orgName');
+  const placeName = searchParams.get('placeName');
+
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState('');
-
-
 
   useEffect(() => {
     if (orgName) {
@@ -31,9 +31,7 @@ export default function DisplayPosts() {
         try {
           const response = await fetch(`/api/get-verified-posts?orgName=${orgName}&placeName=${placeName}`);
           const data = await response.json();
-
           setRole(data.role);
-          console.log("inside the data",data.role)
           setPosts(data.posts);
         } catch (error) {
           console.error('Error fetching posts:', error);
@@ -43,54 +41,40 @@ export default function DisplayPosts() {
       };
 
       fetchPosts();
-
     }
-   
-  }, [orgName]);
-console.log("outuuuu",role)
-  const handleHide =async (postId: string)=>{
-    if (postId) {
-      try {
-        const response = await fetch(`/api/get-verified-posts?postId=${postId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ temporaryDeletion: true }),
-        });
+  }, [orgName, placeName]);
 
-        const data = await response.json();
-        if (data) {
-          setPosts((prevPosts) =>
-            prevPosts.map((post) =>
-              post.id === postId ? { ...post, temporaryDeletion: true } : post
-            )
-          );
-        }
-      } catch (error) {
-        console.error('Error updating post:', error);
-      }
+  const handleHide = async (postId: string) => {
+    try {
+      await fetch(`/api/get-verified-posts?postId=${postId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ temporaryDeletion: true }),
+      });
+
+      setPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post.id === postId ? { ...post, temporaryDeletion: true } : post
+        )
+      );
+    } catch (error) {
+      console.error('Error hiding post:', error);
     }
-  }
+  };
 
   const handleDelete = async (postId: string) => {
-    if (postId) {
-      try {
-        const response = await fetch(`/api/get-verified-posts?postId=${postId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ temporaryDeletion: true }),
-        });
+    try {
+      await fetch(`/api/get-verified-posts?postId=${postId}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ temporaryDeletion: true }),
+      });
 
-        const data = await response.json();
-        if (data) {
-          setPosts((prevPosts) =>
-            prevPosts.map((post) =>
-              post.id === postId ? { ...post, temporaryDeletion: true } : post
-            )
-          );
-        }
-      } catch (error) {
-        console.error('Error updating post:', error);
-      }
+      setPosts((prevPosts) =>
+        prevPosts.filter((post) => post.id !== postId)
+      );
+    } catch (error) {
+      console.error('Error deleting post:', error);
     }
   };
 
@@ -100,66 +84,46 @@ console.log("outuuuu",role)
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1>{role}</h1>
       <h1 className="text-2xl font-bold text-center mb-6">User Posts</h1>
-      {posts.length == 0 ? (
+      {posts.length === 0 ? (
         <p className="text-center text-gray-600">No posts available</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2  gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {posts.map((post) => (
             <div
               key={post.id}
-              className={`relative bg-white rounded-lg shadow-lg overflow-hidden ${
+              className={`relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 w-[350px] min-w-[350px]${
                 post.temporaryDeletion ? 'hidden' : 'block'
-              } cursor-pointer`}
-              onClick={() => router.push({ pathname: `/dashboard/posts/${post.id}` }) }
+              }`}
             >
               {/* Image Section */}
-              {post.imageUrl ? (
+              <div className="relative h-40">
                 <Image
-                  src={img1}
-                  alt="Post Image"
-                  width={50}
-                  height={50}
-                  className="w-full h-40 object-cover"
+                  src={post.imageUrl || '/images/default-image.jpg'}
+                  alt={post.title}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-t-2xl"
                 />
-              ) : (
-                <div className="w-full h-40 bg-gray-200 flex items-center justify-center">
-                   <Image
-                  src={img1}
-                  alt="Post Image"
-                  width={50}
-                  height={50}
-                  className="w-full h-40 object-cover"
-                />
-                </div>
-              )}
-
-              {/* Content Section */}
-              <div className="p-6">
-                <h2 className="text-lg font-bold mb-2">{post.title}</h2>
-                <p className="text-gray-700 mb-4">{post.content}</p>
-                <span className="text-sm text-gray-500">{post.type}</span>
+                <button
+                  title="Go to details"
+                  onClick={() => router.push(`/dashboard/posts/${post.id}`)}
+                  className="absolute bottom-2 right-2 p-3 bg-white text-black text-xl rounded-full hover:bg-indigo-200 transition-colors shadow-md"
+                >
+                  <MdArrowOutward />
+                </button>
               </div>
 
-              {/* Hide Button VERIFIED */}
-              {role === 'VERIFIED' && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent triggering card click
-                    handleHide(post.id);
-                  }}
-                  className="absolute top-2 right-2 text-sm text-white bg-red-500 hover:bg-red-600 px-2 py-1 rounded shadow"
-                >
-                  Hide
-                </button>
-              )}
-              
-              {/* Delete and Hide for TECHADMIN & ADMIN*/}
+              {/* Content Section */}
+              <div className="p-4">
+                <h2 className="text-lg font-bold text-gray-800">{post.title}</h2>
+                <p className="text-gray-700 text-sm mb-2">{post.content}</p>
+                <span className="text-xs text-gray-500">{post.type}</span>
+              </div>
 
-                {role ==="TECHADMIN" || role ==="ADMIN" && (
-
-                <div className="absolute top-2 right-2 ">
+              {/* Action Buttons */}
+              {(role === 'TECHADMIN' || role === 'ADMIN') && (
+                <div className="absolute top-2 right-2 space-x-2">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -179,7 +143,18 @@ console.log("outuuuu",role)
                     Delete
                   </button>
                 </div>
-                  )}
+              )}
+              {role === 'VERIFIED' && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleHide(post.id);
+                  }}
+                  className="absolute top-2 right-2 text-sm text-white bg-red-500 hover:bg-red-600 px-2 py-1 rounded shadow"
+                >
+                  Hide
+                </button>
+              )}
             </div>
           ))}
         </div>
