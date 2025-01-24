@@ -1,10 +1,11 @@
-'use client';
+"use client";
 
 import { supabase } from "@/lib/supabase";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
-import ReactConfetti from 'react-confetti'; // Importing the ReactConfetti component
+import ReactConfetti from "react-confetti";
 import { OrgPlaces } from "@/app/storage";
+import CompressorFileInput from "../CompressorFileInput";
 
 type ItemFormFields = {
   title: string;
@@ -13,86 +14,72 @@ type ItemFormFields = {
   place: string;
   country: string;
   orgnization: string;
-  image: FileList;
 };
 
 export default function ReportFoundItem() {
   const { register, handleSubmit, formState: { errors, isSubmitting }, reset, setValue } = useForm<ItemFormFields>();
-  const [organization, setOrganization] = useState<string>(''); // State for organization
-  const [placeOptions, setPlaceOptions] = useState<string[]>([]); // State for dynamically updating place options
-  const [confetti, setConfetti] = useState(false); // State to trigger confetti animation
+  const [organization, setOrganization] = useState<string>("");
+  const [placeOptions, setPlaceOptions] = useState<string[]>([]);
+  const [compressedFiles, setCompressedFiles] = useState<File[]>([]);
+  const [confetti, setConfetti] = useState(false);
 
-
-
-  // Handle form submission
   const onSubmit: SubmitHandler<ItemFormFields> = async (data) => {
     console.log(data);
-
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("content", data.content);
-    formData.append("type", data.type);
-    formData.append("place", data.place);
-    formData.append("country", data.country);
-    formData.append("orgnization", data.orgnization);
 
     try {
       const response = await fetch("/api/upload-found-item", {
         method: "POST",
         body: JSON.stringify(data),
-        headers: { 'Content-Type': 'application/json' }
+        headers: { "Content-Type": "application/json" },
       });
 
       const result = await response.json();
 
       if (response.ok) {
         console.log("Item uploaded successfully.");
-        setConfetti(true); // Trigger confetti animation
+        setConfetti(true);
 
-        if (data.image && data.image.length > 0) {
-          const uploadPromises = Array.from(data.image).map((file) => {
+        if (compressedFiles.length > 0) {
+          const uploadPromises = compressedFiles.map((file) => {
             const filePath = `${result.postId}/${file.name}`;
             return supabase.storage
               .from("mfqodFiles")
               .upload(filePath, file)
               .then(({ error, data: uploadedData }) => {
                 if (error) {
-                  console.error(`Failed to upload image: ${error.message}`, { filePath });
+                  console.error(`Failed to upload image: ${error.message}`);
                   throw new Error(`Failed to upload image: ${error.message}`);
                 } else {
                   console.log("Uploaded image:", uploadedData);
                   return uploadedData?.path;
                 }
-              })
-              .catch((error) => {
-                console.error(`Error uploading file ${file.name}:`, error.message);
-                return null;
               });
           });
 
           const uploadedFilesKeys = await Promise.all(uploadPromises);
 
-          const imageUrls = uploadedFilesKeys.map((fileKey) => {
-            if (fileKey) {
-              return `https://ggrrwpwyqbblxoxidpmn.supabase.co/storage/v1/object/public/mfqodFiles/${fileKey}`;
-            }
-            return null;
-          }).filter(Boolean);
-          console.log("The image URLs in client before sending:", imageUrls);
+          const imageUrls = uploadedFilesKeys
+            .map((fileKey) => {
+              if (fileKey) {
+                return `https://ggrrwpwyqbblxoxidpmn.supabase.co/storage/v1/object/public/mfqodFiles/${fileKey}`;
+              }
+              return null;
+            })
+            .filter(Boolean);
 
           await fetch("/api/save-post-images", {
             method: "POST",
             body: JSON.stringify({
               postId: result.postId,
-              imageUrls: imageUrls,
+              imageUrls,
             }),
-            headers: { 'Content-Type': 'application/json' },
+            headers: { "Content-Type": "application/json" },
           });
 
           console.log("All images uploaded and URLs saved to the database:", imageUrls);
         }
 
-        reset(); // Reset the form after submission
+        reset();
       } else {
         console.error("Failed to upload item.");
       }
@@ -101,39 +88,39 @@ export default function ReportFoundItem() {
     }
   };
 
-  // Handle organization change and update places
   const handleOrganizationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOrg = e.target.value;
     setOrganization(selectedOrg);
 
-    // Get the places related to the selected organization
-    const selectedOrgData = OrgPlaces.find(org => Object.keys(org)[0] === selectedOrg);
+    const selectedOrgData = OrgPlaces.find(
+      (org) => Object.keys(org)[0] === selectedOrg
+    );
     if (selectedOrgData) {
-      const places = Object.values(selectedOrgData)[0]; // Get places array
+      const places = Object.values(selectedOrgData)[0];
       setPlaceOptions(places);
-      setValue("place", ""); // Reset the selected place
+      setValue("place", "");
     } else {
-      setPlaceOptions([]); // Reset places if no organization is selected
+      setPlaceOptions([]);
     }
   };
 
-  // Set default place options on mount or when the organization changes
   useEffect(() => {
     if (organization) {
-      const selectedOrgData = OrgPlaces.find(org => Object.keys(org)[0] === organization);
+      const selectedOrgData = OrgPlaces.find(
+        (org) => Object.keys(org)[0] === organization
+      );
       if (selectedOrgData) {
-        const places = Object.values(selectedOrgData)[0]; // Get places array
+        const places = Object.values(selectedOrgData)[0];
         setPlaceOptions(places);
       }
     }
   }, [organization]);
 
-  // Reset the confetti animation after a few seconds
   useEffect(() => {
     if (confetti) {
       setTimeout(() => {
         setConfetti(false);
-      }, 7000); // Hide the confetti after 3 seconds
+      }, 7000);
     }
   }, [confetti]);
 
@@ -145,7 +132,9 @@ export default function ReportFoundItem() {
           height={window.innerHeight}
         />
       )}
-      <h2 className="text-2xl font-bold text-center text-indigo-600 mb-6">Report Found Item</h2>
+      <h2 className="text-2xl font-bold text-center text-indigo-600 mb-6">
+        Report Found Item
+      </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Title Input */}
@@ -187,21 +176,10 @@ export default function ReportFoundItem() {
           {errors.type && <p className="mt-2 text-xs text-red-500">{errors.type.message}</p>}
         </div>
 
-        {/* Image upload Input */}
-        <div>
-          <label htmlFor="image" className="block text-lg font-semibold text-gray-700">Upload Image(s)</label>
-          <input
-            type="file"
-            id="image"
-            multiple // Allow multiple image selection
-            {...register("image", { required: "This field is required" })}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-          {errors.image && <p className="mt-2 text-xs text-red-500">{errors.image.message}</p>}
-        </div>
+        <CompressorFileInput onFilesSelected={setCompressedFiles} />
 
-        {/* Select Organization */}
-        <div>
+         {/* Select Organization */}
+         <div>
           <label htmlFor="orgnization" className="block text-lg font-semibold text-gray-700">Organization</label>
           <select
             id="orgnization"
@@ -252,14 +230,9 @@ export default function ReportFoundItem() {
           </select>
           {errors.country && <p className="mt-2 text-xs text-red-500">{errors.country.message}</p>}
         </div>
-
-        {/* Submit Button */}
+        
         <div className="text-center">
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full p-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-400"
-          >
+          <button type="submit" disabled={isSubmitting} className="w-full p-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-400">
             {isSubmitting ? "Submitting..." : "Submit"}
           </button>
         </div>
