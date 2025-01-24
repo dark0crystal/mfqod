@@ -209,7 +209,7 @@ export async function DELETE(req: NextRequest) {
     ];
 
     // Delete images from Supabase storage
-    const deletePromises = allImagePaths.map((url) => {
+    const deletePromises = allImagePaths.map((url:any) => {
       const relativePath = url.split("/storage/v1/object/public/mfqodFiles/")[1]; // Extract the relative path
       return supabase.storage.from("mfqodFiles").remove([relativePath]);
     });
