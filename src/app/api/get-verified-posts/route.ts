@@ -159,50 +159,40 @@ console.log(postId)
 
 import { supabase } from "@/lib/supabase";
 
-// const supabase = createClient(
-//   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-//   process.env.SUPABASE_SERVICE_ROLE_KEY! // Ensure you use the service role key for full access
-// );
 
 export async function DELETE(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const postId = searchParams.get("postId");
-
-  // Checking user role
-  const session = await auth();
-  const userId = session?.user?.id;
-
-  if (!userId) {
-    return NextResponse.json({ error: "User ID is required" }, { status: 400 });
-  }
-
-  const userRole = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { role: true },
-  });
-
-  const role = userRole?.role;
-  if (!postId) {
-    return NextResponse.json({ error: "Post ID is required" }, { status: 400 });
-  }
-
-  if (role !== "ADMIN" && role !== "TECHADMIN") {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-  }
-
   try {
-    // Fetch associated image paths
-    const postPhotos = await prisma.postPhotos.findMany({
-      where: { postId },
-      select: { postUrl: true },
+    const { searchParams } = new URL(req.url);
+    const postId = searchParams.get("postId");
+
+    // Validate `postId`
+    if (!postId) {
+      return NextResponse.json({ error: "Post ID is required" }, { status: 400 });
+    }
+
+    // Check user session and role
+    const session = await auth();
+    const userId = session?.user?.id;
+
+    if (!userId) {
+      return NextResponse.json({ error: "User ID is required" }, { status: 400 });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { role: true },
     });
 
-    const claimPhotos = await prisma.claimPhotos.findMany({
-      where: { claim: { postId } },
-      select: { photoUrl: true },
-    });
+    if (!user || (user.role !== "ADMIN" && user.role !== "TECHADMIN")) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    }
 
-    // Collect all image paths from `postPhotos` and `claimPhotos`
+    // Fetch all associated image URLs
+    const [postPhotos, claimPhotos] = await Promise.all([
+      prisma.postPhotos.findMany({ where: { postId }, select: { postUrl: true } }),
+      prisma.claimPhotos.findMany({ where: { claim: { postId } }, select: { photoUrl: true } }),
+    ]);
+
     const allImagePaths = [
       ...postPhotos.map((photo) => photo.postUrl),
       ...claimPhotos.map((photo) => photo.photoUrl),
@@ -210,36 +200,41 @@ export async function DELETE(req: NextRequest) {
 
     // Delete images from Supabase storage
     const deletePromises = allImagePaths.map((url:any) => {
-      const relativePath = url.split("/storage/v1/object/public/mfqodFiles/")[1]; // Extract the relative path
-      return supabase.storage.from("mfqodFiles").remove([relativePath]);
+      const relativePath = url.split("/storage/v1/object/public/mfqodFiles/")[1];
+      if (relativePath) {
+        return supabase.storage.from("mfqodFiles").remove([relativePath]);
+      }
     });
 
     await Promise.all(deletePromises);
 
     console.log("All associated images deleted from Supabase storage.");
 
+    // Delete associated database records
+    await prisma.$transaction([
+      prisma.claimPhotos.deleteMany({
+        where: { claim: { postId } },
+      }),
+      prisma.claim.deleteMany({
+        where: { postId },
+      }),
+      prisma.postPhotos.deleteMany({
+        where: { postId },
+      }),
+      prisma.address.deleteMany({
+        where: { postId },
+      }),
+      prisma.post.delete({
+        where: { id: postId },
+      }),
+    ]);
 
-    // First, find the claim IDs associated with the postId
-    const claimsToDelete = await prisma.claim.findMany({
-      where: { postId },
-      select: { id: true }, // Only retrieve the IDs
-    });
+    console.log("Post and related records deleted from the database.");
 
-    // Extract the IDs
-    const claimIds = claimsToDelete.map((claim) => claim.id);
-
-    // Delete associated records
-    await prisma.claim.deleteMany({ where: { postId } });
-    await prisma.claimPhotos.deleteMany({ where: { id: { in: claimIds } },});
-    await prisma.postPhotos.deleteMany({ where: { postId } });
-    await prisma.address.deleteMany({ where: { postId } });
-
-    console.log("Associated records deleted from the database.");
-
-    // Delete the post
-    await prisma.post.delete({ where: { id: postId } });
-
-    return NextResponse.json({ message: "Post and all related records deleted successfully." }, { status: 200 });
+    return NextResponse.json(
+      { message: "Post and all related records deleted successfully." },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error deleting post and related data:", error);
     return NextResponse.json({ error: "Failed to delete post." }, { status: 500 });
