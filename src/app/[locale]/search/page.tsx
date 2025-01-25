@@ -23,12 +23,13 @@ const schema = z.object({
 type FormFields = z.infer<typeof schema>;
 
 export default function Search() {
+  
   const [items, setItems] = useState<any[]>([]);
   const router = useRouter();
   const [currentName, setCurrentName] = useState<string>();
   const [show , setShow] = useState(false);
 
-  const { orgNames, OrgPlaces, roles } = DataProvider();
+  const { orgNames } = DataProvider();
 
   const handleClick = async (name: string) => {
     setCurrentName(name);
@@ -79,7 +80,7 @@ export default function Search() {
   };
 
   return ( 
-    <div className="relative    lg:grid lg:grid-cols-12 lg:h-[88vh] ">
+    <div className="relative  lg:grid lg:grid-cols-12 lg:h-[88vh] ">
 
         {/* left Section */}
         <div className="hidden lg:col-span-2  lg:flex flex-col items-center overflow-y-auto p-4">
