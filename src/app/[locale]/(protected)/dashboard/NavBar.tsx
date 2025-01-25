@@ -15,7 +15,7 @@ export default async function NavBar() {
     <div>
       <div>
        
-       <h1> you are  {result?.role}</h1>
+       <h1> Role: {result?.role}</h1>
      </div>
      
       {/* For the CTO */}
