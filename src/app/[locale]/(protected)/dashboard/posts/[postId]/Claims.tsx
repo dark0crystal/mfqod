@@ -23,11 +23,15 @@ export default function Claims({ postId }: { postId: string }){
       }),
 
     })
+    if(response.ok){
+      console.log("claim approved successfully")
+      fetchClaims()
+    }
     } catch (error) {
-        
+        console.log("failed to change the claim approval")
     }
 
-    fetchClaims()
+    
   }
 
   const fetchClaims = async () => {
