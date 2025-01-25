@@ -220,11 +220,9 @@ export async function DELETE(req: NextRequest) {
     const claimPhotoDeletions = claimPhotos.map((photo) => {
       console.log("claim phooooooto",photo)
       const relativePath = photo.photoUrl?.split("/storage/v1/object/public/mfqodFiles/")[1];
-
-      if (relativePath) {
        
         return supabase.storage.from("mfqodFiles").remove([relativePath]);
-      }
+      
     });
 
     const claimPhotoResults = await Promise.all(claimPhotoDeletions);
