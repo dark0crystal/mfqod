@@ -89,7 +89,7 @@ export default function Search() {
               key={index}
               onClick={() => handleClick(org.key)}
               className={`p-3 rounded-full transition-transform duration-300 ${
-                currentName === org.key ? "bg-white border border-1 p-3 rounded-sm scale-110" : "bg-white border border-1 p-3 rounded-sm "
+                currentName === org.key ? "bg-white border border-blue-200  p-3 rounded-sm scale-110" : "bg-white border border-blue-200  p-3 rounded-sm "
               }`}
             >
               {org.name}
@@ -108,7 +108,7 @@ export default function Search() {
               key={index}
               onClick={() => handleClick(org.key)}
               className={`p-2 rounded-full transition-transform duration-300 text-sm ${
-                currentName === org.key ? "bg-white border border-1  rounded-sm scale-105" : "bg-white border border-1  rounded-sm "
+                currentName === org.key ? "bg-white border border-blue-200 rounded-sm scale-105" : "bg-white border border-blue-200   rounded-sm "
               }`}
             >
               {org.name}
