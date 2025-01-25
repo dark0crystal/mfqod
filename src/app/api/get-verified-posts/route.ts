@@ -199,6 +199,7 @@ export async function DELETE(req: NextRequest) {
 
     // Delete post photos from Supabase storage
     const postPhotoDeletions = postPhotos.map((photo) => {
+      console.log("post phooooooto",photo)
       const relativePath = photo.postUrl?.split("/storage/v1/object/public/mfqodFiles/")[1];
       if (relativePath) {
         
@@ -217,6 +218,7 @@ export async function DELETE(req: NextRequest) {
 
     // Delete claim photos from Supabase storage
     const claimPhotoDeletions = claimPhotos.map((photo) => {
+      console.log("claim phooooooto",photo)
       const relativePath = photo.photoUrl?.split("/storage/v1/object/public/mfqodFiles/")[1];
 
       if (relativePath) {
