@@ -91,10 +91,10 @@ export default function Claims({ postId }: { postId: string }){
                 <div>
                   {claim.approved == true ? 
                   (
-                  <button onClick={()=>{handleClaimApproval(claim.id ,true)}}>approved</button>
+                  <button onClick={()=>{handleClaimApproval(claim.id ,false)}}>approved</button>
                 )
                   :(
-                    <button onClick={()=>{handleClaimApproval(claim.id ,false)}}>not approved</button>
+                    <button onClick={()=>{handleClaimApproval(claim.id ,true)}}>not approved</button>
                   )
                   }
                   
