@@ -7,6 +7,29 @@ export default function Claims({ postId }: { postId: string }){
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+
+  async function handleClaimApproval(claimId:string ,approval:boolean){
+    try {
+      
+    
+    const response  = await fetch("/api/post-claim-approval" ,{
+      method:"PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        claimId: claimId,
+        approval
+      }),
+
+    })
+    } catch (error) {
+        
+    }
+
+    fetchClaims()
+  }
+
   const fetchClaims = async () => {
     setIsLoading(true);
     setError(null);
@@ -60,8 +83,17 @@ export default function Claims({ postId }: { postId: string }){
                 <p>
                   <strong>Date:</strong> {new Date(claim.createdAt).toLocaleDateString()}
                 </p>
+                <p>{claim.approved}</p>
                 <div>
-                  <button></button>
+                  {claim.approved == true ? 
+                  (
+                  <button onClick={()=>{handleClaimApproval(claim.id ,true)}}>approved</button>
+                )
+                  :(
+                    <button onClick={()=>{handleClaimApproval(claim.id ,false)}}>not approved</button>
+                  )
+                  }
+                  
                 </div>
               </li>
             ))}
