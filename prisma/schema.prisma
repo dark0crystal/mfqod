@@ -149,6 +149,7 @@ model Claim{
   post Post @relation(fields: [postId] , references: [id])
   claimTitle String
   claimContent String?
+  approved Boolean @default(false)
   temporaryDeletion Boolean @default(false)
   createdAt DateTime @default(now())
   userId String
