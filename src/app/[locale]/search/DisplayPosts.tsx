@@ -13,7 +13,7 @@ export default function DisplayPosts({items}:any){
 
     return(
         <div className="w-full p-6 mt-6 flex items-center flex-col">
-                <h3 className="text-xl font-semibold mb-6 text-indigo-800">Fetched Items</h3>
+                <h3 className="text-xl font-semibold mb-6 text-blue-600">Fetched Items</h3>
                 <div className="grid md:grid-cols-1 lg:grid-cols-2 grid-cols-1 gap-12">
                   {items.length > 0 ? (
                     items.map((item: any, index: number) => (
@@ -41,7 +41,7 @@ export default function DisplayPosts({items}:any){
                               <button
                                 title="arrow to detailed page"
                                 onClick={() => handlePostClick(item.id)}
-                                className="absolute bottom-2 right-2 p-3 bg-white z-20 text-black text-xl rounded-full hover:bg-indigo-200 transition-colors shadow-md"
+                                className="absolute bottom-2 right-2 p-3 bg-white z-20 text-black text-xl rounded-full hover:bg-blue-200 transition-colors shadow-md"
                               >
                                 <MdArrowOutward />
                               </button>
