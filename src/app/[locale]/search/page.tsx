@@ -89,7 +89,7 @@ export default function Search() {
               key={index}
               onClick={() => handleClick(org.key)}
               className={`p-3 rounded-full transition-transform duration-300 ${
-                currentName === org.key ? "bg-white border border-blue-200  p-3 rounded-sm scale-110" : "bg-white border border-blue-200  p-3 rounded-sm "
+                currentName === org.key ? "bg-blue-100 border border-blue-400  p-3 rounded-md scale-110" : "bg-white border border-blue-200  p-3 rounded-md "
               }`}
             >
               {org.name}
@@ -102,13 +102,13 @@ export default function Search() {
       <div className="z-50 fixed bottom-4 right-4 lg:hidden">
         
         {show && 
-      <div className="relative flex flex-col gap-4">
+      <div className="relative flex flex-col gap-2">
           {orgNames.map((org, index: any) => (
             <button
               key={index}
               onClick={() => handleClick(org.key)}
-              className={`p-2 rounded-full transition-transform duration-300 text-sm ${
-                currentName === org.key ? "bg-white border border-blue-200 rounded-sm scale-105" : "bg-white border border-blue-200   rounded-sm "
+              className={`px-3 py-2 rounded-full transition-transform duration-300 text-sm ${
+                currentName === org.key ? "bg-blue-200 border border-blue-400 rounded-md scale-105" : "bg-white border border-blue-200   rounded-md "
               }`}
             >
               {org.name}
