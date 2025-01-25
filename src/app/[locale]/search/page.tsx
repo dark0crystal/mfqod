@@ -44,6 +44,7 @@ export default function Search() {
       const response = await fetch(`/api/get-items?item=${item}&orgName=${place}`);
       if (response.ok) {
         const data = await response.json();
+        console.log(data)
         setItems(data);
       } else {
         console.error("Failed to fetch items");
@@ -88,7 +89,7 @@ export default function Search() {
               key={index}
               onClick={() => handleClick(org.key)}
               className={`p-3 rounded-full transition-transform duration-300 ${
-                currentName === name ? "bg-white border border-1 p-3 rounded-sm scale-110" : "bg-white border border-1 p-3 rounded-sm "
+                currentName === org.key ? "bg-white border border-1 p-3 rounded-sm scale-110" : "bg-white border border-1 p-3 rounded-sm "
               }`}
             >
               {org.name}
