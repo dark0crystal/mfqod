@@ -121,68 +121,60 @@ export default function Search() {
         </button>
       </div>
         
-      
-
       {/* Center Section */}
-      <div className="col-span-12  lg:col-span-8  flex flex-col items-center  p-4 overflow-y-auto w-full h-full">
-        <div className="relative z-20 w-full flex items-center min-h-[30vh]">
-        <div className="absolute -z-10 w-full  rounded-xl overflow-hidden h-full">
-          <Image
-           src={bg9}
-            alt="search bg image"
-             fill 
-             objectFit="cover"
-             className=""
-             />
+<div className="col-span-12 lg:col-span-8 flex flex-col items-center p-4 overflow-y-auto w-full h-full">
+  <div className="relative z-20 w-full flex items-center min-h-[30vh] justify-center">
+    <div className="absolute -z-10 w-full rounded-xl overflow-hidden h-full">
+      <Image
+        src={bg9}
+        alt="search bg image"
+        fill
+        objectFit="cover"
+      />
+    </div>
+    <div className="lg:absolute lg:bottom-12 lg:left-12 w-full flex justify-center">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex lg:flex-row flex-col gap-2 w-full max-w-md">
+        <div>
+          <input
+            id="item"
+            {...register("item")}
+            type="text"
+            placeholder="هيش مغيّب ؟"
+            className="w-full p-3 border bg-white/70 text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          {errors.item && <p className="mt-2 text-xs text-red-500">{errors.item.message}</p>}
         </div>
-        <div className="lg:absolute lg:bottom-12 lg:left-12">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex lg:flex-row flex-col gap-2  ">
-          <div>
-            <input
-              id="item"
-              {...register("item")}
-              type="text"
-              placeholder="هيش مغيّب ؟"
-              className="w-full p-3 border bg-white/70 text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            {errors.item && <p className="mt-2 text-xs text-red-500">{errors.item.message}</p>}
-          </div>
-          <div>
-            <select
-              id="place"
-              {...register("place")}
-              defaultValue=""
-              
-              className="w-full p-3 border bg-white/70  border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="" disabled>هين تدرس؟</option>
-
-              {orgNames.map((org , index:any)=>(
-                <option key={index} value={org.key}>{org.name}</option>
-
-              ))}
-         
-            </select>
-            {errors.place && <p className="mt-2 text-xs text-red-500">{errors.place.message}</p>}
-          </div>
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full lg:w-fit lg:h-fit p-3  bg-blue-600/90 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-400"
+        <div>
+          <select
+            id="place"
+            {...register("place")}
+            defaultValue=""
+            className="w-full p-3 border bg-white/70 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            {isSubmitting ? <RiLoader2Line  size={26}/> : <FaSearch size={26}/>}
-          </button>
-        </form>
+            <option value="" disabled>هين تدرس؟</option>
+            {orgNames.map((org, index: any) => (
+              <option key={index} value={org.key}>{org.name}</option>
+            ))}
+          </select>
+          {errors.place && <p className="mt-2 text-xs text-red-500">{errors.place.message}</p>}
         </div>
-        </div>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full lg:w-fit lg:h-fit p-3 bg-blue-600/90 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-400"
+        >
+          {isSubmitting ? <RiLoader2Line size={26} /> : <FaSearch size={26} />}
+        </button>
+      </form>
+    </div>
+  </div>
 
-        <div className="w-full mt-6">
-          <DisplayPosts items={items} />
-          <Footer/>
-        </div>
-      </div>
+  <div className="w-full mt-6">
+    <DisplayPosts items={items} />
+    <Footer />
+  </div>
+</div>
 
-    
 
       {/* Right Section */}
       <div className="hidden lg:col-span-2  p-4 lg:flex flex-col justify-center items-center">
