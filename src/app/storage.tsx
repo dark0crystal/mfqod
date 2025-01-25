@@ -1,16 +1,42 @@
-// Here we store the data that is used by multiple components
+"use client";
 
-export const orgName = ["جامعة السلطان قابوس","UTAS Muscat", "UTAS Ibra","Bin Omair Library" , "UTAS Nizwa"]
+import { useTranslations } from "next-intl";
 
+export default function DataProvider() {
+  const t = useTranslations("common"); // Assuming translations are under a "common" namespace
 
-// used in report-found-item , 
-  export const OrgPlaces = [
-    { "SQU": ["SQU Library", "SQU Lost and Found Department"] },
-    { "UTAS Muscat": ["UTAS Library", "UTAS Lost and Found Department"] },
-    { "UTAS Ibra": ["UTAS Library", "UTAS Lost and Found Department"] },
-    { "UTAS Nizwa": ["UTAS Library", "UTAS Lost and Found Department"] },
-    { "Bin Omair": ["Bin Omair Library", "Bin Omair Lost and Found Department"] },
+  // Translated organization names
+  const orgNames = [
+    { key: "SQU", name: t("org.SQU") },
+    { key: "UTAS_Muscat", name: t("org.UTAS_Muscat") },
+    { key: "UTAS_Ibra", name: t("org.UTAS_Ibra") },
+    { key: "Bin_Omair", name: t("org.Bin_Omair") },
+    { key: "UTAS_Nizwa", name: t("org.UTAS_Nizwa") },
   ];
 
+  // Translated organization places
+  const OrgPlaces = [
+    { key: "SQU", places: [t("place.SQU_Library"), t("place.SQU_LostFound")] },
+    {
+      key: "UTAS_Muscat",
+      places: [t("place.UTAS_Muscat_Library"), t("place.UTAS_Muscat_LostFound")],
+    },
+    {
+      key: "UTAS_Ibra",
+      places: [t("place.UTAS_Ibra_Library"), t("place.UTAS_Ibra_LostFound")],
+    },
+    {
+      key: "Bin_Omair",
+      places: [t("place.Bin_Omair_Library"), t("place.Bin_Omair_LostFound")],
+    },
+    {
+      key: "UTAS_Nizwa",
+      places: [t("place.UTAS_Nizwa_Library"), t("place.UTAS_Nizwa_LostFound")],
+    },
+  ];
 
-  export const roles =[ "BASIC","VERIFIED","ADMIN", "TECHADMIN"]
+  // Roles (no translation needed)
+  const roles = ["BASIC", "VERIFIED", "ADMIN", "TECHADMIN"];
+
+  return { orgNames, OrgPlaces, roles };
+}
