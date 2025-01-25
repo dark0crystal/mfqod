@@ -143,7 +143,7 @@ export default function Search() {
               {...register("item")}
               type="text"
               placeholder="هيش مغيّب ؟"
-              className="w-full p-3 border bg-white/70 text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-3 border bg-white/70 text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.item && <p className="mt-2 text-xs text-red-500">{errors.item.message}</p>}
           </div>
@@ -153,7 +153,7 @@ export default function Search() {
               {...register("place")}
               defaultValue=""
               
-              className="w-full p-3 border bg-white/70  border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-3 border bg-white/70  border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="" disabled>هين تدرس؟</option>
 
@@ -168,7 +168,7 @@ export default function Search() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full lg:w-fit lg:h-fit p-3  bg-indigo-600/70 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-400"
+            className="w-full lg:w-fit lg:h-fit p-3  bg-blue-600/90 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-400"
           >
             {isSubmitting ? <RiLoader2Line  size={26}/> : <FaSearch size={26}/>}
           </button>
