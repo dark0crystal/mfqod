@@ -10,9 +10,6 @@ import { orgName } from "../../storage";
 import Footer from "@/app/components/Footer";
 import Image from "next/image";
 import ad from "../../../../public/ad.png"
-import bg1 from "../../../../public/bg1.jpg"
-import bg2 from "../../../../public/bg2.jpg"
-import bg3 from "../../../../public/bg3.jpg"
 import bg9 from "../../../../public/bg9.jpg"
 import bg10 from "../../../../public/bg10.jpg"
 import { FaSearch } from "react-icons/fa";
@@ -29,11 +26,16 @@ export default function Search() {
   const [items, setItems] = useState<any[]>([]);
   const router = useRouter();
   const [currentName, setCurrentName] = useState(orgName[0]);
+  const [show , setShow] = useState(false);
 
   const handleClick = async (name: string) => {
     setCurrentName(name);
     await fetchItemByPlace(name);
   };
+
+  function handleShow(){
+    setShow(!show)
+  }
 
   const fetchItems = async (item: string, place: string) => {
     try {
@@ -74,10 +76,10 @@ export default function Search() {
   };
 
   return (
-    <div className="grid grid-cols-12 h-[88vh] ">
+    <div className="   relative    lg:grid lg:grid-cols-12 lg:h-[88vh] ">
 
         {/* left Section */}
-        <div className="col-span-2  flex flex-col items-center overflow-y-auto p-4">
+        <div className="hidden lg:col-span-2  lg:flex flex-col items-center overflow-y-auto p-4">
         <div className="flex flex-col gap-4">
           {orgName.map((name: string, index: any) => (
             <button
@@ -92,10 +94,32 @@ export default function Search() {
           ))}
         </div>
       </div>
+
+      <div className="fixed bottom-4 right-4 lg:hidden">
+        <button className="bg-rose-300 p-3 rounded-3xl" onClick={handleShow}>
+            show the conteentntnt
+        </button>
+        {show && 
+      <div className="relative flex flex-col gap-4">
+          {orgName.map((name: string, index: any) => (
+            <button
+              key={index}
+              onClick={() => handleClick(name)}
+              className={`p-3 rounded-full transition-transform duration-300 ${
+                currentName === name ? "bg-red-400/40 shadow-sm text-black scale-110" : "bg-violet-300"
+              }`}
+            >
+              {name}
+            </button>
+          ))}
+        </div>
+        }
+      </div>
+        
       
 
       {/* Center Section */}
-      <div className="col-span-8  flex flex-col items-center  p-4 overflow-y-auto w-full h-full">
+      <div className="col-span-12  lg:col-span-8  flex flex-col items-center  p-4 overflow-y-auto w-full h-full">
         <div className="relative z-20 w-full flex items-center min-h-[30vh]">
         <div className="absolute -z-10 w-full  rounded-xl overflow-hidden h-full">
           <Image
@@ -148,14 +172,14 @@ export default function Search() {
 
         <div className="w-full mt-6">
           <DisplayPosts items={items} />
-          {/* <Footer/> */}
+          <Footer/>
         </div>
       </div>
 
     
 
       {/* Right Section */}
-      <div className="col-span-2  p-4 flex flex-col justify-center items-center">
+      <div className="hidden lg:col-span-2  p-4 lg:flex flex-col justify-center items-center">
          <div className="relative h-full w-full rounded-2xl overflow-hidden">
           <Image alt="ad" src={ad} fill objectFit="cover"/>
          <div className="absolute bottom-0 bg-gray-300/20 text-center w-full rounded-t-2xl h-10"> 
