@@ -11,5 +11,27 @@
         "dashboard":"Dashboard",
         "report":"Report",
         "reportBtn":"Found Something ?"
+    },
+    "storage":{
+      "org": {
+        "SQU": "Sultan Qaboos University",
+        "UTAS_Muscat": "UTAS Muscat",
+        "UTAS_Ibra": "UTAS Ibra",
+        "Bin_Omair": "Bin Omair Library",
+        "UTAS_Nizwa": "UTAS Nizwa"
+      },
+      "place": {
+        "SQU_Library": "SQU Library",
+        "SQU_LostFound": "SQU Lost and Found Department",
+        "UTAS_Muscat_Library": "UTAS Muscat Library",
+        "UTAS_Muscat_LostFound": "UTAS Muscat Lost and Found Department",
+        "UTAS_Ibra_Library": "UTAS Ibra Library",
+        "UTAS_Ibra_LostFound": "UTAS Ibra Lost and Found Department",
+        "Bin_Omair_Library": "Bin Omair Library",
+        "Bin_Omair_LostFound": "Bin Omair Lost and Found Department",
+        "UTAS_Nizwa_Library": "UTAS Nizwa Library",
+        "UTAS_Nizwa_LostFound": "UTAS Nizwa Lost and Found Department"
+      }
     }
+    
   }
