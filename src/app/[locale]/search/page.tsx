@@ -25,7 +25,7 @@ type FormFields = z.infer<typeof schema>;
 export default function Search() {
   const [items, setItems] = useState<any[]>([]);
   const router = useRouter();
-  const [currentName, setCurrentName] = useState(orgName[0]);
+  const [currentName, setCurrentName] = useState<string>();
   const [show , setShow] = useState(false);
 
   const handleClick = async (name: string) => {
@@ -86,7 +86,7 @@ export default function Search() {
               key={index}
               onClick={() => handleClick(name)}
               className={`p-3 rounded-full transition-transform duration-300 ${
-                currentName === name ? "bg-white border border-1 p-3 rounded-sm scale-110" : "bg-violet-300"
+                currentName === name ? "bg-white border border-1 p-3 rounded-sm scale-110" : "bg-white border border-1 p-3 rounded-sm "
               }`}
             >
               {name}
@@ -104,8 +104,8 @@ export default function Search() {
             <button
               key={index}
               onClick={() => handleClick(name)}
-              className={`p-3 rounded-full transition-transform duration-300 text-sm ${
-                currentName === name ? "bg-white border border-1 p-3 rounded-sm scale-110" : "bg-violet-300"
+              className={`p-2 rounded-full transition-transform duration-300 text-sm ${
+                currentName === name ? "bg-white border border-1  rounded-sm scale-105" : "bg-white border border-1  rounded-sm "
               }`}
             >
               {name}
@@ -113,7 +113,7 @@ export default function Search() {
           ))}
         </div>
         }
-        <button className="bg-white border border-1 p-3 rounded-sm" onClick={handleShow}>
+        <button className="bg-white border border-1 p-3 rounded-sm mt-2" onClick={handleShow}>
             filter
         </button>
       </div>
