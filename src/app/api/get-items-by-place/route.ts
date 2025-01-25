@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
       where: {
         postAddress: {
           some: { 
-            place: {
+            orgnization: {
               contains: orgName, // Filter posts by place name
               mode: "insensitive", // Case-insensitive search
             },
