@@ -159,18 +159,18 @@ console.log(postId)
 
 import { supabase } from "@/lib/supabase";
 
+// Endpoint for deleting posts and its related 
+
 
 export async function DELETE(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const postId = searchParams.get("postId");
 
-    // Validate `postId`
     if (!postId) {
       return NextResponse.json({ error: "Post ID is required" }, { status: 400 });
     }
 
-    // Check user session and role
     const session = await auth();
     const userId = session?.user?.id;
 
@@ -199,14 +199,20 @@ export async function DELETE(req: NextRequest) {
     ];
 
     // Delete images from Supabase storage
-    const deletePromises = allImagePaths.map((url:any) => {
-      const relativePath = url.split("/storage/v1/object/public/mfqodFiles/")[1];
+    const deletePromises = allImagePaths.map((url) => {
+      const relativePath = url?.split("/storage/v1/object/public/mfqodFiles/")[1];
       if (relativePath) {
         return supabase.storage.from("mfqodFiles").remove([relativePath]);
       }
     });
 
-    await Promise.all(deletePromises);
+    const deleteResults = await Promise.all(deletePromises);
+
+    // Validate that all deletions succeeded
+    const failedDeletions = deleteResults.filter((res) => res?.error);
+    if (failedDeletions.length > 0) {
+      console.error("Some images failed to delete from Supabase:", failedDeletions);
+    }
 
     console.log("All associated images deleted from Supabase storage.");
 
