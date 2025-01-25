@@ -135,8 +135,8 @@ export default function Search() {
              className=""
              />
         </div>
-        <div className="absolute bottom-12 left-12">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-row gap-2 w-full ">
+        <div className="lg:absolute lg:bottom-12 lg:left-12">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex lg:flex-row flex-col gap-2  ">
           <div>
             <input
               id="item"
@@ -168,9 +168,9 @@ export default function Search() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-fit h-fit p-3  bg-indigo-600/70 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-400"
+            className="w-full lg:w-fit lg:h-fit p-3  bg-indigo-600/70 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-400"
           >
-            {isSubmitting ? <RiLoader2Line size={26}/> : <FaSearch size={26}/>}
+            {isSubmitting ? <RiLoader2Line  size={26}/> : <FaSearch size={26}/>}
           </button>
         </form>
         </div>
