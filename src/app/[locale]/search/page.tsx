@@ -6,7 +6,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import DisplayPosts from "./DisplayPosts";
-import { orgName } from "../../storage";
+import DataProvider from "@/app/storage";
 import Footer from "@/app/components/Footer";
 import Image from "next/image";
 import ad from "../../../../public/ad.png"
@@ -27,6 +27,8 @@ export default function Search() {
   const router = useRouter();
   const [currentName, setCurrentName] = useState<string>();
   const [show , setShow] = useState(false);
+
+  const { orgNames, OrgPlaces, roles } = DataProvider();
 
   const handleClick = async (name: string) => {
     setCurrentName(name);
@@ -75,21 +77,21 @@ export default function Search() {
     reset();
   };
 
-  return (
+  return ( 
     <div className="   relative    lg:grid lg:grid-cols-12 lg:h-[88vh] ">
 
         {/* left Section */}
         <div className="hidden lg:col-span-2  lg:flex flex-col items-center overflow-y-auto p-4">
         <div className="flex flex-col gap-4">
-          {orgName.map((name: string, index: any) => (
+          {orgNames.map((org, index: any) => (
             <button
               key={index}
-              onClick={() => handleClick(name)}
+              onClick={() => handleClick(org.key)}
               className={`p-3 rounded-full transition-transform duration-300 ${
                 currentName === name ? "bg-white border border-1 p-3 rounded-sm scale-110" : "bg-white border border-1 p-3 rounded-sm "
               }`}
             >
-              {name}
+              {org.name}
             </button>
           ))}
         </div>
@@ -100,15 +102,15 @@ export default function Search() {
         
         {show && 
       <div className="relative flex flex-col gap-4">
-          {orgName.map((name: string, index: any) => (
+          {orgNames.map((org, index: any) => (
             <button
               key={index}
-              onClick={() => handleClick(name)}
+              onClick={() => handleClick(org.key)}
               className={`p-2 rounded-full transition-transform duration-300 text-sm ${
                 currentName === name ? "bg-white border border-1  rounded-sm scale-105" : "bg-white border border-1  rounded-sm "
               }`}
             >
-              {name}
+              {org.name}
             </button>
           ))}
         </div>
