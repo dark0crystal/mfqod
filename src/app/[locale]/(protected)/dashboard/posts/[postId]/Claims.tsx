@@ -60,6 +60,9 @@ export default function Claims({ postId }: { postId: string }){
                 <p>
                   <strong>Date:</strong> {new Date(claim.createdAt).toLocaleDateString()}
                 </p>
+                <div>
+                  <button></button>
+                </div>
               </li>
             ))}
           </ul>
