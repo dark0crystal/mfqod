@@ -159,9 +159,7 @@ console.log(postId)
 
 import { supabase } from "@/lib/supabase";
 
-// Endpoint for deleting posts and its related 
-
-
+// Endpoint for deleting posts and its related data
 export async function DELETE(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
@@ -188,33 +186,53 @@ export async function DELETE(req: NextRequest) {
     }
 
     // Fetch all associated image URLs
-    const [postPhotos, claimPhotos] = await Promise.all([
-      prisma.postPhotos.findMany({ where: { postId }, select: { postUrl: true } }),
-      prisma.claimPhotos.findMany({ where: { claim: { postId } }, select: { photoUrl: true } }),
-    ]);
+    const postPhotos = await prisma.postPhotos.findMany({
+      where: { postId },
+      select: { postUrl: true },
+    });
+    console.log("postPhotos",postPhotos)
+    const claimPhotos = await prisma.claimPhotos.findMany({
+      where: { claim: { postId } },
+      select: { photoUrl: true },
+    });
+    console.log("claimPhotos",claimPhotos)
 
-    const allImagePaths = [
-      ...postPhotos.map((photo) => photo.postUrl),
-      ...claimPhotos.map((photo) => photo.photoUrl),
-    ];
-
-    // Delete images from Supabase storage
-    const deletePromises = allImagePaths.map((url) => {
-      const relativePath = url?.split("/storage/v1/object/public/mfqodFiles/")[1];
+    // Delete post photos from Supabase storage
+    const postPhotoDeletions = postPhotos.map((photo) => {
+      const relativePath = photo.postUrl?.split("/storage/v1/object/public/mfqodFiles/")[1];
       if (relativePath) {
+        
         return supabase.storage.from("mfqodFiles").remove([relativePath]);
       }
     });
 
-    const deleteResults = await Promise.all(deletePromises);
+    const postPhotoResults = await Promise.all(postPhotoDeletions);
 
-    // Validate that all deletions succeeded
-    const failedDeletions = deleteResults.filter((res) => res?.error);
-    if (failedDeletions.length > 0) {
-      console.error("Some images failed to delete from Supabase:", failedDeletions);
+    const failedPostPhotoDeletions = postPhotoResults.filter((res) => res?.error);
+    if (failedPostPhotoDeletions.length > 0) {
+      console.error("Some post photos failed to delete from Supabase:", failedPostPhotoDeletions);
+    } else {
+      console.log("All post photos deleted successfully.");
     }
 
-    console.log("All associated images deleted from Supabase storage.");
+    // Delete claim photos from Supabase storage
+    const claimPhotoDeletions = claimPhotos.map((photo) => {
+      const relativePath = photo.photoUrl?.split("/storage/v1/object/public/mfqodFiles/")[1];
+
+      if (relativePath) {
+       
+        return supabase.storage.from("mfqodFiles").remove([relativePath]);
+      }
+    });
+
+    const claimPhotoResults = await Promise.all(claimPhotoDeletions);
+
+    const failedClaimPhotoDeletions = claimPhotoResults.filter((res) => res?.error);
+    if (failedClaimPhotoDeletions.length > 0) {
+      console.error("Some claim photos failed to delete from Supabase:", failedClaimPhotoDeletions);
+    } else {
+      console.log("All claim photos deleted successfully.");
+    }
 
     // Delete associated database records
     await prisma.$transaction([
