@@ -132,8 +132,8 @@ export default function Search() {
         objectFit="cover"
       />
     </div>
-    <div className="lg:absolute lg:bottom-12 lg:left-12 w-full flex justify-center">
-      <form onSubmit={handleSubmit(onSubmit)} className="flex lg:flex-row flex-col gap-2 w-full max-w-md">
+    <div className="lg:absolute lg:bottom-12  w-full flex justify-center">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex lg:flex-row flex-col gap-2 w-fit max-w-md">
         <div>
           <input
             id="item"
