@@ -9,11 +9,11 @@ export default async function Layout({children}: Readonly<{ children: React.Reac
 
       <main>
       <div className="grid grid-cols-3 h-screen">
-         <div className="bg-violet-200 flex flex-col  items-center px-4 col-span-1">
+         <div className=" border bottom-2 flex flex-col  items-center px-4 col-span-1">
             <UserInfo/>
             <NavBar />
         </div>
-        <div className="bg-red-200 flex flex-col  items-center px-4  col-span-2">
+        <div className=" flex flex-col  items-center px-4  col-span-2">
             {children}
         </div>
         
