@@ -79,7 +79,7 @@ export default function Search() {
   };
 
   return ( 
-    <div className="   relative    lg:grid lg:grid-cols-12 lg:h-[88vh] ">
+    <div className="relative    lg:grid lg:grid-cols-12 lg:h-[88vh] ">
 
         {/* left Section */}
         <div className="hidden lg:col-span-2  lg:flex flex-col items-center overflow-y-auto p-4">
@@ -156,11 +156,12 @@ export default function Search() {
               className="w-full p-3 border bg-white/70  border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               <option value="" disabled>هين تدرس؟</option>
-              <option value="SQU">جامعة السلطان قابوس</option>
-              <option value="UTAS Muscat">جامعة التقنية-مسقط</option>
-              <option value="UTAS Nizwa">UTAS Nizwa</option>
-              <option value="UTAS Ibra">UTAS Ibra</option>
-              <option value="NIZWA Uni">NIZWA Uni</option>
+
+              {orgNames.map((org , index:any)=>(
+                <option key={index} value={org.key}>{org.name}</option>
+
+              ))}
+         
             </select>
             {errors.place && <p className="mt-2 text-xs text-red-500">{errors.place.message}</p>}
           </div>
