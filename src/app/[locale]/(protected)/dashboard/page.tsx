@@ -1,5 +1,6 @@
 
 import { auth } from "../../../../../auth";
+import UserInfo from "./UserInfo";
 
 
 
@@ -9,7 +10,7 @@ export default async function Dashboard(){
     
     return(
         <div >
-           index page
+           <UserInfo/>
         </div>
     )
 }
