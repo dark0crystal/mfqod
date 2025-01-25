@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 
 export default function DataProvider() {
-  const t = useTranslations("common"); // Assuming translations are under a "common" namespace
+  const t = useTranslations("storage"); // Assuming translations are under a "common" namespace
 
   // Translated organization names
   const orgNames = [
