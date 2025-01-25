@@ -48,6 +48,7 @@ export async function GET(req: NextRequest) {
       id: claim.id,
       claimTitle: claim.claimTitle,
       claimContent: claim.claimContent,
+      approval:claim.approved,
       createdAt: claim.createdAt,
       userId: claim.userId,
       user: claim.user,
