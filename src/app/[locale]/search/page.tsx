@@ -86,7 +86,7 @@ export default function Search() {
               key={index}
               onClick={() => handleClick(name)}
               className={`p-3 rounded-full transition-transform duration-300 ${
-                currentName === name ? "bg-indigo-200/40 shadow-sm text-black scale-110" : "bg-violet-300"
+                currentName === name ? "bg-white border border-1 p-3 rounded-sm scale-110" : "bg-violet-300"
               }`}
             >
               {name}
@@ -95,18 +95,17 @@ export default function Search() {
         </div>
       </div>
 
-      <div className="fixed bottom-4 right-4 lg:hidden">
-        <button className="bg-rose-300 p-3 rounded-3xl" onClick={handleShow}>
-            show the conteentntnt
-        </button>
+      {/* for mobile and ipad view */}
+      <div className="z-50 fixed bottom-4 right-4 lg:hidden">
+        
         {show && 
       <div className="relative flex flex-col gap-4">
           {orgName.map((name: string, index: any) => (
             <button
               key={index}
               onClick={() => handleClick(name)}
-              className={`p-3 rounded-full transition-transform duration-300 ${
-                currentName === name ? "bg-red-400/40 shadow-sm text-black scale-110" : "bg-violet-300"
+              className={`p-3 rounded-full transition-transform duration-300 text-sm ${
+                currentName === name ? "bg-white border border-1 p-3 rounded-sm scale-110" : "bg-violet-300"
               }`}
             >
               {name}
@@ -114,6 +113,9 @@ export default function Search() {
           ))}
         </div>
         }
+        <button className="bg-white border border-1 p-3 rounded-sm" onClick={handleShow}>
+            filter
+        </button>
       </div>
         
       
