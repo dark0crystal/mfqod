@@ -134,7 +134,9 @@ export default function Search() {
         objectFit="cover"
       /> 
     </div>
+    {/* blur background on top of image */}
     <div className="absolute z-0 bg-white/60 w-[98%] h-[94%] rounded-xl"/>
+
     <div className="lg:absolute lg:bottom-12  w-full flex justify-center">
       <form onSubmit={handleSubmit(onSubmit)} className="flex lg:flex-row flex-col gap-2 w-fit max-w-md">
         <div>
@@ -143,7 +145,7 @@ export default function Search() {
             {...register("item")}
             type="text"
             placeholder="هيش مغيّب ؟"
-            className="w-full p-3 border bg-white/70 text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border bg-slate-50 text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {errors.item && <p className="mt-2 text-xs text-red-500">{errors.item.message}</p>}
         </div>
@@ -152,7 +154,7 @@ export default function Search() {
             id="place"
             {...register("place")}
             defaultValue=""
-            className="w-full p-3 border bg-white/70 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border bg-slate-50 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="" disabled>هين تدرس؟</option>
             {orgNames.map((org, index: any) => (
