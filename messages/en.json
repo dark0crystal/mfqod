@@ -21,16 +21,16 @@
         "UTAS Nizwa": "UTAS Nizwa"
       },
       "place": {
-        "SQU_Library": "SQU Library",
-        "SQU_LostFound": "SQU Lost and Found Department",
-        "UTAS_Muscat_Library": "UTAS Muscat Library",
-        "UTAS_Muscat_LostFound": "UTAS Muscat Lost and Found Department",
-        "UTAS_Ibra_Library": "UTAS Ibra Library",
-        "UTAS_Ibra_LostFound": "UTAS Ibra Lost and Found Department",
-        "Bin_Omair_Library": "Bin Omair Library",
-        "Bin_Omair_LostFound": "Bin Omair Lost and Found Department",
-        "UTAS_Nizwa_Library": "UTAS Nizwa Library",
-        "UTAS_Nizwa_LostFound": "UTAS Nizwa Lost and Found Department"
+        "SQU Library": "SQU Library",
+        "SQU Lost and Found Department": "SQU Lost and Found Department",
+        "UTAS Muscat Library": "UTAS Muscat Library",
+        "UTAS Muscat Lost and Found Department": "UTAS Muscat Lost and Found Department",
+        "UTAS Ibra Library": "UTAS Ibra Library",
+        "UTAS Ibra Lost and Found Department": "UTAS Ibra Lost and Found Department",
+        "Bin Omair Library": "Bin Omair Library",
+        "Bin Omair Lost and Found Department": "Bin Omair Lost and Found Department",
+        "UTAS Nizwa Library": "UTAS Nizwa Library",
+        "UTAS Nizwa Lost and Found Department": "UTAS Nizwa Lost and Found Department"
       }
     }
     
