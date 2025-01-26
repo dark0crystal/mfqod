@@ -1,36 +1,38 @@
 "use client"
 import { Link } from "@/i18n/routing";
-import { orgName } from "@/app/storage";
+import DataProvider from "@/app/storage";
 export default function NavbarSlider({ userRole, managedOrg , managedPlace }: { userRole: string; managedOrg?: any ,managedPlace?: any }) {
+
+  const { orgNames } = DataProvider();
   const renderLinks = () => {
     switch (userRole) {
       case "TECHADMIN":
         // Full access to all org names
-        return orgName.map((org, index) => (
+        return orgNames.map((org, index) => (
           <Link
             key={index}
             href={{
               pathname: "/dashboard/posts",
-              query: { orgName: org}, // Pass orgName as a query
+              query: { orgName: org.key}, // Pass orgName as a query
             }}
           >
             <div className="p-3 bg-blue-500 text-white rounded-lg my-1 cursor-pointer">
-              {org}
+              {org.name}
             </div>
           </Link>
         ));
       case "ADMIN":
         // Full access to all places
-        return orgName.map((org, index) => (
+        return orgNames.map((org, index) => (
           <Link
             key={index}
             href={{
               pathname: "/dashboard/posts",
-              query: { orgName: org  }, // Pass orgName as a query
+              query: { orgName: org.key  }, // Pass orgName as a query
             }}
           >
             <div className="p-4 bg-green-500 text-white rounded-lg my-2 cursor-pointer">
-              {org}
+              {org.name}
             </div>
           </Link>
         ));
