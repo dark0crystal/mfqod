@@ -16,6 +16,7 @@ export default function MobileSideBar(){
       </button>
       {show &&
         <div className="h-screen w-screen bg-white">
+            
             <NavBar />
         </div>
       }
