@@ -65,7 +65,7 @@ export default function ManageUsers() {
       {/* Results */}
       {users.length > 0 ? (
         <div>
-          <h2 className="text-lg font-bold mb-2">Results:</h2>
+          
           <ul className="list-disc pl-5">
             {users.map((user) => (
               <li key={user.id} className="mb-4">
