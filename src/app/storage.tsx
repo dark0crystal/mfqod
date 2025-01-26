@@ -16,22 +16,22 @@ export default function DataProvider() {
 
   // Translated organization places
   const OrgPlaces = [
-    { key: "SQU", places: [t("place.SQU_Library"), t("place.SQU_LostFound")] },
+    { key: "SQU", places: [{key:"SQU Library",name:t("place.SQU_Library")}, {key:"SQU Lost and Found Department",name:t("place.SQU_LostFound")}] },
     {
-      key: "UTAS_Muscat",
-      places: [t("place.UTAS_Muscat_Library"), t("place.UTAS_Muscat_LostFound")],
+      key: "UTAS Muscat",
+      places: [{key:"UTAS Muscat Library" , name:t("place.UTAS_Muscat_Library")}, {key:"UTAS Muscat Lost and Found Department",name:t("place.UTAS_Muscat_LostFound")}],
     },
     {
-      key: "UTAS_Ibra",
-      places: [t("place.UTAS_Ibra_Library"), t("place.UTAS_Ibra_LostFound")],
+      key: "UTAS Ibra",
+      places: [{key:"UTAS Ibra Library",name:t("place.UTAS_Ibra_Library")}, {key:"UTAS Ibra Lost and Found Department",name:t("place.UTAS_Ibra_LostFound")}],
     },
     {
-      key: "Bin_Omair",
-      places: [t("place.Bin_Omair_Library"), t("place.Bin_Omair_LostFound")],
+      key: "Bin Omair",
+      places: [{key:"Bin Omair Library",name:t("place.Bin_Omair_Library")}],
     },
     {
-      key: "UTAS_Nizwa",
-      places: [t("place.UTAS_Nizwa_Library"), t("place.UTAS_Nizwa_LostFound")],
+      key: "UTAS Nizwa",
+      places: [{key:"UTAS Nizwa Library",name:t("place.UTAS_Nizwa_Library")}, {key:"UTAS Nizwa Lost and Found Department",name:t("place.UTAS_Nizwa_LostFound")}],
     },
   ];
 
