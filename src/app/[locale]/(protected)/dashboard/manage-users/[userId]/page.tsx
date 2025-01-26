@@ -7,7 +7,7 @@ export default function EditUserProfile({ params }: { params: { userId: string }
 
 
     return(
-        <div>
+        <div className="w-full lg:w-[80%] ">
             <AddUserManagement userId={params.userId}/>
             <EditUserManagement userId={params.userId}/>
             <EditUserRole userId={params.userId}/> 
