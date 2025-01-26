@@ -1,4 +1,5 @@
 
+import MobileSideBar from "./MobileSideBar";
 import NavBar from "./NavBar";
 export default async function Layout({children}: Readonly<{ children: React.ReactNode;}>)  {
 
@@ -12,6 +13,7 @@ export default async function Layout({children}: Readonly<{ children: React.Reac
             
             <NavBar />
         </div>
+        <MobileSideBar/>
        
         <div className=" flex flex-col  items-center px-4 col-span-3  lg:col-span-2">
             {children}
