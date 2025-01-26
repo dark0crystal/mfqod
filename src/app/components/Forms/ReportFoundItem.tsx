@@ -20,7 +20,7 @@ type ItemFormFields = {
 export default function ReportFoundItem() {
   const { register, handleSubmit, formState: { errors, isSubmitting }, reset, setValue } = useForm<ItemFormFields>();
   const [organization, setOrganization] = useState<string>("");
-  const [placeOptions, setPlaceOptions] = useState<string[]>([]);
+  const [placeOptions, setPlaceOptions] = useState<{ key: string; name: string }[]>([]);
   const [compressedFiles, setCompressedFiles] = useState<File[]>([]);
   const [confetti, setConfetti] = useState(false);
   const t= useTranslations("storage")
@@ -116,10 +116,10 @@ export default function ReportFoundItem() {
   useEffect(() => {
     if (organization) {
       const selectedOrgData = OrgPlaces.find(
-        (org) => Object.keys(org)[0] === organization
+        (org) => org.key === organization
       );
       if (selectedOrgData) {
-        const places = Object.values(selectedOrgData)[0];
+        const places = selectedOrgData.places;
         setPlaceOptions(places);
       }
     }
@@ -220,7 +220,7 @@ export default function ReportFoundItem() {
             >
               <option value="" disabled>Select Place</option>
               {placeOptions.map((place, index) => (
-                <option key={index} value={place}>{place}</option>
+                <option key={index} value={place.key}>{place.name}</option>
               ))}
             </select>
             {errors.place && <p className="mt-2 text-xs text-red-500">{errors.place.message}</p>}
