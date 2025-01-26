@@ -96,7 +96,7 @@ export default function EditUserManagement({ userId }: { userId: string }) {
           >
             <option value="" disabled>Select Organization</option>
             {orgNames.map((org, index) => {
-              const orgName = Object.keys(org)[0];
+             
               return (
                 <option key={index} value={org.key}>{org.name}</option>
               );
