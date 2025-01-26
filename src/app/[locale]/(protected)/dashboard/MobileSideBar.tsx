@@ -1,6 +1,5 @@
 "use client"
 import { useState } from "react"
-import NavBar from "./NavBar"
 export default function MobileSideBar(){
 
     const [show ,setShow] = useState(false)
@@ -9,18 +8,12 @@ export default function MobileSideBar(){
     setShow(!show)
    }
 
+  
     return(
         <div>
         <button onClick={handleShow}>
         nav
-      </button>
-      {show &&
-        <div className="h-screen w-screen bg-white">
-            
-            <NavBar />
-        </div>
-      }
-
+        </button>
         </div>
     )
 }
