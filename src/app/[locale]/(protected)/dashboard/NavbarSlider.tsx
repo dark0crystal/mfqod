@@ -9,19 +9,26 @@ const t= useTranslations("storage")
     switch (userRole) {
       case "TECHADMIN":
         // Full access to all org names
-        return orgNames.map((org, index) => (
-          <Link
-            key={index}
-            href={{
-              pathname: "/dashboard/posts",
-              query: { orgName: org.key}, // Pass orgName as a query
-            }}
-          >
-            <div className="p-3 bg-blue-500 text-white rounded-lg my-1 cursor-pointer">
-              {org.name}
-            </div>
-          </Link>
-        ));
+
+        return (
+          <div className="flex lg:flex-col flex-row overflow-x-auto lg:overflow-y-auto space-x-4 lg:space-x-0 lg:space-y-2">
+          {orgNames.map((org, index) => (
+            <Link
+              key={index}
+              href={{
+                pathname: "/dashboard/posts",
+                query: { orgName: org.key }, // Pass orgName as a query
+              }}
+            >
+              <div className="p-3 bg-blue-500 text-white rounded-lg my-1 cursor-pointer min-w-[120px] lg:min-w-0 whitespace-nowrap">
+                {org.name}
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        
+          )
       case "ADMIN":
         // Full access to all places
         return orgNames.map((org, index) => (
