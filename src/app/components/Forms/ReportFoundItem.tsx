@@ -4,7 +4,7 @@ import { supabase } from "@/lib/supabase";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import ReactConfetti from "react-confetti";
-import { OrgPlaces } from "@/app/storage";
+import DataProvider from "@/app/storage";
 import CompressorFileInput from "../CompressorFileInput";
 
 type ItemFormFields = {
@@ -22,6 +22,8 @@ export default function ReportFoundItem() {
   const [placeOptions, setPlaceOptions] = useState<string[]>([]);
   const [compressedFiles, setCompressedFiles] = useState<File[]>([]);
   const [confetti, setConfetti] = useState(false);
+
+  const {OrgPlaces} =DataProvider()
 
   const onSubmit: SubmitHandler<ItemFormFields> = async (data) => {
     console.log(data);
