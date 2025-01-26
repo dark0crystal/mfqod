@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { roles } from "@/app/storage";
+import DataProvider from "@/app/storage";
 type RoleData = {
   roles: string[];
 };
@@ -15,6 +15,8 @@ export default function EditUserRole({ userId }: { userId: string }) {
   const [currentRole, setCurrentRole] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const {roles} = DataProvider()
 
   const {
     register,
