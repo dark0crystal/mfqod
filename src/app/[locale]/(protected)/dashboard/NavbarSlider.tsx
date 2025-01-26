@@ -20,7 +20,7 @@ const t= useTranslations("storage")
                 query: { orgName: org.key }, // Pass orgName as a query
               }}
             >
-              <div className="bg-white border border-blue-200  p-3 rounded-md text-black my-1 cursor-pointer min-w-[120px] lg:min-w-0 whitespace-nowrap">
+              <div className="bg-white border border-blue-200  p-3 rounded-md text-black hover:bg-blue-100 my-1 cursor-pointer min-w-[120px] lg:min-w-0 whitespace-nowrap">
                 {org.name}
               </div>
             </Link>
@@ -31,23 +31,27 @@ const t= useTranslations("storage")
           )
       case "ADMIN":
         // Full access to all places
-        return orgNames.map((org, index) => (
-          <Link
-            key={index}
-            href={{
-              pathname: "/dashboard/posts",
-              query: { orgName: org.key  }, // Pass orgName as a query
-            }}
-          >
-            <div className="bg-white border border-blue-200  p-3 rounded-md text-black my-2 cursor-pointer">
-              {org.name}
-            </div>
-          </Link>
-        ));
+        return(
+        <div className="flex lg:flex-col flex-row overflow-x-auto lg:overflow-y-auto space-x-4 lg:space-x-0 lg:space-y-2">
+         { orgNames.map((org, index) => (
+            <Link
+              key={index}
+              href={{
+                pathname: "/dashboard/posts",
+                query: { orgName: org.key  }, // Pass orgName as a query
+              }}
+            >
+              <div className="bg-white border border-blue-200  p-3 rounded-md text-black my-2 cursor-pointer">
+                {org.name}
+              </div>
+            </Link>
+          ))}
+        </div>
+        )
       case "VERIFIED":
         // Access only to managed organizations
         return(
-            <div>
+          <div className="flex lg:flex-col flex-row overflow-x-auto lg:overflow-y-auto space-x-4 lg:space-x-0 lg:space-y-2">
           <Link
          
             href={{
@@ -76,9 +80,9 @@ const t= useTranslations("storage")
       case "BASIC":
         // Access only to their added places
         return (
-            <div>
+          <div className="flex lg:flex-col flex-row overflow-x-auto lg:overflow-y-auto space-x-4 lg:space-x-0 lg:space-y-2">
                 <h1>You are a normal user</h1>
-            </div>
+          </div>
         )
       default:
         return <p>No access available</p>;
