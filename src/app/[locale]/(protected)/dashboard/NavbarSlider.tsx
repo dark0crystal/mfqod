@@ -49,7 +49,7 @@ const t= useTranslations("storage")
             }}
           >
             <div className="p-4 bg-yellow-500 text-white rounded-lg my-2 cursor-pointer">
-              {managedOrg}
+              {t(`org.${managedOrg}`)}
             </div>
           </Link>
            <Link
@@ -60,7 +60,7 @@ const t= useTranslations("storage")
            }}
          >
            <div className="p-4 bg-yellow-500 text-white rounded-lg my-2 cursor-pointer">
-             {managedPlace}
+             {t(`place.${managedPlace}`)}
            </div>
          </Link>
          </div>
