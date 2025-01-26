@@ -89,7 +89,7 @@ export default function Search() {
             <button
               key={index}
               onClick={() => handleClick(org.key)}
-              className={`p-3 rounded-full transition-transform duration-300 ${
+              className={`p-3 rounded-full transition-transform duration-300 text-sm ${
                 currentName === org.key ? "bg-blue-100 border border-blue-400  p-3 rounded-md scale-110" : "bg-white border border-blue-200  p-3 rounded-md "
               }`}
             >
