@@ -24,8 +24,8 @@ export default function DisplayPosts({items}:any){
                       >
                         {/* Content Section */}
                         <div className="p-4">
-                          <h4 className="text-lg font-semibold text-gray-800">{t("title")} {item.title}</h4>
-                          <p className="text-gray-500 text-sm">{t("content")}{item.content}</p>
+                          <h4 className="text-lg font-semibold text-gray-800">{item.title}</h4>
+                          <p className="text-gray-500 text-sm">{item.content}</p>
                         </div>
           
                         {/* Footer Section */}
