@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
-import { OrgPlaces } from "@/app/storage";
+import DataProvider from "@/app/storage";
 
 const schema = z.object({
   org: z.string().nonempty("Please select an organization"),
@@ -15,10 +15,11 @@ type FormFields = z.infer<typeof schema>;
 export default function EditUserManagement({ userId }: { userId: string }) {
   const { register, handleSubmit, setValue, formState: { errors, isSubmitting }, reset } = useForm<FormFields>();
   const [organization, setOrganization] = useState<string>("");
-  const [placeOptions, setPlaceOptions] = useState<string[]>([]);
+  const [placeOptions, setPlaceOptions] = useState<{ key: string; name: string }[]>([]);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  const {OrgPlaces}  = DataProvider();
   // Fetch existing data for the user
   useEffect(() => {
     async function fetchData() {
@@ -31,9 +32,9 @@ export default function EditUserManagement({ userId }: { userId: string }) {
         setOrganization(data.organization);
         setValue("place", data.place);
 
-        const selectedOrgData = OrgPlaces.find(org => Object.keys(org)[0] === data.organization);
+        const selectedOrgData = OrgPlaces.find(org => org.key === data.organization);
         if (selectedOrgData) {
-          setPlaceOptions(Object.values(selectedOrgData)[0]);
+          setPlaceOptions(selectedOrgData.places);
         }
       } catch (error: any) {
         console.error(error.message);
@@ -46,9 +47,9 @@ export default function EditUserManagement({ userId }: { userId: string }) {
     const selectedOrg = e.target.value;
     setOrganization(selectedOrg);
 
-    const selectedOrgData = OrgPlaces.find(org => Object.keys(org)[0] === selectedOrg);
+    const selectedOrgData = OrgPlaces.find(org => org.key === selectedOrg);
     if (selectedOrgData) {
-      const places = Object.values(selectedOrgData)[0];
+      const places = selectedOrgData.places;
       setPlaceOptions(places);
       setValue("place", "");
     } else {
@@ -115,7 +116,7 @@ export default function EditUserManagement({ userId }: { userId: string }) {
             >
               <option value="" disabled>Select Place</option>
               {placeOptions.map((place, index) => (
-                <option key={index} value={place}>{place}</option>
+                <option key={index} value={place.key}>{place.name}</option>
               ))}
             </select>
             {errors.place && <p className="text-red-500 text-sm">{errors.place.message}</p>}
