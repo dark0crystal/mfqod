@@ -126,6 +126,7 @@ export default function Search() {
 <div className="col-span-12 lg:col-span-8 flex flex-col items-center p-4 overflow-y-auto w-full h-full">
   <div className="relative z-20 w-full flex items-center min-h-[30vh] justify-center">
     <div className="absolute -z-10 w-full rounded-xl overflow-hidden h-full">
+      
       <Image
         src={bg11}
         alt="search bg image"
@@ -133,6 +134,7 @@ export default function Search() {
         objectFit="cover"
       /> 
     </div>
+    <div className="absolute z-0 bg-white/60 w-[98%] h-[94%] rounded-xl"/>
     <div className="lg:absolute lg:bottom-12  w-full flex justify-center">
       <form onSubmit={handleSubmit(onSubmit)} className="flex lg:flex-row flex-col gap-2 w-fit max-w-md">
         <div>
