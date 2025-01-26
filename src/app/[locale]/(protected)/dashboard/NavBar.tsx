@@ -12,7 +12,7 @@ export default async function NavBar() {
 
 
   return (
-    <div>
+    <div >
       <div>
        
        <h1> Role: {result?.role}</h1>
