@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import { Link } from "@/i18n/routing";
 
 const schema = z.object({
   email: z.string().min(1, "Email is required").max(50, "Email is too long"),
@@ -11,9 +12,15 @@ const schema = z.object({
 type FormFields = z.infer<typeof schema>;
 
 export default function ManageUsers() {
-  const { register, reset, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormFields>({
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormFields>({
     resolver: zodResolver(schema),
   });
+
   const [users, setUsers] = useState<any[]>([]); // State to store fetched users
   const [error, setFetchError] = useState<string | null>(null);
 
@@ -53,7 +60,9 @@ export default function ManageUsers() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`px-4 py-2 rounded ${isSubmitting ? "bg-gray-400" : "bg-blue-600 text-white"}`}
+          className={`px-4 py-2 rounded ${
+            isSubmitting ? "bg-gray-400" : "bg-blue-600 text-white"
+          }`}
         >
           {isSubmitting ? "Searching..." : "Search"}
         </button>
@@ -64,52 +73,37 @@ export default function ManageUsers() {
 
       {/* Results */}
       {users.length > 0 ? (
-        <div>
-          
-          <ul className="list-disc pl-5">
-            {users.map((user) => (
-              <li key={user.id} className="mb-4">
-                <p><strong>Email:</strong> {user.email}</p>
-                <p><strong>Name:</strong> {user.name || "N/A"}</p>
-                <p><strong>Role:</strong> {user.role || "N/A"}</p>
-                <p><strong>User Id:</strong> {user.id || "N/A"}</p>
-                {/* Managed Places */}
-                {user.manage?.place?.length > 0 ? (
-                  <div>
-                    <h3 className="text-md font-bold mt-2">Managed Places:</h3>
-                    <ul className="list-disc pl-5">
-                      {user.manage.place.map((place: any) => (
-                        <li key={place.id}>
-                          <p><strong>Title:</strong> {place.title}</p>
-                          <p><strong>Description:</strong> {place.description}</p>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : (
-                  <p className="text-gray-500">No managed places.</p>
-                )}
+        <div className="space-y-4">
+          {users.map((user) => (
+            <div
+              key={user.id}
+              className="flex items-center justify-between border p-4 rounded-lg shadow-md"
+            >
+              {/* User Details */}
+              <div>
+                <p>
+                  <strong>Email:</strong> {user.email}
+                </p>
+                <p>
+                  <strong>Name:</strong> {user.name || "N/A"}
+                </p>
+                <p>
+                  <strong>Role:</strong> {user.role || "N/A"}
+                </p>
+              </div>
 
-                {/* Managed Organizations */}
-                {user.manage?.organization?.length > 0 ? (
-                  <div>
-                    <h3 className="text-md font-bold mt-2">Managed Organizations:</h3>
-                    <ul className="list-disc pl-5">
-                      {user.manage.organization.map((org: any) => (
-                        <li key={org.id}>
-                          <p><strong>Name:</strong> {org.name}</p>
-                          <p><strong>Description:</strong> {org.description}</p>
-                          
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : (
-                  <p className="text-gray-500">No managed organizations.</p>
-                )}
-              </li>
-            ))}
-          </ul>
+              {/* Edit Button */}
+              <Link
+               href={{
+                pathname: `/dashboard/manage-users/${user.id}`,
+             
+              }}
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                Edit User
+              </Link>
+            </div>
+          ))}
         </div>
       ) : (
         <p className="text-gray-500">No users found.</p>
