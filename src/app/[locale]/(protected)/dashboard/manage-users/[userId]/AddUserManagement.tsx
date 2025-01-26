@@ -19,7 +19,7 @@ export default function AddUserManagement({ userId }: { userId: string }) {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const {OrgPlaces} = DataProvider();
+  const {OrgPlaces ,orgNames} = DataProvider();
 
 
   const handleOrganizationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -62,8 +62,8 @@ export default function AddUserManagement({ userId }: { userId: string }) {
 
   return (
     <div>
-      <h1 className="text-lg font-bold">Add User Management</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <h1 className="text-lg font-bold ">Add User Management</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 w-full">
         {/* Organization */}
         <div>
           <label htmlFor="org" className="block text-sm font-medium">Organization</label>
@@ -75,10 +75,9 @@ export default function AddUserManagement({ userId }: { userId: string }) {
             className="w-full p-2 border rounded"
           >
             <option value="" disabled>Select Organization</option>
-            {OrgPlaces.map((org, index) => {
-              const orgName = Object.keys(org)[0];
+            {orgNames.map((org, index) => {
               return (
-                <option key={index} value={orgName}>{orgName}</option>
+                <option key={index} value={org.key}>{org.name}</option>
               );
             })}
           </select>
