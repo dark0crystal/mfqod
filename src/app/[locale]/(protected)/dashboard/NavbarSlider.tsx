@@ -20,7 +20,7 @@ const t= useTranslations("storage")
                 query: { orgName: org.key }, // Pass orgName as a query
               }}
             >
-              <div className="bg-white border border-blue-200  p-3 rounded-md text-black hover:bg-blue-100 my-1 cursor-pointer min-w-[120px] lg:min-w-0 whitespace-nowrap">
+              <div className="bg-white border border-blue-200  p-3 rounded-md text-black hover:bg-blue-100 text-sm my-1 cursor-pointer min-w-[120px] lg:min-w-0 whitespace-nowrap">
                 {org.name}
               </div>
             </Link>
@@ -41,7 +41,7 @@ const t= useTranslations("storage")
                 query: { orgName: org.key  }, // Pass orgName as a query
               }}
             >
-              <div className="bg-white border border-blue-200  p-3 rounded-md text-black my-2 cursor-pointer">
+              <div className="bg-white border border-blue-200  p-3 rounded-md text-black hover:bg-blue-100 text-sm my-2 cursor-pointer">
                 {org.name}
               </div>
             </Link>
@@ -59,7 +59,7 @@ const t= useTranslations("storage")
               query: { orgName: managedOrg}, // Pass orgName as a query
             }}
           >
-            <div className="bg-white border border-blue-200  p-3 rounded-md text-black my-2 cursor-pointer">
+            <div className="bg-white border border-blue-200  p-3 rounded-md text-black hover:bg-blue-100 text-sm my-2 cursor-pointer">
               {t(`org.${managedOrg}`)}
             </div>
           </Link>
@@ -70,7 +70,7 @@ const t= useTranslations("storage")
              query: { orgName: managedOrg ,placeName:managedPlace}, // Pass orgName as a query
            }}
          >
-           <div className="p-4 bg-yellow-500 text-white rounded-lg my-2 cursor-pointer">
+           <div className="bg-white border border-blue-200  p-3 rounded-md text-black hover:bg-blue-100 text-sm  my-2 cursor-pointer">
              {t(`place.${managedPlace}`)}
            </div>
          </Link>
