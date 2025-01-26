@@ -1,8 +1,9 @@
 "use client"
 import { Link } from "@/i18n/routing";
 import DataProvider from "@/app/storage";
+import { useTranslations } from "next-intl";
 export default function NavbarSlider({ userRole, managedOrg , managedPlace }: { userRole: string; managedOrg?: any ,managedPlace?: any }) {
-
+const t= useTranslations("storage")
   const { orgNames } = DataProvider();
   const renderLinks = () => {
     switch (userRole) {
