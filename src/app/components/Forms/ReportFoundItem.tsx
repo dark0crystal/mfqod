@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import ReactConfetti from "react-confetti";
 import DataProvider from "@/app/storage";
 import CompressorFileInput from "../CompressorFileInput";
+import { useTranslations } from "next-intl";
 
 type ItemFormFields = {
   title: string;
@@ -22,7 +23,7 @@ export default function ReportFoundItem() {
   const [placeOptions, setPlaceOptions] = useState<string[]>([]);
   const [compressedFiles, setCompressedFiles] = useState<File[]>([]);
   const [confetti, setConfetti] = useState(false);
-
+  const t= useTranslations("storage")
   const {OrgPlaces} =DataProvider()
 
   const onSubmit: SubmitHandler<ItemFormFields> = async (data) => {
@@ -92,13 +93,19 @@ export default function ReportFoundItem() {
 
   const handleOrganizationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOrg = e.target.value;
+    console.log("before",selectedOrg)
     setOrganization(selectedOrg);
+    console.log("after" ,organization)
 
     const selectedOrgData = OrgPlaces.find(
-      (org) => Object.keys(org)[0] === selectedOrg
+      (org) => org.key === selectedOrg
+      
     );
+    console.log("after",selectedOrgData)
     if (selectedOrgData) {
-      const places = Object.values(selectedOrgData)[0];
+      console.log(selectedOrgData)
+      const places = selectedOrgData.places;
+      console.log(places)
       setPlaceOptions(places);
       setValue("place", "");
     } else {
@@ -195,7 +202,7 @@ export default function ReportFoundItem() {
             {OrgPlaces.map((org, index) => {
               const orgName = Object.keys(org)[0];
               return (
-                <option key={index} value={orgName}>{orgName}</option>
+                <option key={index} value={org.key}>{t(`org.${org.key}`)}</option>
               );
             })}
           </select>
