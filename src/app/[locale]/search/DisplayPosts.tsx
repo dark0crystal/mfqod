@@ -2,8 +2,9 @@
 import { useRouter } from "@/i18n/routing";
 import { MdArrowOutward } from "react-icons/md";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 export default function DisplayPosts({items}:any){
-    console.log(items)
+  const t= useTranslations("card")
     const router = useRouter();  // To navigate to the details page
  // Handle post click to navigate to details
  const handlePostClick = (postId: string) => {
@@ -23,14 +24,14 @@ export default function DisplayPosts({items}:any){
                       >
                         {/* Content Section */}
                         <div className="p-4">
-                          <h4 className="text-lg font-semibold text-gray-800">{item.title}</h4>
-                          <p className="text-gray-500 text-sm">{item.content}</p>
+                          <h4 className="text-lg font-semibold text-gray-800">{t("title")} {item.title}</h4>
+                          <p className="text-gray-500 text-sm">{t("content")}{item.content}</p>
                         </div>
           
                         {/* Footer Section */}
                         <div className="flex items-center justify-between py-2 px-4">
                           <p className="text-gray-600 text-sm">
-                            Location: {item.address?.place}, {item.address?.country}
+                            {t("location")}: {item.address?.place}, {item.address?.country}
                           </p>
                         </div>
           
