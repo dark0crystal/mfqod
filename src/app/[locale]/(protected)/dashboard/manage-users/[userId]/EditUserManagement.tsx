@@ -19,7 +19,7 @@ export default function EditUserManagement({ userId }: { userId: string }) {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const {OrgPlaces}  = DataProvider();
+  const {OrgPlaces ,orgNames}  = DataProvider();
   // Fetch existing data for the user
   useEffect(() => {
     async function fetchData() {
@@ -95,10 +95,10 @@ export default function EditUserManagement({ userId }: { userId: string }) {
             className="w-full p-2 border rounded"
           >
             <option value="" disabled>Select Organization</option>
-            {OrgPlaces.map((org, index) => {
+            {orgNames.map((org, index) => {
               const orgName = Object.keys(org)[0];
               return (
-                <option key={index} value={orgName}>{orgName}</option>
+                <option key={index} value={org.key}>{org.name}</option>
               );
             })}
           </select>
