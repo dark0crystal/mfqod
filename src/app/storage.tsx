@@ -8,10 +8,10 @@ export default function DataProvider() {
   // Translated organization names
   const orgNames = [
     { key: "SQU", name: t("org.SQU") },
-    { key: "UTAS Muscat", name: t("org.UTAS_Muscat") },
-    { key: "UTAS Ibra", name: t("org.UTAS_Ibra") },
-    { key: "Bin Omair", name: t("org.Bin_Omair") },
-    { key: "UTAS Nizwa", name: t("org.UTAS_Nizwa") },
+    { key: "UTAS Muscat", name: t("org.UTAS Muscat") },
+    { key: "UTAS Ibra", name: t("org.UTAS Ibra") },
+    { key: "Bin Omair", name: t("org.Bin Omair") },
+    { key: "UTAS Nizwa", name: t("org.UTAS Nizwa") },
   ];
 
   // Translated organization places
