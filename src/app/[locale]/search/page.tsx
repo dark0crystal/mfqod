@@ -100,7 +100,7 @@ export default function Search() {
       </div>
 
       {/* for mobile and ipad view */}
-      <div className="z-50 fixed bottom-4 right-4 lg:hidden">
+      <div className="z-40 fixed bottom-4 right-4 lg:hidden">
         
         {show && 
       <div className="relative flex flex-col gap-2">
@@ -117,7 +117,7 @@ export default function Search() {
           ))}
         </div>
         }
-        <button className="bg-white border border-1 p-3 rounded-sm mt-2" onClick={handleShow}>
+        <button className="bg-white border border-1 p-3 rounded-sm mt-2 " onClick={handleShow}>
             filter
         </button>
       </div>
