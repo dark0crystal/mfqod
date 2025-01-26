@@ -15,10 +15,10 @@
     "storage":{
       "org": {
         "SQU": "Sultan Qaboos University",
-        "UTAS_Muscat": "UTAS Muscat",
-        "UTAS_Ibra": "UTAS Ibra",
-        "Bin_Omair": "Bin Omair Library",
-        "UTAS_Nizwa": "UTAS Nizwa"
+        "UTAS Muscat": "UTAS Muscat",
+        "UTAS Ibra": "UTAS Ibra",
+        "Bin Omair": "Bin Omair Library",
+        "UTAS Nizwa": "UTAS Nizwa"
       },
       "place": {
         "SQU_Library": "SQU Library",
