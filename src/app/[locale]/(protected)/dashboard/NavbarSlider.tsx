@@ -41,7 +41,7 @@ const t= useTranslations("storage")
                 query: { orgName: org.key  }, // Pass orgName as a query
               }}
             >
-              <div className="bg-white border border-blue-200  p-3 rounded-md text-black hover:bg-blue-100 text-sm my-2 cursor-pointer">
+              <div className="bg-white border border-blue-200  p-3 rounded-md text-black hover:bg-blue-100 text-sm my-2 cursor-pointer  whitespace-nowrap">
                 {org.name}
               </div>
             </Link>
@@ -59,7 +59,7 @@ const t= useTranslations("storage")
               query: { orgName: managedOrg}, // Pass orgName as a query
             }}
           >
-            <div className="bg-white border border-blue-200  p-3 rounded-md text-black hover:bg-blue-100 text-sm my-2 cursor-pointer">
+            <div className="bg-white border border-blue-200  p-3 rounded-md text-black hover:bg-blue-100 text-sm my-2 cursor-pointer  whitespace-nowrap">
               {t(`org.${managedOrg}`)}
             </div>
           </Link>
@@ -70,7 +70,7 @@ const t= useTranslations("storage")
              query: { orgName: managedOrg ,placeName:managedPlace}, // Pass orgName as a query
            }}
          >
-           <div className="bg-white border border-blue-200  p-3 rounded-md text-black hover:bg-blue-100 text-sm  my-2 cursor-pointer">
+           <div className="bg-white border border-blue-200  p-3 rounded-md text-black hover:bg-blue-100 text-sm  my-2 cursor-pointer  whitespace-nowrap">
              {t(`place.${managedPlace}`)}
            </div>
          </Link>
