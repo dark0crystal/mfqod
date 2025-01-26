@@ -32,6 +32,12 @@
         "UTAS Nizwa Library": "UTAS Nizwa Library",
         "UTAS Nizwa Lost and Found Department": "UTAS Nizwa Lost and Found Department"
       }
+    },
+
+
+    "card":{
+      
+      "location":"Location"
     }
     
   }
