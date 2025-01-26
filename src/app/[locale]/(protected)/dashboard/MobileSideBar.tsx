@@ -12,7 +12,7 @@ export default function MobileSideBar(){
     return(
         <div>
         <button onClick={handleShow}>
-        nav
+           nav
         </button>
         </div>
     )
