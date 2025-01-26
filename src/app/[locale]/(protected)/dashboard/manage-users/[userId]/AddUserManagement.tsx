@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
-import { OrgPlaces } from "@/app/storage";
+import DataProvider from "@/app/storage";
 
 const schema = z.object({
   org: z.string().nonempty("Please select an organization"),
@@ -15,18 +15,21 @@ type FormFields = z.infer<typeof schema>;
 export default function AddUserManagement({ userId }: { userId: string }) {
   const { register, handleSubmit, formState: { errors, isSubmitting }, reset, setValue } = useForm<FormFields>();
   const [organization, setOrganization] = useState<string>(""); // Organization state
-  const [placeOptions, setPlaceOptions] = useState<string[]>([]); // Place options state
+  const [placeOptions, setPlaceOptions] = useState<{ key: string; name: string }[]>([]);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const {OrgPlaces} = DataProvider();
+
 
   const handleOrganizationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOrg = e.target.value;
     setOrganization(selectedOrg);
 
-    const selectedOrgData = OrgPlaces.find(org => Object.keys(org)[0] === selectedOrg);
+    const selectedOrgData = OrgPlaces.find(org => org.key === selectedOrg);
     if (selectedOrgData) {
-      const places = Object.values(selectedOrgData)[0];
-      setPlaceOptions(places);
+      const places = selectedOrgData;
+      setPlaceOptions(selectedOrgData.places);
       setValue("place", ""); // Reset the selected place
     } else {
       setPlaceOptions([]);
@@ -93,7 +96,7 @@ export default function AddUserManagement({ userId }: { userId: string }) {
             >
               <option value="" disabled>Select Place</option>
               {placeOptions.map((place, index) => (
-                <option key={index} value={place}>{place}</option>
+                <option key={index} value={place.key}>{place.name}</option>
               ))}
             </select>
             {errors.place && <p className="text-red-500 text-sm">{errors.place.message}</p>}
