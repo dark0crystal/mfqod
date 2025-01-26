@@ -135,9 +135,9 @@ export default function Search() {
       /> 
     </div>
     {/* blur background on top of image */}
-    <div className="absolute z-0 bg-white/60 w-[98%] h-[94%] rounded-xl"/>
+    <div className="absolute z-10 bg-white/60 w-[98%] h-[94%] rounded-xl"/>
 
-    <div className="lg:absolute lg:bottom-12  w-full flex justify-center">
+    <div className="lg:absolute lg:bottom-12  w-full flex justify-center z-20">
       <form onSubmit={handleSubmit(onSubmit)} className="flex lg:flex-row flex-col gap-2 w-fit max-w-md">
         <div>
           <input
@@ -183,12 +183,12 @@ export default function Search() {
 
       {/* Right Section */}
       <div className="hidden lg:col-span-2  p-4 lg:flex flex-col justify-center items-center">
-         <div className="relative h-full w-full rounded-2xl overflow-hidden">
+         {/* <div className="relative h-full w-full rounded-2xl overflow-hidden">
           <Image alt="ad" src={ad} fill objectFit="cover"/>
          <div className="absolute bottom-0 bg-gray-300/20 text-center w-full rounded-t-2xl h-10"> 
             <h1 className="text-lg text-white  font-normal">Fake Sponsorship</h1>
           </div>
-         </div>
+         </div> */}
       </div>
     </div>
   );
