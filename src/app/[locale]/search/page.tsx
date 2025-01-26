@@ -10,7 +10,7 @@ import DataProvider from "@/app/storage";
 import Footer from "@/app/components/Footer";
 import Image from "next/image";
 import ad from "../../../../public/ad.png"
-import bg9 from "../../../../public/bg9.jpg"
+import bg11 from "../../../../public/bg11.jpg"
 import bg20 from "../../../../public/bg20.jpeg"
 import { FaSearch } from "react-icons/fa";
 import { RiLoader2Line } from "react-icons/ri";
@@ -127,7 +127,7 @@ export default function Search() {
   <div className="relative z-20 w-full flex items-center min-h-[30vh] justify-center">
     <div className="absolute -z-10 w-full rounded-xl overflow-hidden h-full">
       <Image
-        src={bg20}
+        src={bg11}
         alt="search bg image"
         fill
         objectFit="cover"
