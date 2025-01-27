@@ -4,6 +4,7 @@
       "about": "Go to the about page",
       "search":"ابحث عن مفقود",
       "report":"بلّغ عن مفقود",
+      "description":"مفقود يسهل عليك تحصل ممتلكاتك المفقودة",
       "versionMessage":"إطلاق مفقود النسخة التجريبية v1.0.0 "
     },
     "navbar":{
