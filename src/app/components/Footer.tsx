@@ -1,5 +1,7 @@
+"use client"
 import Brand from "./navbar/Brand";
 import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 // Data arrays for the links
 const quickLinks = [
@@ -22,6 +24,8 @@ const otherLinks = [
 
 // Footer component
 export default function Footer() {
+  const t =useTranslations("footer");
+
   return (
     <footer className="text-gray-500 py-10 px-12 mt-20 border-t-2">
       <div className="flex flex-col lg:flex-row  ">
@@ -42,7 +46,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row">
           {/* Quick Links */}
           <div className="mx-4">
-            <h1 className="text-black mb-4">روابط سريعة</h1>
+            <h1 className="text-black mb-4">{t("quickLinks")}</h1>
             {quickLinks.map((link, index) => (
               <div key={index}>
                 <Link href={link.href}>{link.label}</Link>
@@ -52,7 +56,7 @@ export default function Footer() {
 
           {/* Privacy and Terms */}
           <div className="mx-4">
-            <h1 className="text-black mb-4">الخصوصية و البنود</h1>
+            <h1 className="text-black mb-4">{t("privacyTitle")}</h1>
             {privacyLinks.map((link, index) => (
               <div key={index}>
                 {link.label && <Link href={link.href}>{link.label}</Link>}
