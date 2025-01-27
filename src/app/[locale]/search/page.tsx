@@ -11,7 +11,7 @@ import Footer from "@/app/components/Footer";
 import Image from "next/image";
 import ad from "../../../../public/ad.png"
 import bg11 from "../../../../public/bg11.jpg"
-import bg20 from "../../../../public/bg20.jpeg"
+import bg12 from "../../../../public/bg12.jpeg"
 import { FaSearch } from "react-icons/fa";
 import { RiLoader2Line } from "react-icons/ri";
 
@@ -128,14 +128,14 @@ export default function Search() {
     <div className="absolute -z-10 w-full rounded-xl overflow-hidden h-full">
       
       <Image
-        src={bg11}
+        src={bg12}
         alt="search bg image"
         fill
         objectFit="cover"
       /> 
     </div>
     {/* blur background on top of image */}
-    <div className="absolute z-10 bg-white/60 w-[98%] h-[94%] rounded-xl"/>
+    <div className="absolute z-10 bg-white/40 w-full h-full rounded-xl"/>
 
     <div className="lg:absolute lg:bottom-12  w-full flex justify-center z-20">
       <form onSubmit={handleSubmit(onSubmit)} className="flex lg:flex-row flex-col gap-2 w-fit max-w-md">
