@@ -1,7 +1,9 @@
 {
     "HomePage": {
       "title": "Hello world!",
-      "about": "Go to the about page"
+      "about": "Go to the about page",
+      "search":"ابحث عن مفقود",
+      "report":"بلّغ عن مفقود"
     },
     "navbar":{
         "brand":"مَفقوُد",
