@@ -3,28 +3,29 @@ import Brand from "./navbar/Brand";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 
-// Data arrays for the links
-const quickLinks = [
-  { href: "/", label: "" },
-  { href: "/", label: "بشيسبش بلغ" },
-  { href: "/", label: " بسيبش اي شي" },
-];
 
-const privacyLinks = [
-  { href: "/", label: "سياسة الخصوصية" },
-  { href: "/", label: "بنود الخدمة" },
-  { href: "/", label: "" }, // You can add a label or remove this if unnecessary
-];
-
-const otherLinks = [
-  { href: "/", label: " لشب بشرابط" },
-  { href: "/", label: "رابطب بسي" },
-  { href: "/", label: "رابط بشسب" },
-];
 
 // Footer component
 export default function Footer() {
   const t =useTranslations("footer");
+
+
+  // Data arrays for the links
+const quickLinks = [
+  { href: "/", label: "" },
+  { href: "/report-found-item", label: `${t("report")}` },
+  { href: "/search", label: `${t("search")}` },
+];
+
+const privacyLinks = [
+  { href: "/", label: `${t("privacy")}` },
+  { href: "/", label: `${t("terms")}`},
+];
+
+const otherLinks = [
+  { href: "/dashboard", label: `${t("dashboard")}` },
+  { href: "/", label: `${t("Register")}` },
+];
 
   return (
     <footer className="text-gray-500 py-10 px-12 mt-20 border-t-2">
@@ -66,7 +67,7 @@ export default function Footer() {
 
           {/* Other Links */}
           <div className="mx-4">
-            <h1 className="text-black mb-4">أشياء أخرى</h1>
+            <h1 className="text-black mb-4">{t("seeAlso")}</h1>
             {otherLinks.map((link, index) => (
               <div key={index}>
                 <Link href={link.href}>{link.label}</Link>
