@@ -1,9 +1,12 @@
 "use client"
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 const ChangingWords = () => {
-  const words = ["فاقد شي؟", "نقدر نساعدك", "محصل شي؟", "ساعد صاحبه"]; // List of words
+  const t =useTranslations("timeBaseWords")
+
+  const words = [`${t("lostSth")}`, `${t("help")}`,`${t("foundSth")}` , `${t("helpOwner")}`]; // List of words
   const [currentWord, setCurrentWord] = useState(words[0]);
 
   useEffect(() => {
