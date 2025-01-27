@@ -78,9 +78,7 @@ const otherLinks = [
       </div>
 
       <div>
-        <h1>
-          {t("")}
-        </h1>
+      <h1 className="mt-8 text-gray-500 text-lg text-center" >{t("disclaimer")}</h1>
       </div>
     </footer>
   );
