@@ -41,10 +41,9 @@ export default async function Home() {
         </div>
 
         {/* Bottom Center Card */}
-        <div className='flex flex-row gap-4 items-center justify-center mt-16'>
-          <FoundButton/>
-        
+        <div className='flex flex-col md:flex-row gap-4 items-center justify-center mt-16'>
           <SearchButton/>
+          <FoundButton/>
         </div>
       
 
@@ -102,7 +101,7 @@ export default async function Home() {
 async function FoundButton() {
   const t = await getTranslations("HomePage")
   return (
-    <Link href="/report-found-item" className="bg-gradient-to-r from-[#ff5722] to-[#f44336] p-4 rounded-xl text-white font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
+    <Link href="/report-found-item" className=" w-full md:w-[200px] bg-gradient-to-r from-white to-white border border-black p-4 rounded-xl text-black font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
       <h1>{t("report")}</h1>
     </Link>
   );
@@ -111,7 +110,7 @@ async function FoundButton() {
 async function SearchButton() {
   const t = await getTranslations("HomePage")
   return (
-    <Link href="/search" className="bg-gradient-to-r from-[#2196f3] to-[#4caf50] p-4 rounded-xl text-white font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
+    <Link href="/search" className="w-full md:w-[200px]  bg-gradient-to-r from-[#2196f3] to-[#2f7ce1] p-4 rounded-xl text-white font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
       {t("search")}
     </Link>
   );
