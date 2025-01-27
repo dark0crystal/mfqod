@@ -28,7 +28,7 @@ const otherLinks = [
 ];
 
   return (
-    <footer className="text-gray-500 mt-20 border-t-2">
+    <footer className="text-gray-500 mt-24 border-t-2">
       <div className="flex flex-col lg:flex-row justify-around md:items-center  py-[2rem]">
         {/* Brand and Language Change */}
         <div className="p-4">
@@ -77,9 +77,11 @@ const otherLinks = [
         </div>
       </div>
           <div className="bg-gray-200 h-[1.5px] w-full "/>
-      <div className="p-8 md:p-12">
-      <h1 className=" text-gray-500 text-sm md:text-lg text-center" >{t("disclaimer")}</h1>
-      <Link href="https://mrdasdev.vercel.app/">{t("developer")}</Link>
+      <div className="p-8 md:p-12 text-center">
+      <h1 className=" text-gray-500 text-sm md:text-lg " >{t("disclaimer")}</h1>
+      <div className="  mt-4 text-center">
+        <Link className="bg-blue-200"  href="https://mrdasdev.vercel.app/">{t("developer")}</Link>
+      </div>
       </div>
     </footer>
   );
