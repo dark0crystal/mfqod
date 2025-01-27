@@ -1,7 +1,9 @@
 {
     "HomePage": {
       "title": "Hello world!",
-      "about": "Go to the about page"
+      "about": "Go to the about page",
+      "search":"Search Lost Items",
+      "report":"Report Found Item"
     },
     "navbar":{
         "brand":"",
@@ -57,6 +59,10 @@
 
 
 
+    },
+
+    "trustedBy":{
+      "title":"Proudly Trusted By"
     }
     
   }
