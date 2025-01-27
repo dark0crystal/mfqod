@@ -28,8 +28,8 @@ const otherLinks = [
 ];
 
   return (
-    <footer className="text-gray-500 py-10 px-12 mt-20 border-t-2">
-      <div className="flex flex-col lg:flex-row  ">
+    <footer className="text-gray-500 mt-20 border-t-2">
+      <div className="flex flex-col lg:flex-row justify-around items-center  py-[2rem]">
         {/* Brand and Language Change */}
         <div className="p-4">
           <div>
@@ -75,6 +75,12 @@ const otherLinks = [
             ))}
           </div>
         </div>
+      </div>
+
+      <div>
+        <h1>
+          {t("")}
+        </h1>
       </div>
     </footer>
   );
