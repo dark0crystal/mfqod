@@ -1,6 +1,6 @@
 {
     "HomePage": {
-      "title": "Hello world!",
+      "title": "Lost Something? Mfqod Will Help",
       "about": "Go to the about page",
       "search":"Search Lost Items",
       "report":"Report Found Item",
@@ -67,6 +67,17 @@
 
     "trustedBy":{
       "title":"Proudly Trusted By"
+    },
+
+    "cards":{
+      "name1":"SQU",
+      "name2":"UTAS",
+      "name3":"GUtech",
+      "name4":"OXFORD",
+      "item1":"Watch",
+      "item2":"wallet",
+      "item3":"Ring",
+      "item4":"Key"
     }
     
   }
