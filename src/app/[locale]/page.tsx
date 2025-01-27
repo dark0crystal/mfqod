@@ -25,7 +25,7 @@ export default async function Home() {
         </div>
         {/* Central Text */}
         <p className="text-center text-4xl font-extrabold text-black leading-relaxed">
-          مغيّب شي ؟ مفقود بيساعدك
+          {t("title")}
         </p>
 
         <div className="flex flex-col items-center justify-center mt-2 rounded-lg  px-[2rem] md:px-[5rem] lg:px-[7rem] text-center">
