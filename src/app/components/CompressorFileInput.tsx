@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Compressor from "compressorjs";
+import { useTranslations } from "next-intl";
 
 interface CompressorFileInputProps {
   onFilesSelected: (compressedFiles: File[]) => void;
@@ -12,6 +13,8 @@ const CompressorFileInput: React.FC<CompressorFileInputProps> = ({
 }) => {
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [compressedFiles, setCompressedFiles] = useState<File[]>([]);
+
+  const t =useTranslations("report-found");
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -64,7 +67,7 @@ const CompressorFileInput: React.FC<CompressorFileInputProps> = ({
         htmlFor="compressed-file-input"
         className="block text-lg font-semibold text-gray-700"
       >
-        Upload Image(s)
+        {t("uploadImages")}
       </label>
       <input
         type="file"
