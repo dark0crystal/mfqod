@@ -14,6 +14,7 @@ import CardsSection from '../components/CardSection';
 import TrustedBy from '../components/trusted-by/TrustedBy';
 import Footer from "../components/Footer"
 import { getTranslations } from "next-intl/server"
+import { Link } from "@/i18n/routing"
 
 export default async function Home() {
   
@@ -120,16 +121,16 @@ export default async function Home() {
 
 function FoundButton() {
   return (
-    <div className="bg-gradient-to-r from-[#ff5722] to-[#f44336] p-4 rounded-xl text-white font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
+    <Link href="/report-found-item" className="bg-gradient-to-r from-[#ff5722] to-[#f44336] p-4 rounded-xl text-white font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
       <h1>بلغ عن شيء مفقود</h1>
-    </div>
+    </Link>
   );
 }
 
 function SearchButton() {
   return (
-    <div className="bg-gradient-to-r from-[#2196f3] to-[#4caf50] p-4 rounded-xl text-white font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
+    <Link href="/search" className="bg-gradient-to-r from-[#2196f3] to-[#4caf50] p-4 rounded-xl text-white font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
       إبحث عن شيء مفقود
-    </div>
+    </Link>
   );
 }
