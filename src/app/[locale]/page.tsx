@@ -38,7 +38,7 @@ export default async function Home() {
 
   return (
     <main className="overflow-hidden flex flex-col justify-center "> 
-      <div className="relative h-[58vh] w-screen  mt-20 p-4 overflow-hidden">
+      <div className="relative h-fit w-screen  mt-20 p-4 overflow-hidden">
         <div className='flex justify-center my-2 items-center'>
         <TimeBasedWords/>
         </div>
