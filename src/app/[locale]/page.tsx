@@ -99,18 +99,20 @@ export default async function Home() {
 // }
 
 
-function FoundButton() {
+async function FoundButton() {
+  const t = await getTranslations("HomePage")
   return (
     <Link href="/report-found-item" className="bg-gradient-to-r from-[#ff5722] to-[#f44336] p-4 rounded-xl text-white font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
-      <h1>بلغ عن شيء مفقود</h1>
+      <h1>{t("report")}</h1>
     </Link>
   );
 }
 
-function SearchButton() {
+async function SearchButton() {
+  const t = await getTranslations("HomePage")
   return (
     <Link href="/search" className="bg-gradient-to-r from-[#2196f3] to-[#4caf50] p-4 rounded-xl text-white font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
-      إبحث عن شيء مفقود
+      {t("search")}
     </Link>
   );
 }
