@@ -24,16 +24,35 @@ export default async function Home() {
         <TimeBasedWords/>
         </div>
         {/* Central Text */}
-        <p className="text-center text-4xl font-extrabold text-black">
-          مغيّب شي ؟ مفقود بيساعدك 
-          
+        <p className="text-center text-4xl font-extrabold text-black leading-relaxed">
+          مغيّب شي ؟ مفقود بيساعدك
+        </p>
 
-          </p>
         <div className="flex flex-col items-center justify-center mt-2 rounded-lg  px-[2rem] md:px-[5rem] lg:px-[7rem] text-center">
 
-            <p className="text-center text-lg font-semibold text-black">
-           
-           </p>
+        <div className="relative inline-block">
+            <p className="relative text-center text-lg font-semibold text-black z-20">
+            {t("description")}
+            </p>
+            <svg
+              className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-10"
+              xmlns="http://www.w3.org/2000/svg"
+              width="150"
+              height="50"
+              viewBox="0 0 150 50"
+              fill="none"
+            >
+             <path
+                d="M10 25c10 10 60 15 120 0"
+                stroke="#add8e6" /* Light blue color */
+                strokeWidth="10"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+
+
         
         <p className="text-center text-md font-medium text-gray-600 mt-6 underline decoration-blue-500 decoration-wavy">
           {t("versionMessage")}
