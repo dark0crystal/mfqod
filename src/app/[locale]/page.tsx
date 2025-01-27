@@ -13,9 +13,11 @@ import TimeBasedWords from '../components/framer/TimeBaseWords';
 import CardsSection from '../components/CardSection';
 import TrustedBy from '../components/trusted-by/TrustedBy';
 import Footer from "../components/Footer"
+import { getTranslations } from "next-intl/server"
 
-export default function Home() {
-
+export default async function Home() {
+  
+ const t = await getTranslations("HomePage")
   // const container = useRef();
   // const { scrollYProgress } = useScroll({
   //   target: container,
@@ -53,7 +55,7 @@ export default function Home() {
           <p className="text-center text-lg font-semibold text-black">
           مغيّب شي ؟ مفقود بيساعدك 
           </p>
-          
+          <h1>{t("disclaimer")}</h1>
         </div>
 
         {/* Bottom Center Card */}
