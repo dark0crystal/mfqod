@@ -1,7 +1,20 @@
 import Image from "next/image";
-import img4 from "../../../public/img4.jpeg";
+import img1 from "../../../public/img5.jpeg";
+import img2 from "../../../public/img4.jpeg";
+import img3 from "../../../public/img3.jpeg";
+import img4 from "../../../public/img15.jpeg";
+import { getTranslations } from "next-intl/server";
 
-export default function CardsSection() {
+export default async function CardsSection() {
+  const t = await getTranslations("cards")
+
+
+  const cards = [{name:`${t("name1")}`,item:`${t("item1")}`, image: img1},
+                 {name:`${t("name2")}`,item:`${t("item2")}`, image: img2},
+                 {name:`${t("name3")}`,item:`${t("item3")}`, image: img3},
+                 {name:`${t("name4")}`,item:`${t("item4")}`, image: img4}
+  ]
+
   return (
     <div className="h-[50vh] w-full p-10 ">
       <div className="h-full w-full rounded-3xl relative flex flex-col justify-center">
@@ -66,7 +79,7 @@ export default function CardsSection() {
 
         {/* Cards */}
         <div className="flex justify-evenly items-center relative z-20">
-          {[...Array(4)].map((_, index) => (
+          {cards.map((card, index) => (
             <div
               key={index}
               className={`w-[160px] h-[190px] rounded-2xl bg-white/30 backdrop-blur-lg shadow-lg border border-white/20 flex flex-col items-center justify-center p-4 ${
@@ -75,13 +88,13 @@ export default function CardsSection() {
             >
               <div className="w-[90px] h-[90px] rounded-full overflow-hidden border-4 border-white shadow-md">
                 <Image
-                  src={img4}
+                  src={card.image}
                   alt={`Profile ${index + 1}`}
                   className="w-full h-full object-cover"
                 />
               </div>
-              <p className="mt-4 text-lg font-semibold text-black/55">ساعة</p>
-              <p className="text-sm text-black/55">مكتبة الجامعة</p>
+              <p className="mt-4 text-lg font-semibold text-black/55">{card.item}</p>
+              <p className="text-sm text-black/55">{card.name}</p>
             </div>
           ))}
         </div>
