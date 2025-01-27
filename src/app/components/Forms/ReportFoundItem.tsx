@@ -24,6 +24,7 @@ export default function ReportFoundItem() {
   const [compressedFiles, setCompressedFiles] = useState<File[]>([]);
   const [confetti, setConfetti] = useState(false);
   const t= useTranslations("storage")
+  const c= useTranslations("storage")
   const {OrgPlaces} =DataProvider()
 
   const onSubmit: SubmitHandler<ItemFormFields> = async (data) => {
