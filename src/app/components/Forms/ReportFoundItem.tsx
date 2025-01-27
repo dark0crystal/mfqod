@@ -24,7 +24,7 @@ export default function ReportFoundItem() {
   const [compressedFiles, setCompressedFiles] = useState<File[]>([]);
   const [confetti, setConfetti] = useState(false);
   const t= useTranslations("storage")
-  const c= useTranslations("storage")
+  const c= useTranslations("report-found")
   const {OrgPlaces} =DataProvider()
 
   const onSubmit: SubmitHandler<ItemFormFields> = async (data) => {
@@ -143,13 +143,17 @@ export default function ReportFoundItem() {
         />
       )}
       <h2 className="text-2xl font-bold text-center text-indigo-600 mb-6">
-        Report Found Item
+        {c("title")}
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+
+      ,
+
+
         {/* Title Input */}
         <div>
-          <label htmlFor="title" className="block text-lg font-semibold text-gray-700">What did you find?</label>
+          <label htmlFor="title" className="block text-lg font-semibold text-gray-700">{c("whatDidYouFind")}</label>
           <input
             type="text"
             id="title"
@@ -162,7 +166,7 @@ export default function ReportFoundItem() {
 
         {/* Content Input */}
         <div>
-          <label htmlFor="content" className="block text-lg font-semibold text-gray-700">Details</label>
+          <label htmlFor="content" className="block text-lg font-semibold text-gray-700">{c("Details")}</label>
           <input
             type="text"
             id="content"
@@ -175,7 +179,7 @@ export default function ReportFoundItem() {
 
         {/* Type Input */}
         <div>
-          <label htmlFor="type" className="block text-lg font-semibold text-gray-700">Type of Item</label>
+          <label htmlFor="type" className="block text-lg font-semibold text-gray-700">{c("type")}</label>
           <input
             type="text"
             id="type"
@@ -190,7 +194,7 @@ export default function ReportFoundItem() {
 
          {/* Select Organization */}
          <div>
-          <label htmlFor="orgnization" className="block text-lg font-semibold text-gray-700">Organization</label>
+          <label htmlFor="orgnization" className="block text-lg font-semibold text-gray-700">{c("organization")}</label>
           <select
             id="orgnization"
             value={organization} // Bind to the organization state
@@ -213,7 +217,7 @@ export default function ReportFoundItem() {
         {/* Select Place */}
         {placeOptions.length > 0 && (
           <div>
-            <label htmlFor="place" className="block text-lg font-semibold text-gray-700">Place</label>
+            <label htmlFor="place" className="block text-lg font-semibold text-gray-700">{c("place")}</label>
             <select
               id="place"
               {...register("place", { required: "Please select a place" })}
@@ -230,7 +234,7 @@ export default function ReportFoundItem() {
 
         {/* Select Country */}
         <div>
-          <label htmlFor="country" className="block text-lg font-semibold text-gray-700">Country</label>
+          <label htmlFor="country" className="block text-lg font-semibold text-gray-700">{c("country")}</label>
           <select
             id="country"
             {...register("country", { required: "Please select a country" })}
