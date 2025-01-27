@@ -78,6 +78,15 @@
       "item2":"wallet",
       "item3":"Ring",
       "item4":"Key"
+    },
+
+    "timeBaseWords":{
+      "lostSth":"Lost something?",
+      "help":"We can help you",
+      "foundSth":"Found something?",
+      "helpOwner":"Help its owner"
     }
+  
+
     
   }
