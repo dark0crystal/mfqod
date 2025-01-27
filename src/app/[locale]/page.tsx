@@ -77,16 +77,14 @@ export default function Home() {
     <div>
       <TrustedBy/>
     </div>
-      <div className='h-[20vh]'/>
-      <div className='h-[15vh] w-screen bg-blue-500'>
-
-      </div>
+  
+     
       {/* <div ref={container}>
         <Slide src={img5} direction={'left'} left={"-40%"} progress={scrollYProgress}/>
         <Slide src={img2} direction={'right'} left={"-25%"} progress={scrollYProgress}/>
         <Slide src={img3} direction={'left'}  left={"-75%"} progress={scrollYProgress}/>
       </div> */}
-      <div className='h-[20vh]' />
+     
 
       <Footer/>
     </main>
