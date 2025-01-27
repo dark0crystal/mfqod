@@ -3,7 +3,7 @@ import img4 from "../../../public/img4.jpeg";
 
 export default function CardsSection() {
   return (
-    <div className="h-[50vh] w-full p-10">
+    <div className="h-[50vh] w-full p-10 ">
       <div className="h-full w-full rounded-3xl relative flex flex-col justify-center">
         {/* SVG Lines */}
         <svg
