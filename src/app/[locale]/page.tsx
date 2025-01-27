@@ -12,6 +12,7 @@ import Image from 'next/image';
 import TimeBasedWords from '../components/framer/TimeBaseWords';
 import CardsSection from '../components/CardSection';
 import TrustedBy from '../components/trusted-by/TrustedBy';
+import Footer from "../components/Footer"
 
 export default function Home() {
 
@@ -86,6 +87,8 @@ export default function Home() {
         <Slide src={img3} direction={'left'}  left={"-75%"} progress={scrollYProgress}/>
       </div> */}
       <div className='h-[20vh]' />
+
+      <Footer/>
     </main>
   );
 }
