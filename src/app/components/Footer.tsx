@@ -3,9 +3,9 @@ import { Link } from "@/i18n/routing";
 
 // Data arrays for the links
 const quickLinks = [
-  { href: "/", label: "ابحث" },
-  { href: "/", label: "بلغ" },
-  { href: "/", label: "اي شي" },
+  { href: "/", label: "ابحثبسشب " },
+  { href: "/", label: "بشيسبش بلغ" },
+  { href: "/", label: " بسيبش اي شي" },
 ];
 
 const privacyLinks = [
@@ -15,16 +15,16 @@ const privacyLinks = [
 ];
 
 const otherLinks = [
-  { href: "/", label: "رابط" },
-  { href: "/", label: "رابط" },
-  { href: "/", label: "رابط" },
+  { href: "/", label: " لشب بشرابط" },
+  { href: "/", label: "رابطب بسي" },
+  { href: "/", label: "رابط بشسب" },
 ];
 
 // Footer component
 export default function Footer() {
   return (
     <footer className="text-gray-500 py-10 mt-20 border-t-2">
-      <div className="flex flex-col lg:flex-row">
+      <div className="flex flex-col lg:flex-row justify-center">
         {/* Brand and Language Change */}
         <div>
           <div>
