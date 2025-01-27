@@ -12,7 +12,7 @@ export default function Footer() {
 
   // Data arrays for the links
 const quickLinks = [
-  { href: "/", label: "" },
+  
   { href: "/report-found-item", label: `${t("report")}` },
   { href: "/search", label: `${t("search")}` },
 ];
@@ -29,7 +29,7 @@ const otherLinks = [
 
   return (
     <footer className="text-gray-500 mt-20 border-t-2">
-      <div className="flex flex-col lg:flex-row justify-around items-center  py-[2rem]">
+      <div className="flex flex-col lg:flex-row justify-around md:items-center  py-[2rem]">
         {/* Brand and Language Change */}
         <div className="p-4">
           <div>
@@ -44,12 +44,12 @@ const otherLinks = [
         </div>
 
         {/* Links */}
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col md:flex-row gap-2">
           {/* Quick Links */}
           <div className="mx-4">
-            <h1 className="text-black mb-4">{t("quickLinks")}</h1>
+            <h1 className="text-black mb-4 font-semibold">{t("quickLinks")}</h1>
             {quickLinks.map((link, index) => (
-              <div key={index}>
+              <div key={index} className="m-2">
                 <Link href={link.href}>{link.label}</Link>
               </div>
             ))}
@@ -57,9 +57,9 @@ const otherLinks = [
 
           {/* Privacy and Terms */}
           <div className="mx-4">
-            <h1 className="text-black mb-4">{t("privacyTitle")}</h1>
+            <h1 className="text-black mb-4 font-semibold">{t("privacyTitle")}</h1>
             {privacyLinks.map((link, index) => (
-              <div key={index}>
+              <div key={index} className="m-2">
                 {link.label && <Link href={link.href}>{link.label}</Link>}
               </div>
             ))}
@@ -67,18 +67,19 @@ const otherLinks = [
 
           {/* Other Links */}
           <div className="mx-4">
-            <h1 className="text-black mb-4">{t("seeAlso")}</h1>
+            <h1 className="text-black mb-4 font-semibold">{t("seeAlso")}</h1>
             {otherLinks.map((link, index) => (
-              <div key={index}>
+              <div key={index} className="m-2">
                 <Link href={link.href}>{link.label}</Link>
               </div>
             ))}
           </div>
         </div>
       </div>
-
-      <div>
-      <h1 className="mt-8 text-gray-500 text-lg text-center" >{t("disclaimer")}</h1>
+          <div className="bg-gray-200 h-[1.5px] w-full "/>
+      <div className="p-8 md:p-12">
+      <h1 className=" text-gray-500 text-sm md:text-lg text-center" >{t("disclaimer")}</h1>
+      <Link href="https://mrdasdev.vercel.app/">{t("developer")}</Link>
       </div>
     </footer>
   );
