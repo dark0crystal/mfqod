@@ -77,7 +77,16 @@
         "item2":"محفظة",
         "item3":"خاتم",
         "item4":"مفتاح"
+      },
+
+      "timeBaseWords":{
+        "lostSth":"فاقد شي؟",
+        "help":"نقدر نساعدك",
+        "foundSth":"محصل شي؟",
+        "helpOwner":"ساعد صاحبه"
       }
+
+
 
 
       
