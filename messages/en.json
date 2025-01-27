@@ -50,7 +50,9 @@
       "report":"Report Found Item",
       "privacy":"Privacy Policy",
       "terms":"Terms of Service",
-      "":""
+      "dashboard":"Dashboard",
+      "Register":"Sign In"
+
     }
     
   }
