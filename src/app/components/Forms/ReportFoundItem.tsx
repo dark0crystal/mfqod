@@ -203,7 +203,7 @@ export default function ReportFoundItem() {
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             {/* Display "Select Organization" first */}
-            <option value="" disabled>Select Organization</option>
+            <option value="" disabled>{c("selectOrganization")}</option>
             {OrgPlaces.map((org, index) => {
               const orgName = Object.keys(org)[0];
               return (
@@ -223,7 +223,7 @@ export default function ReportFoundItem() {
               {...register("place", { required: "Please select a place" })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              <option value="" disabled>Select Place</option>
+              <option value="" disabled>{c("selectPlace")}</option>
               {placeOptions.map((place, index) => (
                 <option key={index} value={place.key}>{place.name}</option>
               ))}
