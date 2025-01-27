@@ -3,7 +3,9 @@
       "title": "Hello world!",
       "about": "Go to the about page",
       "search":"Search Lost Items",
-      "report":"Report Found Item"
+      "report":"Report Found Item",
+      "versionMessage":"Mfqod Trail Version 1.0.0 officially released!"
+
     },
     "navbar":{
         "brand":"",
