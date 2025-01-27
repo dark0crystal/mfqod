@@ -1,14 +1,10 @@
-// 'use client'
-// import { useScroll, useTransform, motion } from 'framer-motion';
+
 import img1 from "../../../public/img1.jpeg"
 import img2 from "../../../public/img2.jpeg"
 import img3 from "../../../public/img3.jpeg"
 import img4 from "../../../public/img4.jpeg"
 import img5 from "../../../public/img5.jpeg"
-// import Lenis from 'lenis';
-
 import Image from 'next/image';
-// import { useEffect, useRef } from 'react';
 import TimeBasedWords from '../components/framer/TimeBaseWords';
 import CardsSection from '../components/CardSection';
 import TrustedBy from '../components/trusted-by/TrustedBy';
@@ -19,22 +15,7 @@ import { Link } from "@/i18n/routing"
 export default async function Home() {
   
  const t = await getTranslations("HomePage")
-  // const container = useRef();
-  // const { scrollYProgress } = useScroll({
-  //   target: container,
-  //   offset: ['start end', 'end start']
-  // })
 
-  // useEffect( () => {
-  //   const lenis = new Lenis()
-
-  //   function raf(time:any) {
-  //     lenis.raf(time)
-  //     requestAnimationFrame(raf)
-  //   }
-
-  //   requestAnimationFrame(raf)
-  // }, [])
 
   return (
     <main className="overflow-hidden flex flex-col justify-center "> 
