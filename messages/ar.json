@@ -1,7 +1,8 @@
 {
     "HomePage": {
       "title": "Hello world!",
-      "about": "Go to the about page"
+      "about": "Go to the about page",
+      "disclaimer":"تنبيه: مفقود غير مصرح أو معتمد في أي من مؤسسة من المؤسسات المذكورة لغاية آخر تحديث v1.0.0، نحن في مفقود نستخدم أسماء المؤسسات لغرض المحاكاه فقط."
     },
     "navbar":{
         "brand":"مَفقوُد",
@@ -53,7 +54,9 @@
           "privacy":"سياسة الخصوصية",
           "terms":"شروط الخدمة",
           "dashboard":"لوحة التحكم",
-          "Register":"تسجيل دخول"
+          "Register":"تسجيل دخول",
+          "":""
+
       }
 
 
