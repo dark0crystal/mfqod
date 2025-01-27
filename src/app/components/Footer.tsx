@@ -18,8 +18,8 @@ const quickLinks = [
 ];
 
 const privacyLinks = [
-  { href: "/", label: `${t("privacy")}` },
-  { href: "/", label: `${t("terms")}`},
+  { href: "/legal/privacy", label: `${t("privacy")}` },
+  { href: "/legal/terms", label: `${t("terms")}`},
 ];
 
 const otherLinks = [
