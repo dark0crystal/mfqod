@@ -38,6 +38,18 @@
     "card":{
       
       "location":"Location"
+    },
+
+
+    "footer":{
+      "seeAlso":"See Also",
+      "quickLinks":"Quick links",
+      "main":"Main Page",
+      "search":"Search Lost Items",
+      "report":"Report Found Item",
+      "privacy":"Privacy Policy",
+      "terms":"Terms of Service",
+      "":""
     }
     
   }

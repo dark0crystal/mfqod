@@ -3,7 +3,7 @@ import { Link } from "@/i18n/routing";
 
 // Data arrays for the links
 const quickLinks = [
-  { href: "/", label: "ابحثبسشب " },
+  { href: "/", label: "" },
   { href: "/", label: "بشيسبش بلغ" },
   { href: "/", label: " بسيبش اي شي" },
 ];
@@ -23,17 +23,17 @@ const otherLinks = [
 // Footer component
 export default function Footer() {
   return (
-    <footer className="text-gray-500 py-10 mt-20 border-t-2">
-      <div className="flex flex-col lg:flex-row justify-center">
+    <footer className="text-gray-500 py-10 px-12 mt-20 border-t-2">
+      <div className="flex flex-col lg:flex-row  ">
         {/* Brand and Language Change */}
-        <div>
+        <div className="p-4">
           <div>
             <Brand />
             <p className="text-sm text-gray-500">
               مفقود هو موقع لمساعدة الأشخاص للحصول على مفقوداتهم
             </p>
           </div>
-          <div>
+          <div className="my-3">
             <h1>غير اللغة</h1>
           </div>
         </div>
