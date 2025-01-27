@@ -11,7 +11,7 @@ import CompressorFileInput from '../../../components/CompressorFileInput';
 // Define Zod validation schema
 const schema = z.object({
   claimTitle: z.string().min(1, { message: "The Field is required!" }),
-  claimContent: z.string().min(1, { message: "Please select a place" }),
+  claimContent: z.string().min(1, { message: "Please provide proof of ownership!" }),
 });
 
 type FormFields = {
@@ -37,6 +37,7 @@ export default function PostDetails({ params }: { params: { id: string } }) {
     resolver: zodResolver(schema),
   });
 
+  // Fetch post details
   useEffect(() => {
     const fetchPostDetails = async () => {
       try {
@@ -54,6 +55,7 @@ export default function PostDetails({ params }: { params: { id: string } }) {
     fetchPostDetails();
   }, [id]);
 
+  // Form submission
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
       const response = await fetch("/api/upload-claim", {
@@ -67,13 +69,16 @@ export default function PostDetails({ params }: { params: { id: string } }) {
       if (response.ok) {
         setConfetti(true);
 
-        const imageUrls = compressedFiles.map((file) => {
-          const filePath = `${result.claimId}/${file.name}`;
-          supabase.storage.from("mfqodFiles").upload(filePath, file);
-          return supabase.storage.from("mfqodFiles").getPublicUrl(filePath).data.publicUrl;
-        });
+        // Upload images
+        const imageUrls = await Promise.all(
+          compressedFiles.map(async (file) => {
+            const filePath = `${result.claimId}/${file.name}`;
+            await supabase.storage.from("mfqodFiles").upload(filePath, file);
+            return supabase.storage.from("mfqodFiles").getPublicUrl(filePath).data.publicUrl;
+          })
+        );
 
-        // Send the image URLs to the backend
+        // Send image URLs to the backend
         await fetch("/api/save-claim-image", {
           method: "POST",
           body: JSON.stringify({ claimId: result.claimId, imageUrls }),
@@ -82,30 +87,67 @@ export default function PostDetails({ params }: { params: { id: string } }) {
 
         reset();
       } else {
-        console.error("Failed to upload item.");
+        console.error("Failed to upload claim.");
       }
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
 
+  // Reset confetti after 7 seconds
   useEffect(() => {
     if (confetti) {
       setTimeout(() => setConfetti(false), 7000);
     }
   }, [confetti]);
 
-  if (!post) return <p>Loading...</p>;
+  if (!post) return <p className="text-center text-gray-500">Loading post details...</p>;
 
   return (
     <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
       {confetti && <ReactConfetti width={window.innerWidth} height={window.innerHeight} />}
+
       <h2 className="text-3xl font-bold text-gray-800 mb-4">{post.title}</h2>
       <p className="text-gray-600 mb-2"><strong>Content:</strong> {post.content}</p>
-      <p className="text-gray-600 mb-2"><strong>Place:</strong> {post.place}</p>
-      <p className="text-gray-600 mb-4"><strong>Country:</strong> {post.country}</p>
+      <p className="text-gray-600 mb-2"><strong>Author Email:</strong> {post.authorEmail}</p>
+      <p className="text-gray-600 mb-4"><strong>Temporary Deletion:</strong> {post.temporaryDeletion ? 'Yes' : 'No'}</p>
 
-      {/* Toggle Button */}
+      {/* Images */}
+      <div>
+        <h3 className="text-lg font-semibold text-gray-800">Uploaded Images:</h3>
+        <div className="flex flex-wrap gap-4 mt-2">
+          {Array.isArray(post?.images) && post.images.length > 0 ? (
+            post.images.map((image: string, index: number) => (
+              <img
+                key={index}
+                src={image}
+                alt={`Uploaded image ${index + 1}`}
+                className="w-32 h-32 object-cover rounded-lg"
+              />
+            ))
+          ) : (
+            <p className="text-gray-500">No images uploaded.</p>
+          )}
+        </div>
+      </div>
+
+
+      {/* Address */}
+      <div className="mb-4">
+        <h3 className="text-lg font-semibold text-gray-800">Address:</h3>
+        {Array.isArray(post?.address) && post.address.length > 0 ? (
+          post.address.map((addr: any, index: number) => (
+            <div key={index} className="text-gray-600">
+              <p><strong>Place:</strong> {addr.place}</p>
+              <p><strong>Country:</strong> {addr.country}</p>
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-500">No address available.</p>
+        )}
+      </div>
+
+      {/* Toggle Form Button */}
       <button
         onClick={() => setShowForm(!showForm)}
         className="mb-6 px-4 py-2 bg-indigo-600 text-white font-semibold rounded hover:bg-indigo-700 transition"
@@ -137,7 +179,6 @@ export default function PostDetails({ params }: { params: { id: string } }) {
             {errors.claimContent && <p className="mt-2 text-xs text-red-500">{errors.claimContent.message}</p>}
           </div>
           <CompressorFileInput onFilesSelected={setCompressedFiles} />
-          {errors.images && <p className="mt-2 text-xs text-red-500">{errors.images.message}</p>}
           <div>
             <button
               type="submit"
