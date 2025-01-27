@@ -52,9 +52,8 @@ export default async function Home() {
         
       </div>
 
-     
     <div>
-    <CardsSection/>
+      <CardsSection/>
     </div>
 
 
