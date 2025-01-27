@@ -1,7 +1,8 @@
 // components/Footer.js
 export default function Footer() {
     return (
-      <footer className="bg-black text-white py-10">
+      <footer className=" text-gray-500 py-10 mt-20">
+        <div className="bg-gray-300 h-[1px] w-full"/>
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Left Section */}
           <div>
