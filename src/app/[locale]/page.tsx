@@ -30,12 +30,17 @@ export default async function Home() {
 
           </p>
         <div className="flex flex-col items-center justify-center mt-2 rounded-lg  px-[2rem] md:px-[5rem] lg:px-[7rem] text-center">
+
+            <p className="text-center text-lg font-semibold text-black">
+           
+           </p>
+        
+        <p className="text-center text-md font-medium text-gray-600 mt-6 underline decoration-blue-500 decoration-wavy">
+          {t("versionMessage")}
+        </p>
+
           <p className="text-center text-lg font-semibold text-black">
-          مغيّب شي ؟ مفقود بيساعدك 
-          مغيّب شي ؟ مفقود بيساعدك 
-          </p>
-          <p className="text-center text-lg font-semibold text-black">
-          مغيّب شي ؟ مفقود بيساعدك 
+           
           </p>
           
         </div>
