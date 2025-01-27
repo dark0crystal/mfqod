@@ -85,6 +85,18 @@
       "help":"We can help you",
       "foundSth":"Found something?",
       "helpOwner":"Help its owner"
+    },
+
+    "report-found":{
+      "title":"بلّغ عن شيء وجدته",
+      "whatDidYouFind":"ماذا وجدت",
+      "Details":"اضف تفاصيل عن الغرض",
+      "type":"ما نوع الغرض",
+      "uploadImages":"ارفق ًصور للغرض",
+      "organization":"اسم المؤسسة",
+      "place":"اسم مكان التسليم الغرض",
+      "country":"الدولة"
+
     }
   
 
