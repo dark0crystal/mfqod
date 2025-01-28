@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ReactConfetti from 'react-confetti';
 import CompressorFileInput from '../../../components/CompressorFileInput';
 import Image from 'next/image';
+import Footer from '@/app/components/Footer';
 
 // Define Zod validation schema
 const schema = z.object({
@@ -105,7 +106,9 @@ export default function PostDetails({ params }: { params: { id: string } }) {
   if (!post) return <p className="text-center text-gray-500">Loading post details...</p>;
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-3xl h-fit">
+      <div>
+
+    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-3xl h-fit md:mt-24">
       {confetti && <ReactConfetti width={window.innerWidth} height={window.innerHeight} />}
 
       <div className='grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2'>
@@ -201,6 +204,13 @@ export default function PostDetails({ params }: { params: { id: string } }) {
           </div>
         </form>
       )}
+
+
+      
+    </div>
+      <div className='md:mt-40'>
+        <Footer/>
+        </div>
     </div>
   );
 }
