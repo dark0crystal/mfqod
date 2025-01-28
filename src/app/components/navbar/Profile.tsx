@@ -7,10 +7,13 @@ import { SignOut } from "../auth/client/signout-button";
 import { SignIn } from "../auth/client/signin-button";
 import defaultProfileImage from "../../../../public/img2.jpeg";
 import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 export default function Profile() {
   const [show, setShow] = useState(false);
   const { data: session, status } = useSession();
+
+  const t= useTranslations("navbar")
 
   function handleProfile() {
     setShow((prev) => !prev);
@@ -55,7 +58,7 @@ export default function Profile() {
               <div className="flex flex-col items-center text-gray-800 space-y-2">
                 {/* User Dashboard */}
                 <Link href="/dashboard" className="text-sm font-medium hover:text-violet-500">
-                  Dashboard
+                  {t("dashboard")}
                 </Link>
 
                 {/* User Email */}
