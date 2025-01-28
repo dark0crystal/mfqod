@@ -2,6 +2,7 @@
 import Brand from "./navbar/Brand";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
+import LanguageChange from "./navbar/LangChange";
 
 
 
@@ -39,7 +40,7 @@ const otherLinks = [
             </p>
           </div>
           <div className="my-3">
-            <h1>غير اللغة</h1>
+            <LanguageChange/>
           </div>
         </div>
 
