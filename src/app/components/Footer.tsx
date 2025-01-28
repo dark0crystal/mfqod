@@ -36,7 +36,7 @@ const otherLinks = [
           <div>
             <Brand />
             <p className="text-sm text-gray-500">
-              مفقود هو موقع لمساعدة الأشخاص للحصول على مفقوداتهم
+                {t("description")}
             </p>
           </div>
           <div className="my-3">
