@@ -105,61 +105,61 @@ export default function PostDetails({ params }: { params: { id: string } }) {
   if (!post) return <p className="text-center text-gray-500">Loading post details...</p>;
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-3xl ">
+    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-3xl h-fit">
       {confetti && <ReactConfetti width={window.innerWidth} height={window.innerHeight} />}
 
-      <div className=' md:grid  md:grid-cols-2'>
-        <div className=' flex flex-col md:col-span-1'>
+      <div className='grid grid-rows-2  md:grid-cols-2'>
+        <div className='order-2 row-span-1 md:col-span-1 md:order-1'>
 
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">{post.title}</h2>
-          <p className="text-gray-600 mb-2"><strong>Content:</strong> {post.content}</p>
-          <p className="text-gray-600 mb-2"><strong>Author Email:</strong> {post.authorEmail}</p>
-          <p className="text-gray-600 mb-4"><strong>Temporary Deletion:</strong> {post.temporaryDeletion ? 'Yes' : 'No'}</p>
-          {/* Address */}
-          <div className="mb-4">
-            <h3 className="text-lg font-semibold text-gray-800">Address:</h3>
-            {Array.isArray(post?.address) && post.address.length > 0 ? (
-              post.address.map((addr: any, index: number) => (
-                <div key={index} className="text-gray-600">
-                  <p><strong>Place:</strong> {addr.place}</p>
-                  <p><strong>Country:</strong> {addr.country}</p>
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-500">No address available.</p>
-            )}
-          </div>
-
-          {/* Toggle Form Button */}
-          <button
-            onClick={() => setShowForm(!showForm)}
-            className="mb-6 px-4 py-2 bg-indigo-600 text-white font-semibold rounded hover:bg-indigo-700 transition"
-          >
-            {showForm ? "Hide Claim Form" : "Show Claim Form"}
-          </button>
-
-          </div>
-
-          {/* Images */}
-          <div className='md:col-span-1 '>
-            <div className="w-full h-full">
-              {Array.isArray(post?.images) && post.images.length > 0 ? (
-                post.images.map((image: string, index: number) => (
-                  <div key={index} className='relative w-full h-full rounded-3xl overflow-hidden'>
-                      <Image
-                        fill 
-                        objectFit='cover'
-                        src={image}
-                        alt={`Uploaded image ${index + 1}`}
-                        className="absolute "
-                      />
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">{post.title}</h2>
+            <p className="text-gray-600 mb-2"><strong>Content:</strong> {post.content}</p>
+            <p className="text-gray-600 mb-2"><strong>Author Email:</strong> {post.authorEmail}</p>
+            <p className="text-gray-600 mb-4"><strong>Temporary Deletion:</strong> {post.temporaryDeletion ? 'Yes' : 'No'}</p>
+            {/* Address */}
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold text-gray-800">Address:</h3>
+              {Array.isArray(post?.address) && post.address.length > 0 ? (
+                post.address.map((addr: any, index: number) => (
+                  <div key={index} className="text-gray-600">
+                    <p><strong>Place:</strong> {addr.place}</p>
+                    <p><strong>Country:</strong> {addr.country}</p>
                   </div>
                 ))
               ) : (
-                <p className="text-gray-500">No images uploaded.</p>
+                <p className="text-gray-500">No address available.</p>
               )}
             </div>
-      </div>
+
+            {/* Toggle Form Button */}
+            <button
+              onClick={() => setShowForm(!showForm)}
+              className="mb-6 px-4 py-2 bg-indigo-600 text-white font-semibold rounded hover:bg-indigo-700 transition"
+            >
+              {showForm ? "Hide Claim Form" : "Show Claim Form"}
+            </button>
+
+        </div>
+
+            {/* Images */}
+            <div className='order-1 md:order-2 row-span-1 md:col-span-1'>
+              <div className="w-full h-full">
+                {Array.isArray(post?.images) && post.images.length > 0 ? (
+                  post.images.map((image: string, index: number) => (
+                    <div key={index} className='relative w-full h-full rounded-3xl overflow-hidden'>
+                        <Image
+                          fill 
+                          objectFit='cover'
+                          src={image}
+                          alt={`Uploaded image ${index + 1}`}
+                          className="absolute "
+                        />
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-gray-500">No images uploaded.</p>
+                )}
+              </div>
+        </div>
 
 
      
