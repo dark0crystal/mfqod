@@ -22,7 +22,7 @@ export default function Profile() {
   return (
     <div className="flex justify-center items-center h-screen">
       {status === "unauthenticated" ? (
-        <div>
+        <div className=" w-full  md:w-[120px] bg-gradient-to-r from-blue-100/40 to-blue-100 border border-gray-600 p-4 md:p-2 rounded-full text-gray-700 font-semibold md:font-medium text-xl md:text-base text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
           <SignIn />
         </div>
       ) : (
