@@ -108,8 +108,8 @@ export default function PostDetails({ params }: { params: { id: string } }) {
     <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-3xl ">
       {confetti && <ReactConfetti width={window.innerWidth} height={window.innerHeight} />}
 
-      <div className='grid md:grid-cols-2'>
-        <div className='col-span-1'>
+      <div className=' md:grid  md:grid-cols-2'>
+        <div className=' flex flex-col md:col-span-1'>
 
           <h2 className="text-3xl font-bold text-gray-800 mb-4">{post.title}</h2>
           <p className="text-gray-600 mb-2"><strong>Content:</strong> {post.content}</p>
@@ -141,7 +141,7 @@ export default function PostDetails({ params }: { params: { id: string } }) {
           </div>
 
           {/* Images */}
-          <div className='col-span-1'>
+          <div className='md:col-span-1 '>
             <div className="w-full h-full">
               {Array.isArray(post?.images) && post.images.length > 0 ? (
                 post.images.map((image: string, index: number) => (
