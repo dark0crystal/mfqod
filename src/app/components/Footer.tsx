@@ -79,7 +79,7 @@ const otherLinks = [
           <div className="bg-gray-200 h-[1.5px] w-full "/>
       <div className="p-8 md:p-12 text-center">
       <h1 className=" text-gray-500 text-sm md:text-lg " >{t("disclaimer")}</h1>
-      <div className="  mt-4 text-center">
+      <div className="mt-4 text-center">
         <Link className="bg-blue-200"  href="https://mrdasdev.vercel.app/">{t("developer")}</Link>
       </div>
       </div>
