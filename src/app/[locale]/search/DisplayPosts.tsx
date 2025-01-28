@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 export default function DisplayPosts({items}:any){
   const t= useTranslations("card")
+  const c= useTranslations("storage")
+  
     const router = useRouter();  // To navigate to the details page
  // Handle post click to navigate to details
  const handlePostClick = (postId: string) => {
@@ -31,7 +33,7 @@ export default function DisplayPosts({items}:any){
                         {/* Footer Section */}
                         <div className="flex items-center justify-between py-2 px-4">
                           <p className="text-gray-600 text-sm">
-                            {t("location")}: {item.address?.place}, {item.address?.country}
+                            {t("location")}: {c(`place.${item.address?.place}`)}, {c(`country.${item.address?.country}`)}
                           </p>
                         </div>
           
