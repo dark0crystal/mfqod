@@ -12,8 +12,7 @@ type Post = {
   title: string;
   content: string;
   type: string;
-  uploadedPostPhotos: [];
-  postUrl:string  ;// Optional field for the post's image
+  uploadedPostPhotos: { postUrl: string }[]; // Updated to include postUrl structure
 };
 
 export default function DisplayPosts() {
@@ -33,7 +32,6 @@ export default function DisplayPosts() {
           const response = await fetch(`/api/get-verified-posts?orgName=${orgName}&placeName=${placeName}`);
           const data = await response.json();
           setRole(data.role);
-          console.log("inside",data.posts)
           setPosts(data.posts);
         } catch (error) {
           console.error('Error fetching posts:', error);
@@ -72,9 +70,7 @@ export default function DisplayPosts() {
         body: JSON.stringify({ temporaryDeletion: true }),
       });
 
-      setPosts((prevPosts) =>
-        prevPosts.filter((post) => post.id !== postId)
-      );
+      setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
     } catch (error) {
       console.error('Error deleting post:', error);
     }
@@ -94,19 +90,25 @@ export default function DisplayPosts() {
           {posts.map((post) => (
             <div
               key={post.id}
-              className={`relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 w-[350px] min-w-[350px]${
+              className={`relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 w-[350px] min-w-[350px] ${
                 post.temporaryDeletion ? 'hidden' : 'block'
               }`}
             >
               {/* Image Section */}
               <div className="relative h-40">
-                <Image
-                  src={post.uploadedPostPhotos[0].postUrl}
-                  alt={post.title}
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-t-2xl"
-                />
+                {post.uploadedPostPhotos.length > 0 && post.uploadedPostPhotos[0].postUrl ? (
+                  <Image
+                    src={post.uploadedPostPhotos[0].postUrl}
+                    alt={post.title}
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-t-2xl"
+                  />
+                ) : (
+                  <div className="flex items-center justify-center h-full bg-gray-200 text-gray-500">
+                    No Image Available
+                  </div>
+                )}
                 <button
                   title="Go to details"
                   onClick={() => router.push(`/dashboard/posts/${post.id}`)}
