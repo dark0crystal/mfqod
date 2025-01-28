@@ -12,7 +12,8 @@ type Post = {
   title: string;
   content: string;
   type: string;
-  imageUrl?: string; // Optional field for the post's image
+  uploadedPostPhotos: [];
+  postUrl:string  ;// Optional field for the post's image
 };
 
 export default function DisplayPosts() {
@@ -32,6 +33,7 @@ export default function DisplayPosts() {
           const response = await fetch(`/api/get-verified-posts?orgName=${orgName}&placeName=${placeName}`);
           const data = await response.json();
           setRole(data.role);
+          console.log("inside",data.posts)
           setPosts(data.posts);
         } catch (error) {
           console.error('Error fetching posts:', error);
@@ -99,7 +101,7 @@ export default function DisplayPosts() {
               {/* Image Section */}
               <div className="relative h-40">
                 <Image
-                  src={post.imageUrl || '/images/default-image.jpg'}
+                  src={post.uploadedPostPhotos[0].postUrl}
                   alt={post.title}
                   layout="fill"
                   objectFit="cover"
