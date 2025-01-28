@@ -7,6 +7,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ReactConfetti from 'react-confetti';
 import CompressorFileInput from '../../../components/CompressorFileInput';
+import Image from 'next/image';
 
 // Define Zod validation schema
 const schema = z.object({
@@ -104,7 +105,7 @@ export default function PostDetails({ params }: { params: { id: string } }) {
   if (!post) return <p className="text-center text-gray-500">Loading post details...</p>;
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg ">
+    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-3xl ">
       {confetti && <ReactConfetti width={window.innerWidth} height={window.innerHeight} />}
 
       <div className='grid md:grid-cols-2'>
@@ -141,16 +142,18 @@ export default function PostDetails({ params }: { params: { id: string } }) {
 
           {/* Images */}
           <div className='col-span-1'>
-            <h3 className="text-lg font-semibold text-gray-800">Uploaded Images:</h3>
-            <div className="flex flex-wrap gap-4 mt-2">
+            <div className="w-full h-full">
               {Array.isArray(post?.images) && post.images.length > 0 ? (
                 post.images.map((image: string, index: number) => (
-                  <img
-                    key={index}
-                    src={image}
-                    alt={`Uploaded image ${index + 1}`}
-                    className="w-32 h-32 object-cover rounded-lg"
-                  />
+                  <div key={index} className='relative w-full h-full rounded-3xl overflow-hidden'>
+                      <Image
+                        fill 
+                        objectFit='cover'
+                        src={image}
+                        alt={`Uploaded image ${index + 1}`}
+                        className="absolute "
+                      />
+                  </div>
                 ))
               ) : (
                 <p className="text-gray-500">No images uploaded.</p>
