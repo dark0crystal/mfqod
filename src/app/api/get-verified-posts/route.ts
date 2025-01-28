@@ -57,7 +57,12 @@ console.log(role)
               }
             },
             include: {
-              postAddress: true, // Include related address details in the result
+              postAddress: true, 
+              uploadedPostPhotos:{
+                select: {
+                  postUrl: true, // Select only the post URL from uploaded photos
+                },
+              },// Include related address details in the result
             }
           })
 
@@ -75,7 +80,12 @@ console.log(role)
           }
         },
         include: {
-          postAddress: true, // Include related address details in the result
+          postAddress: true,
+          uploadedPostPhotos:{
+            select: {
+              postUrl: true, // Select only the post URL from uploaded photos
+            },
+          }, // Include related address details in the result
         }
       })
 
@@ -102,7 +112,11 @@ console.log(role)
           },
           include: {
             postAddress: true, // Include address data
-            uploadedPostPhotos: true, // Include related photos
+            uploadedPostPhotos:{
+              select: {
+                postUrl: true, // Select only the post URL from uploaded photos
+              },
+            }, // Include related photos
             author: {
               select: {
                 id: true,
