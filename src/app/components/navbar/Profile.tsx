@@ -30,7 +30,7 @@ export default function Profile() {
           {/* Profile Button */}
           <button
             onClick={handleProfile}
-            className="relative w-[43px] h-[43px] rounded-xl overflow-hidden border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-violet-500"
+            className="relative w-[43px] h-[43px] rounded-xl overflow-hidden border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
             aria-label="Toggle profile menu"
           >
             <Image
@@ -52,20 +52,20 @@ export default function Profile() {
           {/* Dropdown Menu */}
           {show && (
             <div
-              className="absolute bottom-[60px] lg:top-[60px] left-1/2 transform -translate-x-1/2 w-48 bg-white shadow-lg rounded-lg p-4 z-50"
+              className="absolute bottom-[60px] lg:top-[60px] left-1/2 transform -translate-x-1/2 w-fit bg-white shadow-lg rounded-lg p-4 z-50 h-fit whitespace-nowrap"
               onClick={() => setShow(false)}
             >
-              <div className="flex flex-col items-center text-gray-800 space-y-2">
+              <div className="flex flex-col items-center text-gray-800 space-y-5 m-3">
                 {/* User Dashboard */}
-                <Link href="/dashboard" className="text-sm font-medium hover:text-violet-500">
+                <Link href="/dashboard" className="text-lg w-[200px]  text-gray-700  hover:text-blue-500    bg-gradient-to-r from-[#ff512a] to-[#d42727]  py-3 px-6  rounded-xl  font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
                   {t("dashboard")}
                 </Link>
 
-                {/* User Email */}
-                <p className="text-sm text-gray-600">{session?.user?.email || "No email provided"}</p>
-
+               
                 {/* Sign Out Button */}
-                <SignOut />
+                <div className=" w-[200px]  bg-gradient-to-r from-[#ff512a] to-[#d42727] py-3 px-6  rounded-xl text-white font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
+                  <SignOut />
+                </div>
               </div>
             </div>
           )}
