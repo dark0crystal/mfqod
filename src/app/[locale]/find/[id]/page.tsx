@@ -104,56 +104,64 @@ export default function PostDetails({ params }: { params: { id: string } }) {
   if (!post) return <p className="text-center text-gray-500">Loading post details...</p>;
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg ">
       {confetti && <ReactConfetti width={window.innerWidth} height={window.innerHeight} />}
 
-      <h2 className="text-3xl font-bold text-gray-800 mb-4">{post.title}</h2>
-      <p className="text-gray-600 mb-2"><strong>Content:</strong> {post.content}</p>
-      <p className="text-gray-600 mb-2"><strong>Author Email:</strong> {post.authorEmail}</p>
-      <p className="text-gray-600 mb-4"><strong>Temporary Deletion:</strong> {post.temporaryDeletion ? 'Yes' : 'No'}</p>
+      <div className='grid md:grid-cols-2'>
+        <div className='col-span-1'>
 
-      {/* Images */}
-      <div>
-        <h3 className="text-lg font-semibold text-gray-800">Uploaded Images:</h3>
-        <div className="flex flex-wrap gap-4 mt-2">
-          {Array.isArray(post?.images) && post.images.length > 0 ? (
-            post.images.map((image: string, index: number) => (
-              <img
-                key={index}
-                src={image}
-                alt={`Uploaded image ${index + 1}`}
-                className="w-32 h-32 object-cover rounded-lg"
-              />
-            ))
-          ) : (
-            <p className="text-gray-500">No images uploaded.</p>
-          )}
-        </div>
-      </div>
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">{post.title}</h2>
+          <p className="text-gray-600 mb-2"><strong>Content:</strong> {post.content}</p>
+          <p className="text-gray-600 mb-2"><strong>Author Email:</strong> {post.authorEmail}</p>
+          <p className="text-gray-600 mb-4"><strong>Temporary Deletion:</strong> {post.temporaryDeletion ? 'Yes' : 'No'}</p>
+          {/* Address */}
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold text-gray-800">Address:</h3>
+            {Array.isArray(post?.address) && post.address.length > 0 ? (
+              post.address.map((addr: any, index: number) => (
+                <div key={index} className="text-gray-600">
+                  <p><strong>Place:</strong> {addr.place}</p>
+                  <p><strong>Country:</strong> {addr.country}</p>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500">No address available.</p>
+            )}
+          </div>
 
+          {/* Toggle Form Button */}
+          <button
+            onClick={() => setShowForm(!showForm)}
+            className="mb-6 px-4 py-2 bg-indigo-600 text-white font-semibold rounded hover:bg-indigo-700 transition"
+          >
+            {showForm ? "Hide Claim Form" : "Show Claim Form"}
+          </button>
 
-      {/* Address */}
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold text-gray-800">Address:</h3>
-        {Array.isArray(post?.address) && post.address.length > 0 ? (
-          post.address.map((addr: any, index: number) => (
-            <div key={index} className="text-gray-600">
-              <p><strong>Place:</strong> {addr.place}</p>
-              <p><strong>Country:</strong> {addr.country}</p>
+          </div>
+
+          {/* Images */}
+          <div className='col-span-1'>
+            <h3 className="text-lg font-semibold text-gray-800">Uploaded Images:</h3>
+            <div className="flex flex-wrap gap-4 mt-2">
+              {Array.isArray(post?.images) && post.images.length > 0 ? (
+                post.images.map((image: string, index: number) => (
+                  <img
+                    key={index}
+                    src={image}
+                    alt={`Uploaded image ${index + 1}`}
+                    className="w-32 h-32 object-cover rounded-lg"
+                  />
+                ))
+              ) : (
+                <p className="text-gray-500">No images uploaded.</p>
+              )}
             </div>
-          ))
-        ) : (
-          <p className="text-gray-500">No address available.</p>
-        )}
       </div>
 
-      {/* Toggle Form Button */}
-      <button
-        onClick={() => setShowForm(!showForm)}
-        className="mb-6 px-4 py-2 bg-indigo-600 text-white font-semibold rounded hover:bg-indigo-700 transition"
-      >
-        {showForm ? "Hide Claim Form" : "Show Claim Form"}
-      </button>
+
+     
+      </div>
+     
 
       {/* Claim Form */}
       {showForm && (
