@@ -108,8 +108,8 @@ export default function PostDetails({ params }: { params: { id: string } }) {
     <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-3xl h-fit">
       {confetti && <ReactConfetti width={window.innerWidth} height={window.innerHeight} />}
 
-      <div className='grid grid-rows-2  md:grid-cols-2'>
-        <div className='order-2 row-span-1 md:col-span-1 md:order-1'>
+      <div className='grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2'>
+        <div className='order-2 row-span-1 md:col-span-1 md:order-1 mt-4'>
 
             <h2 className="text-3xl font-bold text-gray-800 mb-4">{post.title}</h2>
             <p className="text-gray-600 mb-2"><strong>Content:</strong> {post.content}</p>
@@ -141,7 +141,7 @@ export default function PostDetails({ params }: { params: { id: string } }) {
         </div>
 
             {/* Images */}
-            <div className='order-1 md:order-2 row-span-1 md:col-span-1'>
+            <div className='order-1 md:order-2 row-span-1 md:col-span-1 '>
               <div className="w-full h-full">
                 {Array.isArray(post?.images) && post.images.length > 0 ? (
                   post.images.map((image: string, index: number) => (
@@ -168,7 +168,7 @@ export default function PostDetails({ params }: { params: { id: string } }) {
 
       {/* Claim Form */}
       {showForm && (
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-6 mt-8">
           <div>
             <input
               id="claimTitle"
