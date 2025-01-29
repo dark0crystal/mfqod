@@ -50,7 +50,7 @@ export async function GET(req: NextRequest) {
     const postsWithImages = posts.map((post) => {
       const imageUrls = post.uploadedPostPhotos.length > 0
         ? post.uploadedPostPhotos.map((photo) => photo.postUrl)
-        : ['https://ggrrwpwyqbblxoxidpmn.supabase.co/storage/v1/object/public/mfqodFiles/images']; // Default image
+        : null; // Default image
 
       const address = post.postAddress.length > 0 ? post.postAddress[0] : null;
 
