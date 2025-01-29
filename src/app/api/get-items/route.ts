@@ -41,7 +41,7 @@ console.log(orgName)
   const postsWithImages = posts.map((post) => {
     const imageUrls = post.uploadedPostPhotos.length > 0
       ? post.uploadedPostPhotos.map((photo) => photo.postUrl) // If post has images, map to image URLs
-      : ['https://ggrrwpwyqbblxoxidpmn.supabase.co/storage/v1/object/public/mfqodFiles/images']; // Default image URL if no images are found
+      : null; // Default image URL if no images are found
 
     // Check if address exists and prepare the address info
     const address = post.postAddress.length > 0 ? post.postAddress[0] : null;
