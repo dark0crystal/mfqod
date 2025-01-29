@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 const ChangingWords = () => {
   const t =useTranslations("timeBaseWords")
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const words = [`${t("lostSth")}`, `${t("help")}`,`${t("foundSth")}` , `${t("helpOwner")}`]; // List of words
   const [currentWord, setCurrentWord] = useState(words[0]);
 
@@ -19,7 +20,7 @@ const ChangingWords = () => {
     }, 3000); // Change word every 3 seconds
 
     return () => clearInterval(intervalId); // Clean up interval on component unmount
-  }, []);
+  }, [words]);
 
   return (
     <motion.h1
