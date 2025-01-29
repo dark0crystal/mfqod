@@ -10,9 +10,11 @@ export default async function ReportItem() {
   const session = await auth();
   const locale = await getLocale();   
 
+  if(!session){
+    redirect({href: '/login', locale:`${locale}`});
+  }
 
-  // Redirects to `/en/login`
-redirect({href: '/login', locale:`${locale}`});
+
 
 
   return(
