@@ -1,30 +1,28 @@
-import { NextRequest ,NextResponse} from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
-export default async function GET(req:NextRequest){
+
+export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get('userId');
 
-    if(!userId) return null;
+    if (!userId) {
+        return new Response("userId is required", { status: 400 });
+    }
 
     try {
         const userRole = await prisma.user.findUnique({
-            where:{
-                id:userId
-
-            },
-            select:{
-                role:true
-            }
-            
+            where: { id: userId },
+            select: { role: true }
         });
-        if(userRole){
-            return NextResponse.json({userRole:userRole})
 
+        if (!userRole) {
+            return NextResponse.json({ error: "User role not found" }, { status: 404 });
         }
 
-        return NextResponse.json({ error: 'User Role not found' }, { status: 500 });
+        return NextResponse.json({ userRole });
 
     } catch (error) {
-        console.log(error)
+        console.error("Error fetching user role:", error);
+        return new Response("Internal server error", { status: 500 });
     }
 }
