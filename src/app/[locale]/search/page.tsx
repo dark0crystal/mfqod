@@ -119,9 +119,13 @@ export default function Search() {
           ))}
         </div>
         }
-        <button className="bg-white border border-1 p-3 rounded-sm mt-2 " onClick={handleShow}>
-            {t("filter")}
-        </button>
+       <button 
+        className="bg-white border-2 border-blue-500  py-3 px-4 rounded-md mt-2 text-lg font-semibold" 
+        onClick={handleShow}
+       >
+          {t("filter")}
+      </button>
+
       </div>
         
       {/* Center Section */}
