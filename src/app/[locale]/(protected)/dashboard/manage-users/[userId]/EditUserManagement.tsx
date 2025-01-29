@@ -41,7 +41,7 @@ export default function EditUserManagement({ userId }: { userId: string }) {
       }
     }
     fetchData();
-  }, [userId, setValue]);
+  }, [userId, setValue, OrgPlaces]);
 
   const handleOrganizationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOrg = e.target.value;
