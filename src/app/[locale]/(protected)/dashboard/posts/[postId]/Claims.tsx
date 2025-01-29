@@ -34,7 +34,9 @@ export default function Claims({ postId }: { postId: string }){
     
   }
 
-  const fetchClaims = async () => {
+
+
+  async function fetchClaims() {
     setIsLoading(true);
     setError(null);
     try {
@@ -52,10 +54,6 @@ export default function Claims({ postId }: { postId: string }){
     }
   };
 
-  // Fetch claims automatically on component mount
-  useEffect(() => {
-    fetchClaims();
-  }, [postId]);
 
   return (
     <div className="mt-6">
