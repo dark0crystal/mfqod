@@ -14,7 +14,7 @@ import bg11 from "../../../../public/bg11.jpg"
 import bg12 from "../../../../public/bg12.jpeg"
 import { FaSearch } from "react-icons/fa";
 import { RiLoader2Line } from "react-icons/ri";
-
+import { useTranslations } from "next-intl";
 const schema = z.object({
   item: z.string().min(1, { message: "The Field is required!" }),
   place: z.string().min(1, { message: "Please select a place" }),
@@ -30,6 +30,8 @@ export default function Search() {
   const [show , setShow] = useState(false);
 
   const { orgNames } = DataProvider();
+
+  const t=  useTranslations("search")
 
   const handleClick = async (name: string) => {
     setCurrentName(name);
@@ -118,7 +120,7 @@ export default function Search() {
         </div>
         }
         <button className="bg-white border border-1 p-3 rounded-sm mt-2 " onClick={handleShow}>
-            filter
+            {t("filter")}
         </button>
       </div>
         

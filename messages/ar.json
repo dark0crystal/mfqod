@@ -103,6 +103,9 @@
         "selectOrganization":"اختر اسم المؤسسة",
         "selectPlace":"اختر اسم مكان تسليم أو وضع الغرض"
 
+      },
+      "search":{
+        "filter":"فلتر"
       }
 
 
