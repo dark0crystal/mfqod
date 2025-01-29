@@ -65,7 +65,7 @@ export default function ReportFoundItem() {
           const imageUrls = uploadedFilesKeys
             .map((fileKey) => {
               if (fileKey) {
-                return `https://ggrrwpwyqbblxoxidpmn.supabase.co/storage/v1/object/public/mfqodFiles/${fileKey}`;
+                return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/mfqodFiles/${fileKey}`;
               }
               return null;
             })
