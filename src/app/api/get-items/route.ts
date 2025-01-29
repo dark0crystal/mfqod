@@ -41,7 +41,7 @@ console.log(orgName)
   const postsWithImages = posts.map((post) => {
     const imageUrls = post.uploadedPostPhotos.length > 0
       ? post.uploadedPostPhotos.map((photo) => photo.postUrl) // If post has images, map to image URLs
-      : null; // Default image URL if no images are found
+      : []; // Default image URL if no images are found
 
     // Check if address exists and prepare the address info
     const address = post.postAddress.length > 0 ? post.postAddress[0] : null;
