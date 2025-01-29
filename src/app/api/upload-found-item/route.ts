@@ -1,5 +1,6 @@
 import { auth } from "../../../../auth";
 import prisma from "@/lib/db";
+import { redis } from "@/lib/redis";
 import { NextRequest, NextResponse } from "next/server";
 
 interface NewItem {
@@ -47,6 +48,7 @@ export async function POST(req: NextRequest) {
         
       });
 
+      await redis.del(body.orgnization);
 
     // Return the new post ID in the response
     return NextResponse.json({ message: "Post created successfully", postId: newPost.id }, { status: 200 });
