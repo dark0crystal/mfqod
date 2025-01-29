@@ -50,7 +50,7 @@ export async function GET(req: NextRequest) {
     const postsWithImages = posts.map((post) => {
       const imageUrls = post.uploadedPostPhotos.length > 0
         ? post.uploadedPostPhotos.map((photo) => photo.postUrl)
-        : null; // Default image
+        : []; // Default image
 
       const address = post.postAddress.length > 0 ? post.postAddress[0] : null;
 
