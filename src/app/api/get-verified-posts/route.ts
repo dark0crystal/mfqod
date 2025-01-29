@@ -1,6 +1,8 @@
 import { NextResponse, NextRequest } from 'next/server';
 import prisma from "@/lib/db";
 import {auth} from "../../../../auth"
+import { redis } from "@/lib/redis";
+
   // according the given userId the API endpoint will return the appropiate posts for that user 
   // the endpoit will check for the user address , and show the posts that have the same address
   // For Admin will show all the posts
@@ -163,6 +165,24 @@ console.log(postId)
       },
     });
 
+    const orgName = await prisma.post.findFirst({
+      where: { id: postId },
+      select: {
+        postAddress: {
+          select: {
+            orgnization: true
+          }
+        }
+      }
+    });
+
+    if(orgName){
+    
+    if (orgName?.postAddress?.length > 0 && orgName.postAddress[0].orgnization) {
+      await redis.del(orgName.postAddress[0].orgnization);
+    }
+  }
+
     return NextResponse.json(updatedPost);
   } catch (error) {
     console.error('Error updating post:', error);
@@ -248,6 +268,25 @@ export async function DELETE(req: NextRequest) {
       console.log("All claim photos deleted successfully.");
     }
 
+    const orgName = await prisma.post.findFirst({
+      where: { id: postId },
+      select: {
+        postAddress: {
+          select: {
+            orgnization: true
+          }
+        }
+      }
+    });
+
+    if(orgName){
+    
+    if (orgName?.postAddress?.length > 0 && orgName.postAddress[0].orgnization) {
+      await redis.del(orgName.postAddress[0].orgnization);
+    }
+  }
+
+
     // Delete associated database records
     await prisma.$transaction([
       prisma.claimPhotos.deleteMany({
@@ -259,6 +298,7 @@ export async function DELETE(req: NextRequest) {
       prisma.postPhotos.deleteMany({
         where: { postId },
       }),
+      
       prisma.address.deleteMany({
         where: { postId },
       }),
@@ -268,6 +308,7 @@ export async function DELETE(req: NextRequest) {
     ]);
 
     console.log("Post and related records deleted from the database.");
+    
 
     return NextResponse.json(
       { message: "Post and all related records deleted successfully." },
