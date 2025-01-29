@@ -1,23 +1,19 @@
 import { signIn } from "../../../../auth";
-import { redirect } from "next/navigation";
+import {redirect} from '@/i18n/routing';
+import { getLocale } from "next-intl/server"; 
 import React from "react";
 
-export default function Login({
-  searchParams,
-}: {
-  searchParams?: { [key: string]: string | string[] | undefined };
-}) {
+export default function Login() {
   async function handleSignIn() {
     "use server";
 
     await signIn();
+    const locale = await getLocale();   
 
-    const redirectPath =
-      typeof searchParams?.redirectit === "string"
-        ? searchParams.redirectit
-        : "/";
+    
 
-    redirect(redirectPath);
+    redirect({href: '/', locale:`${locale}`});
+
   }
 
   return (

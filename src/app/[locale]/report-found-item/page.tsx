@@ -1,14 +1,20 @@
 import ReportFoundItem from "../../components/Forms/ReportFoundItem";
 import {auth} from '../../../../auth'
-import { redirect } from "next/navigation";
+import {redirect} from '@/i18n/routing';
+import { getLocale } from "next-intl/server"; 
+
+ 
+
 
 export default async function ReportItem() {
   const session = await auth();
+  const locale = await getLocale();   
 
-const currentUrl = "report-found-item"
-  if(session?.user == null){
-    redirect(`/login?redirectit=${encodeURIComponent(currentUrl)}`);
-  }
+
+  // Redirects to `/en/login`
+redirect({href: '/login', locale:`${locale}`});
+
+
   return(
     <div>
       <ReportFoundItem/>
