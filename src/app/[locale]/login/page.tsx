@@ -3,16 +3,15 @@ import {redirect} from '@/i18n/routing';
 import { getLocale } from "next-intl/server"; 
 import React from "react";
 
-export default function Login() {
+export default async function Login() {
+  const locale = await getLocale();   
   async function handleSignIn() {
     "use server";
 
     await signIn();
-    const locale = await getLocale();   
-
     
 
-    redirect({href: '/', locale:`${locale}`});
+    return redirect({href: '/', locale:`${locale}`});
 
   }
 
