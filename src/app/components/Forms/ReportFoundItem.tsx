@@ -124,7 +124,7 @@ export default function ReportFoundItem() {
         setPlaceOptions(places);
       }
     }
-  }, [organization]);
+  }, [OrgPlaces, organization]);
 
   useEffect(() => {
     if (confetti) {
