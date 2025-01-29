@@ -3,6 +3,8 @@ import { useRouter } from "@/i18n/routing";
 import { MdArrowOutward } from "react-icons/md";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import defaultImage from "../../../../public/bg11.jpg"
+
 export default function DisplayPosts({items}:any){
   const t= useTranslations("card")
   const c= useTranslations("storage")
@@ -66,7 +68,7 @@ export default function DisplayPosts({items}:any){
                                 <MdArrowOutward />
                               </button>
                               <Image
-                                src="/images/default-image.jpg"
+                                src={defaultImage}
                                 alt="Default Image"
                                 layout="fill"
                                 objectFit="cover"
