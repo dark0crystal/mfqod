@@ -90,7 +90,7 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
           {showPost ? (
             <div className="w-full h-80 bg-yellow-100 flex flex-row">
               <div className="w-1/2 relative overflow-hidden rounded-2xl">
-                <Image alt="sora" src={img4} fill objectFit="cover" />
+                <Image alt="Post image" src={img4} fill className="object-cover" />
               </div>
               <div className="w-1/2 p-4">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">
