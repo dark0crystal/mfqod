@@ -1,6 +1,6 @@
 import { auth } from "../../../../../auth"
 import Image from "next/image"
-import img2 from "../../../../../public/img2.jpeg"
+import img2 from "../../../../../public/bg11.jpg"
 export default async function UserInfo(){
 
     const session = await auth()
