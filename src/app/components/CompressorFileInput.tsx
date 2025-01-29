@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Compressor from "compressorjs";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 interface CompressorFileInputProps {
   onFilesSelected: (compressedFiles: File[]) => void;
@@ -79,11 +80,15 @@ const CompressorFileInput: React.FC<CompressorFileInputProps> = ({
       />
       <div className="mt-4 flex flex-wrap gap-2">
         {previewImages.map((src, index) => (
-          <div key={index} className="relative">
-            <img
+          <div key={index} className="relative w-24 h-24 overflow-hidden ounded-lg shadow-md">
+            <Image
               src={src}
               alt={`Preview ${index}`}
-              className="w-24 h-24 object-cover rounded-lg shadow-md"
+              width={24}
+              height={24}
+              objectFit="cover"
+              fill
+              className="absolute"
             />
             <button
               onClick={() => handleDeleteImage(index)}
