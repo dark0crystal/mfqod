@@ -225,7 +225,10 @@ export default function ReportFoundItem() {
             >
               <option value="" disabled>{c("selectPlace")}</option>
               {placeOptions.map((place, index) => (
-                <option key={index} value={place.key}>{place.name}</option>
+                <option
+                 key={index}
+                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                 value={place.key}>{place.name}</option>
               ))}
             </select>
             {errors.place && <p className="mt-2 text-xs text-red-500">{errors.place.message}</p>}
