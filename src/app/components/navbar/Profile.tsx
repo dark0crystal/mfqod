@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { SignOut } from "../auth/client/signout-button";
 import { SignIn } from "../auth/client/signin-button";
-import defaultProfileImage from "../../../../public/img2.jpeg";
+import defaultProfileImage from "../../../../public/bg11.jpg";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 
