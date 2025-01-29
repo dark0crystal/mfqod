@@ -28,7 +28,7 @@ export default async function ManageUsersPage() {
       {user.role === "TECHADMIN" ? (
         <ManageUsers />
       ) : (
-        <div>You can't access this page</div>
+        <div>You can not access this page</div>
       )}
     </>
   );
