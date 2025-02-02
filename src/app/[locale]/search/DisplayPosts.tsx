@@ -35,8 +35,8 @@ export default function DisplayPosts({ items }: any) {
             return (
               <div
                 key={index}
-                className={`bg-white min-w-[350px] rounded-2xl shadow-lg overflow-hidden ${
-                  isExpanded ? "fixed inset-0 bg-black bg-opacity-80 z-50 flex justify-center items-center" : "hover:shadow-xl transition-shadow duration-300"
+                className={`bg-white min-w-[350px]  shadow-lg overflow-hidden ${
+                  isExpanded ? "fixed inset-0 bg-black bg-opacity-80 z-50 flex justify-center items-center" : "hover:shadow-xl rounded-2xl transition-shadow duration-300"
                 }`}
               >
                 {/* Content Section */}
@@ -77,8 +77,8 @@ export default function DisplayPosts({ items }: any) {
                       <Image
                         src={item.imageUrls[0]} // Display the first image
                         alt={`Image ${index}`}
-                        layout="fill"
-                        objectFit="cover"
+                        fill
+                        objectFit={`${isExpanded ? "fill":"cover"}`}
                         className={`rounded-2xl transition-transform ${
                           isExpanded ? "cursor-zoom-out w-auto h-auto max-w-full max-h-full" : ""
                         }`}
