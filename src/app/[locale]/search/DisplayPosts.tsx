@@ -40,20 +40,20 @@ export default function DisplayPosts({ items }: any) {
                 }`}
               >
                 {/* Content Section */}
-                <div className="p-4">
+                <div className={`p-4  ${isExpanded && "hidden"}`}>
                   <h4 className="text-lg font-semibold text-gray-800">{item.title}</h4>
                   <p className="text-gray-500 text-sm">{item.content}</p>
                 </div>
 
                 {/* Footer Section */}
-                <div className="flex items-center justify-between py-2 px-4">
+                <div className={`flex items-center justify-between py-2 px-4 ${isExpanded && "hidden"}`}>
                   <p className="text-gray-600 text-sm">
                     {t("location")}: {c(`place.${item.address?.place}`)}, {c(`country.${item.address?.country}`)}
                   </p>
                 </div>
 
                 {/* Image Section */}
-                <div className={`relative ${isExpanded ? "w-full h-full" : "h-[250px] m-3"}`}>
+                <div className={`relative ${isExpanded ? "md:w-[500px] md:h-[600px] lg:w-[500px] lg:h-[700px]" : "h-[250px] m-3"}`}>
                   {item.imageUrls.length > 0 ? (
                     <div>
                       {/* Button to navigate to details */}
