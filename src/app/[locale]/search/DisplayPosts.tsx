@@ -53,7 +53,7 @@ export default function DisplayPosts({ items }: any) {
                 </div>
 
                 {/* Image Section */}
-                <div className={`relative ${isExpanded ? "md:w-[500px] md:h-[600px] lg:w-[500px] lg:h-[700px]" : "h-[250px] m-3"}`}>
+                <div className={`relative ${isExpanded ? "w-[98vw] h-[88vh] md:w-[500px] md:h-[600px] lg:w-[500px] lg:h-[700px]" : "h-[250px] m-3"}`}>
                   {item.imageUrls.length > 0 ? (
                     <div>
                       {/* Button to navigate to details */}
