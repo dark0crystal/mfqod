@@ -57,7 +57,7 @@ export default function Profile() {
             >
               <div className="flex flex-col items-center text-gray-800 space-y-5 m-3">
                 {/* User Dashboard */}
-                <Link href="/dashboard" className="text-lg w-[200px]  text-gray-700  hover:text-blue-500    bg-gradient-to-r from-[#d7eeff] to-[#93bcd2]  py-3 px-6  rounded-xl  font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
+                <Link href="/dashboard" className="text-sm w-[200px]  text-gray-700  hover:text-blue-500    bg-gradient-to-r from-[#d7eeff] to-[#93bcd2]  py-3 px-6  rounded-xl  font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
                   {t("dashboard")}
                 </Link>
 
