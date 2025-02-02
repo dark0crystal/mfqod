@@ -9,6 +9,8 @@ import ReactConfetti from 'react-confetti';
 import CompressorFileInput from '../../../components/CompressorFileInput';
 import Image from 'next/image';
 import Footer from '@/app/components/Footer';
+import { useSession } from "next-auth/react"
+import { Link } from '@/i18n/routing';
 
 // Define Zod validation schema
 const schema = z.object({
@@ -27,6 +29,8 @@ export default function PostDetails({ params }: { params: { id: string } }) {
   const [confetti, setConfetti] = useState(false);
   const [showForm, setShowForm] = useState(false); // State to toggle form visibility
   const [compressedFiles, setCompressedFiles] = useState<File[]>([]);
+
+  const { data: session } = useSession()
 
   const { id } = params;
 
@@ -169,6 +173,8 @@ export default function PostDetails({ params }: { params: { id: string } }) {
 
       {/* Claim Form */}
       {showForm && (
+        <>
+        {session?.user?.email !=null  ? (
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-6 mt-8">
           <div>
             <input
@@ -201,6 +207,17 @@ export default function PostDetails({ params }: { params: { id: string } }) {
             </button>
           </div>
         </form>
+        ):(
+          <div className='flex flex-col justify-center items-center h-52'>
+            <h1>You Need To LogIn</h1>
+            <div className='bg-blue-600 rounded-3xl  text-white p-4 mt-10'>
+              
+                <Link href="/login" className='m-12 text-xl font-semibold'>Log In</Link>
+            </div>
+              
+          </div>
+        ) }
+        </>
       )}
 
 
