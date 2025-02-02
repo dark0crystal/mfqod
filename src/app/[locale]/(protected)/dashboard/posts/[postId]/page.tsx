@@ -79,11 +79,11 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
 
   return (
     // Admin post details and claims
-    <div className=" w-[700px] mx-auto p-6">
+    <div className="w-screen md:w-[700px] mx-10 p-6">
       {/* post details only */}
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-        <div className="p-6">
 
+        <div className="p-4">
 
           <button
             onClick={handlePostEdit}
@@ -92,10 +92,12 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
             Edit Post
           </button>
           {showPost ? (
-            <div className="w-full h-80  flex flex-row">
-              <div className="w-1/2 relative overflow-hidden rounded-2xl">
+            <div className="w-full min-h-[500px] md:min-h-[400px]  flex flex-col lg:flex-row">
+              {/* image section */}
+              <div className="w-[300px] relative overflow-hidden rounded-2xl">
                 <Image alt="Post image" src={img4} fill className="object-cover" />
               </div>
+              {/* post content section */}
               <div className="w-1/2 p-4">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">
                   {post.title || "Untitled Post"}
