@@ -92,13 +92,13 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
             Edit Post
           </button>
           {showPost ? (
-            <div className="w-full min-h-[500px] md:min-h-[400px]  flex flex-col lg:flex-row">
+            <div className="w-full min-h-[500px] md:min-h-[400px]  grid grid-cols-1 grid-rows-2 md:grid-cols-2 md:grid-rows-1">
               {/* image section */}
-              <div className="w-[300px] relative overflow-hidden rounded-2xl">
-                <Image alt="Post image" src={img4} fill className="object-cover" />
+              <div className="w-[300px] h-[300px] border relative overflow-hidden rounded-2xl order-1 md:order-2 md:col-span-1">
+                <Image alt="Post image" src={img4} fill objectFit="cover" />
               </div>
               {/* post content section */}
-              <div className="w-1/2 p-4">
+              <div className="w-[300px] border  p-4 order-2 md:order-1 md:col-span-1">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">
                   {post.title || "Untitled Post"}
                 </h1>
