@@ -63,7 +63,7 @@ export default function Profile() {
 
                
                 {/* Sign Out Button */}
-                <div className=" w-[200px] text-lg bg-gradient-to-r from-[#ff512a] to-[#d42727] py-3 px-6  rounded-xl text-white font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
+                <div className=" w-[200px] text-sm bg-gradient-to-r from-[#ff512a] to-[#d42727] py-3 px-6  rounded-xl text-white font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
                   <SignOut />
                 </div>
               </div>
