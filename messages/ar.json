@@ -2,7 +2,7 @@
     "HomePage": {
       "title": "مغيّب شي؟ مفقود بيساعدك",
       "about": "Go to the about page",
-      "search":"ابحث عن مفقود",
+      "search":"أبحث عن مفقود",
       "report":"بلّغ عن مفقود",
       "description":"مفقود يسهل عليك تحصل ممتلكاتك المفقودة",
       "versionMessage":"إطلاق مفقود النسخة التجريبية v1.0.0 "
@@ -10,7 +10,7 @@
     "navbar":{
         "brand":"مَفقوُد",
         "brand-duplicate":"مفقود",
-        "search":"ابحث عن مفقود",
+        "search":"أبحث عن مفقود",
         "searchBtn":"Search Something",
         "dashboard":"لوحة التحكم",
         "report":"وجدت مفقودًا",
@@ -55,7 +55,7 @@
          "quickLinks":"روابط سريعة",
          "privacyTitle":"الخصوصية و البنود",
           "main":"الرئيسية",
-          "search":"ابحث عن مفقود",
+          "search":"أبحث عن مفقود",
           "report":"بلّغ عن مفقود",
           "privacy":"سياسة الخصوصية",
           "terms":"شروط الخدمة",
