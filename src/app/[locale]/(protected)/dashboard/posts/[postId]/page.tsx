@@ -78,9 +78,13 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
   }
 
   return (
-    <div className="w-[700px] mx-auto p-6">
+    // Admin post details and claims
+    <div className=" w-[700px] mx-auto p-6">
+      {/* post details only */}
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="p-6">
+
+
           <button
             onClick={handlePostEdit}
             className="mb-4 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-900"
@@ -88,7 +92,7 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
             Edit Post
           </button>
           {showPost ? (
-            <div className="w-full h-80 bg-yellow-100 flex flex-row">
+            <div className="w-full h-80  flex flex-row">
               <div className="w-1/2 relative overflow-hidden rounded-2xl">
                 <Image alt="Post image" src={img4} fill className="object-cover" />
               </div>
@@ -105,10 +109,13 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
             <div className="w-full h-fit bg-yellow-100 flex flex-row">
               <div className="w-1/2 relative overflow-hidden rounded-2xl">
                 {/* Placeholder for EditPost */}
+                Comming soon
               </div>
             </div>
           )}
         </div>
+
+        {/* post  approval  */}
         <div className="p-4">
           <label htmlFor="approval" className="inline-flex items-center cursor-pointer">
             <span className="mr-2 text-gray-700">Approval:</span>
@@ -135,7 +142,9 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
           </label>
         </div>
       </div>
-      <div className="flex flex-row items-center w-full mt-4">
+
+      {/* claim section */}
+      <div className="flex flex-row items-center w-full border mt-4">
         {!showClaims ? (
           <button
             onClick={() => setShowClaims(true)}
