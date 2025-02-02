@@ -116,8 +116,6 @@ export default function PostDetails({ params }: { params: { id: string } }) {
 
             <h2 className="text-3xl font-bold text-gray-800 mb-4">{post.title}</h2>
             <p className="text-gray-600 mb-2"><strong>Content:</strong> {post.content}</p>
-            <p className="text-gray-600 mb-2"><strong>Author Email:</strong> {post.authorEmail}</p>
-            <p className="text-gray-600 mb-4"><strong>Temporary Deletion:</strong> {post.temporaryDeletion ? 'Yes' : 'No'}</p>
             {/* Address */}
             <div className="mb-4">
               <h3 className="text-lg font-semibold text-gray-800">Address:</h3>
