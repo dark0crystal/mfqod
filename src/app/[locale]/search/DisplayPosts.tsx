@@ -73,18 +73,17 @@ export default function DisplayPosts({ items }: any) {
                       >
                         <IoMdResize />
                       </button>
-                      <div>
-                        <Image
-                          src={item.imageUrls[0]} // Display the first image
-                          alt={`Image ${index}`}
-                          layout="fill"
-                          objectFit="cover"
-                          className={`rounded-2xl transition-transform ${
-                            isExpanded ? "cursor-zoom-out w-auto h-auto max-w-full max-h-full" : ""
-                          }`}
-                          onClick={() => handleImageSize(item.imageUrls[0])}
-                        />
-                        </div>
+
+                      <Image
+                        src={item.imageUrls[0]} // Display the first image
+                        alt={`Image ${index}`}
+                        layout="fill"
+                        objectFit="cover"
+                        className={`rounded-2xl transition-transform ${
+                          isExpanded ? "cursor-zoom-out w-auto h-auto max-w-full max-h-full" : ""
+                        }`}
+                        onClick={() => handleImageSize(item.imageUrls[0])}
+                      />
                     </div>
                   ) : (
                     <>
