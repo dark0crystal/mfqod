@@ -79,9 +79,9 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
 
   return (
     // Admin post details and claims
-    <div className="w-screen md:w-[700px] mx-10 p-6">
+    <div className="w-screen md:w-[700px] mx-10 p-6 bg-slate-500">
       {/* post details only */}
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="bg-violet-300 shadow-lg rounded-lg overflow-hidden">
 
         <div className="p-4">
 
@@ -92,16 +92,22 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
             Edit Post
           </button>
           {showPost ? (
-            <div className="w-full min-h-[500px] md:min-h-[400px]  grid grid-cols-1 grid-rows-2 md:grid-cols-2 md:grid-rows-1">
+            <div className="w-full bg-red-300 h-fit  grid grid-cols-1 grid-rows-2 md:grid-cols-2 md:grid-rows-1">
               {/* image section */}
-              <div className="w-[300px] h-[300px] border relative overflow-hidden rounded-2xl order-1 md:order-2 md:col-span-1">
+              <div className="w-full h-[350px] border relative overflow-hidden rounded-2xl order-1 md:order-2 md:col-span-1">
                 <Image alt="Post image" src={img4} fill objectFit="cover" />
               </div>
               {/* post content section */}
-              <div className="w-[300px] border  p-4 order-2 md:order-1 md:col-span-1">
+              <div className="w-full border  p-4 order-2 md:order-1 md:col-span-1">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">
                   {post.title || "Untitled Post"}
                 </h1>
+                <p className="text-gray-700 mb-4">
+                  {post.content || "No content available"}
+                </p>
+                <p className="text-gray-700 mb-4">
+                  {post.content || "No content available"}
+                </p>
                 <p className="text-gray-700 mb-4">
                   {post.content || "No content available"}
                 </p>
