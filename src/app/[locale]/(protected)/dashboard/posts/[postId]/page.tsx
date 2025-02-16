@@ -165,7 +165,7 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
       </div>
 
       {/* claim section */}
-      <div className="flex flex-row items-center w-full border mt-4">
+      <div className="flex flex-row items-center w-full border mt-4 bg-red-600">
         {!showClaims ? (
           <button
             onClick={() => setShowClaims(true)}
