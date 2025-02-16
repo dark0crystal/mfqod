@@ -1,65 +1,54 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import React, { useState } from 'react';
+import img from "../../../../../../../public/img3.jpeg"
 
 // Claims Component
-export default function Claims({ postId }: { postId: string }){
+export default function Claims({ postId }: { postId: string }) {
   const [claims, setClaims] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-
-  async function handleClaimApproval(claimId:string ,approval:boolean){
+  async function handleClaimApproval(claimId: string, approval: boolean) {
     try {
-      
-    
-    const response  = await fetch("/api/post-claim-approval" ,{
-      method:"PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        claimId: claimId,
-        approval
-      }),
+      const response = await fetch('/api/post-claim-approval', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ claimId, approval }),
+      });
 
-    })
-    if(response.ok){
-      console.log("claim approved successfully")
-      fetchClaims()
-    }
+      if (response.ok) {
+        console.log('Claim status updated');
+        fetchClaims();
+      } else {
+        console.error('Failed to update claim status');
+      }
     } catch (error) {
-        console.log("failed to change the claim approval")
+      console.error('Error updating claim approval');
     }
-
-    
   }
-
-
 
   async function fetchClaims() {
     setIsLoading(true);
     setError(null);
     try {
       const response = await fetch(`/api/get-claims?postId=${postId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch claims');
-      }
+      if (!response.ok) throw new Error('Failed to fetch claims');
+      
       const data = await response.json();
-      console.log(data)
       setClaims(data);
     } catch (err) {
       setError('Error fetching claims.');
     } finally {
       setIsLoading(false);
     }
-  };
-
+  }
 
   return (
-    <div className="mt-6">
+    <div className="mt-6 w-full">
       <button
         onClick={fetchClaims}
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition-all duration-200"
       >
         Reload Claims
       </button>
@@ -67,45 +56,47 @@ export default function Claims({ postId }: { postId: string }){
       {isLoading && <p className="mt-4 text-gray-500">Loading claims...</p>}
       {error && <p className="mt-4 text-red-500">{error}</p>}
 
-      {claims.length > 0 && (
-        <div className="mt-4">
-          <h3 className="text-lg font-bold text-gray-800 mb-2">Claims</h3>
-          <ul className="list-disc pl-5 text-gray-700">
+      {claims.length > 0 ? (
+        <div className="mt-4 w-full">
+          <h3 className="text-xl font-bold text-gray-800 mb-4">Claims</h3>
+          <div className="">
             {claims.map((claim, index) => (
-              <li key={index}>
-                <p>
-                  <strong>Claim ID:</strong> {claim.id}
-                </p>
-                <p>
-                  <strong>Description:</strong> {claim.claimTitle}
-                </p>
-                <p>
-                  <strong>claimContent:</strong> {claim.claimContent}
-                </p>
-                <p>
-                  <strong>Date:</strong> {new Date(claim.createdAt).toLocaleDateString()}
-                </p>
-                <p>{claim.approved}</p>
-                <div>
-                  {claim.approved == true ? 
-                  (
-                  <button onClick={()=>{handleClaimApproval(claim.id ,false)}}>approved</button>
-                )
-                  :(
-                    <button onClick={()=>{handleClaimApproval(claim.id ,true)}}>not approved</button>
-                  )
-                  }
-                  
+              <div key={index} className="p-4 border rounded-lg shadow bg-white w-full ">
+                <div className='w-[400px] h-[400px]'>
+                  <Image alt='image' src={img} fill objectFit='cover'/>
                 </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+                <div>
+                  <p className="text-gray-700">
+                    <strong>Claim ID:</strong> {claim.id}
+                  </p>
+                  <p className="text-gray-700">
+                    <strong>Title:</strong> {claim.claimTitle}
+                  </p>
+                  <p className="text-gray-700">
+                    <strong>Content:</strong> {claim.claimContent}
+                  </p>
+                  <p className="text-gray-700">
+                    <strong>Date:</strong> {new Date(claim.createdAt).toLocaleDateString()}
+                  </p>
 
-      {claims.length === 0 && !isLoading && (
-        <p className="mt-4 text-gray-500">No claims available for this post.</p>
+                  <div className="mt-4">
+                    <button
+                      onClick={() => handleClaimApproval(claim.id, !claim.approved)}
+                      className={`px-4 py-2 rounded-lg text-white transition-all duration-200 ${
+                        claim.approved ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'
+                      }`}
+                    >
+                      {claim.approved ? 'Approved' : 'Not Approved'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        !isLoading && <p className="mt-4 text-gray-500">No claims available for this post.</p>
       )}
     </div>
   );
-};
+}
