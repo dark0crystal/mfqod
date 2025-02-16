@@ -79,7 +79,7 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
 
   return (
     // Admin post details and claims
-    <div className="w-screen md:w-[700px] mx-10 p-6 bg-slate-500">
+    <div className="w-screen md:w-[700px] mx-10 p-6">
       {/* post details only */}
       <div className="bg-violet-300 shadow-lg rounded-lg overflow-hidden">
 
@@ -165,7 +165,7 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
       </div>
 
       {/* claim section */}
-      <div className="flex flex-row items-center w-full border mt-4 bg-red-600">
+      <div className="flex flex-row items-center w-full border mt-4">
         {!showClaims ? (
           <button
             onClick={() => setShowClaims(true)}
