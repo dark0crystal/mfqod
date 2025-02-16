@@ -62,7 +62,7 @@ export default function Claims({ postId }: { postId: string }) {
           <div className="">
             {claims.map((claim, index) => (
               <div key={index} className="p-4 border rounded-lg shadow bg-white w-full ">
-                <div className='w-[400px] h-[400px]'>
+                <div className='w-full h-[400px] relative'>
                   <Image alt='image' src={img} fill objectFit='cover'/>
                 </div>
                 <div>
