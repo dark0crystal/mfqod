@@ -99,18 +99,31 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
               </div>
               {/* post content section */}
               <div className="w-full border  p-4 order-2 md:order-1 md:col-span-1">
+                 {/* Title */}
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">
                   {post.title || "Untitled Post"}
                 </h1>
+
+                {/* Content */}
                 <p className="text-gray-700 mb-4">
                   {post.content || "No content available"}
                 </p>
+
+                {/* Type */}
                 <p className="text-gray-700 mb-4">
-                  {post.content || "No content available"}
+                  النوع: {post.type || "No type available"}
                 </p>
+
+                {/* Temporary Deletion */}
                 <p className="text-gray-700 mb-4">
-                  {post.content || "No content available"}
+                  {post.temporaryDeletion ? "Marked for deletion" : "Not marked for deletion"}
                 </p>
+
+                {/* Approval Status */}
+                <p className="text-gray-700 mb-4">
+                  {post.approval ? "Approved ✅" : "Not approved ❌"}
+                </p>
+                              
               </div>
             </div>
           ) : (
