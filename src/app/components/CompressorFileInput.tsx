@@ -84,8 +84,6 @@ const CompressorFileInput: React.FC<CompressorFileInputProps> = ({
             <Image
               src={src}
               alt={`Preview ${index}`}
-              width={24}
-              height={24}
               objectFit="cover"
               fill
               className="absolute"
