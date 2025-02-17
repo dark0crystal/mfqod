@@ -48,11 +48,11 @@ export default async function LocaleLayout({
   return (
     <SessionProvider session={session}>
     <html lang={locale} dir={direction}>
-      <Head>
+      {/* <Head>
       <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" 
       async="">
     </script>
-      </Head>
+      </Head> */}
 
     
     <body className={alexandria.className}>
