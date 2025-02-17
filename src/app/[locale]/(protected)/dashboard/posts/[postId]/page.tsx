@@ -95,7 +95,10 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
             <div className="w-full h-fit  grid grid-cols-1 grid-rows-2 lg:grid-cols-2 md:grid-rows-1">
               {/* image section */}
               <div className="w-full h-[350px] relative overflow-hidden rounded-2xl order-1 md:order-2 md:col-span-1">
-                <Image alt="Post image" src={img4} fill objectFit="cover" />
+                {post.images.map((img:string , index:number)=>(
+                  <Image key={index} alt="Post image" src={img} fill objectFit="cover" />
+                ))}
+                
               </div>
               {/* post content section */}
               <div className="w-full   p-4 order-2 md:order-1 md:col-span-1">
