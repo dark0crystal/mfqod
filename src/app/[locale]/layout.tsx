@@ -10,6 +10,8 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "../../../auth";
 import NavBar from "../components/navbar/Navbar";
+import Head from "next/head";
+import OneSignalInitializer from "../components/OneSignalInitializer";
 // import Footer from "./components/Footer";
 
 const alexandria = Alexandria({ subsets: ["latin"] });
@@ -41,11 +43,17 @@ export default async function LocaleLayout({
   }
    // Providing all messages to the client
   // side is the easiest way to get started
-
+  // a20918ee-ab25-4dbd-951e-6bf0763799dd
   const messages = await getMessages();
   return (
     <SessionProvider session={session}>
     <html lang={locale} dir={direction}>
+      <Head>
+      <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" 
+      async="">
+    </script>
+      </Head>
+
     
     <body className={alexandria.className}>
     <div className="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(70,130,180,0.3),rgba(255,255,255,0))]"></div>
