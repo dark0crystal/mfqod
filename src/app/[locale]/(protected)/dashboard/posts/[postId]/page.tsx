@@ -141,9 +141,10 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
 
         {/* post  approval  */}
         <div className="p-4">
-          <label htmlFor="approval" className="inline-flex items-center cursor-pointer">
-            <span className="mr-2 text-gray-700">Approval:</span>
+          <label htmlFor="approval" className="flex items-center cursor-pointer space-x-3">
+            <span className="text-gray-700 font-medium">Approval:</span>
             <div className="relative">
+              {/* Hidden Checkbox */}
               <input
                 type="checkbox"
                 id="approval"
@@ -152,19 +153,22 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
                 disabled={loading}
                 className="sr-only"
               />
+              {/* Background Track */}
               <div
-                className={`w-[5.3rem] h-8 rounded-full shadow-inner absolute ${
-                  post.approval ? "bg-green-400" : "bg-red-300"
+                className={`w-14 h-7 rounded-full transition-all duration-300 ${
+                  post.approval ? "bg-green-500" : "bg-red-400"
                 }`}
               ></div>
+              {/* Toggle Knob */}
               <div
-                className={`absolute w-6 h-6 bg-white rounded-full shadow transform transition-transform ${
-                  post.approval ? "translate-x-14" : "translate-x-1"
+                className={`absolute top-1 left-1 w-5 h-5 bg-white rounded-full shadow-md transform transition-all duration-300 ${
+                  post.approval ? "translate-x-7" : "translate-x-0"
                 }`}
               ></div>
             </div>
           </label>
         </div>
+
       </div>
 
       {/* claim section */}
