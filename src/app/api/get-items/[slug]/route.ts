@@ -11,12 +11,12 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
 
   try {
     // Check the cache for the item
-    const cachedValue = await redis.get(itemId);
-    if (cachedValue) {
-      console.log("Cache hit in details:", cachedValue);
+    // const cachedValue = await redis.get(itemId);
+    // if (cachedValue) {
+    //   console.log("Cache hit in details:", cachedValue);
 
-      return NextResponse.json(JSON.parse(cachedValue));
-    }
+    //   return NextResponse.json(JSON.parse(cachedValue));
+    // }
 
     // Fetch the post from the database with additional details
     const post = await prisma.post.findUnique({
@@ -67,7 +67,7 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
     };
 
     // Cache the formatted response
-    await redis.set(itemId, JSON.stringify(responseData), 'EX', 3600);
+    // await redis.set(itemId, JSON.stringify(responseData), 'EX', 3600);
 
     // Return the response as JSON
     console.log("Fetched from database:", responseData.title);
