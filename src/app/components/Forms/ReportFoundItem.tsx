@@ -26,9 +26,13 @@ export default function ReportFoundItem() {
   const t= useTranslations("storage")
   const c= useTranslations("report-found")
   const {OrgPlaces} =DataProvider()
+  const [resultApi, setResultApi] = useState();
 
   const onSubmit: SubmitHandler<ItemFormFields> = async (data) => {
     console.log(data);
+
+    
+    
 
     try {
       const response = await fetch("/api/upload-found-item", {
@@ -82,6 +86,20 @@ export default function ReportFoundItem() {
 
           console.log("All images uploaded and URLs saved to the database:", imageUrls);
         }
+        window.OneSignal = window.OneSignal || [];
+          OneSignal.push(function () {
+            OneSignal.init({
+              appId: "ONE-SIGNAL-APP-ID",
+              notifyButton: {
+                enable: true,
+              },
+
+              allowLocalhostAsSecureOrigin: true,
+            });
+          });
+          return () => {
+            window.OneSignal = undefined;
+          };
 
         reset();
       } else {
