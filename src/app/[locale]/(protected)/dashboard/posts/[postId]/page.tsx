@@ -79,7 +79,7 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
 
   return (
     // Admin post details and claims
-    <div className="w-screen md:w-[700px] mx-10 p-6">
+    <div className="w-screen md:w-[650px] mx-10 p-6">
       {/* post details only */}
       <div className="bg-violet-300 shadow-lg rounded-lg overflow-hidden">
 
