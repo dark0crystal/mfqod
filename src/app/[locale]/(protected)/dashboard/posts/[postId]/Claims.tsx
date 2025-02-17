@@ -62,13 +62,11 @@ export default function Claims({ postId }: { postId: string }) {
           <div className="grid md:grid-cols-1 lg:grid-cols-2 grid-cols-1 lg:gap-4 gap-12">
             {claims.map((claim, index) => (
               <div key={index} className="p-4 border border-blue-500 rounded-lg shadow bg-white w-full ">
-                <div className='w-full h-[300px] lg:h-[200px] relative'>
+                <div className='w-full h-[300px] lg:h-[200px] relative rounded-xl overflow-hidden' >
                   <Image alt='image' src={img} fill objectFit='cover'/>
                 </div>
-                <div>
-                  <p className="text-gray-700">
-                    <strong>Claim ID:</strong> {claim.id}
-                  </p>
+                <div className='mt-3'>
+              
                   <p className="text-gray-700">
                     <strong>Title:</strong> {claim.claimTitle}
                   </p>
