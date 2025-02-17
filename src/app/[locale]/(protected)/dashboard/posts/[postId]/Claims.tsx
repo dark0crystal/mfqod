@@ -59,10 +59,10 @@ export default function Claims({ postId }: { postId: string }) {
       {claims.length > 0 ? (
         <div className="mt-4 w-full">
           <h3 className="text-xl font-bold text-gray-800 mb-4">Claims</h3>
-          <div className="">
+          <div className="grid md:grid-cols-1 lg:grid-cols-2 grid-cols-1 lg:gap-4 gap-12">
             {claims.map((claim, index) => (
-              <div key={index} className="p-4 border rounded-lg shadow bg-white w-full ">
-                <div className='w-full h-[400px] relative'>
+              <div key={index} className="p-4 border border-blue-500 rounded-lg shadow bg-white w-full ">
+                <div className='w-full h-[300px] lg:h-[200px] relative'>
                   <Image alt='image' src={img} fill objectFit='cover'/>
                 </div>
                 <div>
