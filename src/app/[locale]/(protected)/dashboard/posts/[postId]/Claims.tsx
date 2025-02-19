@@ -50,7 +50,7 @@ export default function Claims({ postId }: { postId: string }) {
         onClick={fetchClaims}
         className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition-all duration-200"
       >
-        Reload Claims
+        Show Claims
       </button>
 
       {isLoading && <p className="mt-4 text-gray-500">Loading claims...</p>}
@@ -76,6 +76,14 @@ export default function Claims({ postId }: { postId: string }) {
                   <p className="text-gray-700">
                     <strong>Date:</strong> {new Date(claim.createdAt).toLocaleDateString()}
                   </p>
+                  <p className="text-gray-700">
+                    <strong>User Name:</strong> {claim.user.name}
+                  </p>
+                  <p className="text-gray-700">
+                    <strong>Email:</strong> {claim.user.email}
+                  </p>
+                 
+
 
                   <div className="mt-4">
                     <button
