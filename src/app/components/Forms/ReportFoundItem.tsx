@@ -27,26 +27,26 @@ export default function ReportFoundItem() {
   const c= useTranslations("report-found")
   const {OrgPlaces} =DataProvider()
 
-   async function sendEmail() {
-    const res = await fetch("/api/send-email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: ["mfqod909@gmail.com","albusaidi9094@gmail.com"],
-        subject: "Welcome to Our Service 🎉",
-        content: "<p>Hello, this is a test email from OneSignal!</p>",
-      }),
-    });
+  //  async function sendEmail() {
+  //   const res = await fetch("/api/send-email", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       email: ["mfqod909@gmail.com","albusaidi9094@gmail.com"],
+  //       subject: "Welcome to Our Service 🎉",
+  //       content: "<p>Hello, this is a test email from OneSignal!</p>",
+  //     }),
+  //   });
   
-    const data = await res.json();
-    if (data.success) {
-      alert("Email sent successfully!");
-    } else {
-      alert("Failed to send email.");
-    }
-  }
+  //   const data = await res.json();
+  //   if (data.success) {
+  //     alert("Email sent successfully!");
+  //   } else {
+  //     alert("Failed to send email.");
+  //   }
+  // }
 
  
 
@@ -110,7 +110,6 @@ export default function ReportFoundItem() {
           console.log("All images uploaded and URLs saved to the database:", imageUrls);
         }
        
-        await sendEmail()
         reset();
       } else {
         console.error("Failed to upload item.");
