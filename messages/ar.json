@@ -106,6 +106,9 @@
       },
       "search":{
         "filter":"فلتر"
+      },
+      "loading":{
+        "loadingMessage":"لحظات..."
       }
 
 
