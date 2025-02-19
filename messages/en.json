@@ -102,7 +102,9 @@
       "place": "Select the placement location",
       "country": "Country",
       "selectOrganization": "Select the organization name",
-      "selectPlace": "Select the placement location"
+      "selectPlace": "Select the placement location",
+      "note":"Note: In this version v1.0.2 posts will be verified before publishing"
+
 },
 "search":{
   "filter":"filter"
