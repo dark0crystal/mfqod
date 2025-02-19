@@ -45,7 +45,7 @@ export default async function NavBar() {
        {/* for Basic */}
       {result.role == "BASIC" &&
           <div>
-            <h1>Welcome Admin, Thank For Your Great Job </h1>
+            <h1>Welcome You Are Basic User</h1>
             <NavbarSlider userRole ={result.role}/> 
           </div>
       }
