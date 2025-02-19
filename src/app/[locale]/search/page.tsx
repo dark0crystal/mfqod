@@ -33,6 +33,7 @@ export default function Search() {
 
   const handleClick = async (name: string) => {
     setCurrentName(name);
+    setShow(false);
     await fetchItemByPlace(name);
   };
 
