@@ -106,10 +106,10 @@
 },
 "search":{
   "filter":"filter"
+},
+"loading":{
+        "loadingMessage":"Loading..."
 }
-
-
-  
 
     
   }
