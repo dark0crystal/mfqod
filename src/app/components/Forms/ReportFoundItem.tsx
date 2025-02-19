@@ -175,8 +175,7 @@ export default function ReportFoundItem() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 
-      ,
-
+      
 
         {/* Title Input */}
         <div>
@@ -276,6 +275,9 @@ export default function ReportFoundItem() {
           <button type="submit" disabled={isSubmitting} className="w-full p-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-400">
             {isSubmitting ? "Submitting..." : "Submit"}
           </button>
+        </div>
+        <div className="text-center">
+          <h1 >{c("note")}</h1>
         </div>
       </form>
     </div>
