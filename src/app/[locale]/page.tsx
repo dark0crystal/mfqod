@@ -11,6 +11,8 @@ import TrustedBy from '../components/trusted-by/TrustedBy';
 import Footer from "../components/Footer"
 import { getTranslations } from "next-intl/server"
 import { Link } from "@/i18n/routing"
+import { SearchButton } from "../components/Buttons/SearchButton"
+import FoundButton from "../components/Buttons/FoundButton"
 
 export default async function Home() {
   
@@ -122,20 +124,20 @@ export default async function Home() {
 // }
 
 
-async function FoundButton() {
-  const t = await getTranslations("HomePage")
-  return (
-    <Link href="/report-found-item" className=" w-full md:w-[200px] bg-gradient-to-r from-white to-white border border-black p-4 rounded-xl text-black font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
-      <h1>{t("report")}</h1>
-    </Link>
-  );
-}
+// async function FoundButton() {
+//   const t = await getTranslations("HomePage")
+//   return (
+//     <Link href="/report-found-item" className=" w-full md:w-[200px] bg-gradient-to-r from-white to-white border border-black p-4 rounded-xl text-black font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
+//       <h1>{t("report")}</h1>
+//     </Link>
+//   );
+// }
 
-async function SearchButton() {
-  const t = await getTranslations("HomePage")
-  return (
-    <Link href="/search" className="w-full md:w-[200px]  bg-gradient-to-r from-[#2196f3] to-[#2f7ce1] p-4 rounded-xl text-white font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
-      {t("search")}
-    </Link>
-  );
-}
+// async function SearchButton() {
+//   const t = await getTranslations("HomePage")
+//   return (
+//     <Link href="/search" className="w-full md:w-[200px]  bg-gradient-to-r from-[#2196f3] to-[#2f7ce1] p-4 rounded-xl text-white font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
+//       {t("search")}
+//     </Link>
+//   );
+// }
