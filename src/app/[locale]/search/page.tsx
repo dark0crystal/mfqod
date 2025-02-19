@@ -108,7 +108,7 @@ export default function Search() {
       </div>
 
       {/* For mobile and ipad view */}
-      <div className="z-40 fixed bottom-4 right-4 lg:hidden">
+      <div className="z-40 fixed bottom-8 right-6 lg:hidden">
         {show && (
           <div className="relative flex flex-col gap-2">
             {orgNames.map((org, index: any) => (
@@ -117,7 +117,7 @@ export default function Search() {
                 onClick={() => handleClick(org.key)}
                 className={`px-3 py-2 rounded-full transition-transform duration-300 text-sm ${
                   currentName === org.key
-                    ? "bg-blue-200 border border-blue-400 rounded-md scale-105"
+                    ? "bg-blue-200 border border-blue-500 rounded-md scale-105"
                     : "bg-white border border-blue-200 rounded-md"
                 }`}
               >
@@ -127,7 +127,7 @@ export default function Search() {
           </div>
         )}
         <button
-          className="bg-white border-2 border-blue-500 py-3 px-4 rounded-md mt-2 text-lg font-semibold"
+          className="text-white border-2 bg-blue-500 py-3 px-4 rounded-md mt-2 text-lg font-semibold"
           onClick={handleShow}
         >
           {t("filter")}
