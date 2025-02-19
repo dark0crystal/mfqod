@@ -173,16 +173,16 @@ export default function PostDetails({ params }: { params: { postId: string } }) 
 
       {/* claim section */}
       <div className="flex flex-row items-center w-full  mt-4">
-        {!showClaims ? (
+        {/* {!showClaims ? (
           <button
             onClick={() => setShowClaims(true)}
             className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
           >
             Show Claims
-          </button>
-        ) : (
+          </button> */}
+        {/* ) : ( */}
           <Claims postId={params.postId} />
-        )}
+        {/* )} */}
       </div>
     </div>
   );
