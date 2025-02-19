@@ -45,13 +45,16 @@ export default function DisplayPosts() {
   }, [orgName, placeName]);
 
   const handleHide = async (postId: string) => {
+    const isConfirmed = window.confirm("Are you sure you want to hide this post?");
+    if (!isConfirmed) return;
+  
     try {
       await fetch(`/api/get-verified-posts?postId=${postId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ temporaryDeletion: true }),
       });
-
+  
       setPosts((prevPosts) =>
         prevPosts.map((post) =>
           post.id === postId ? { ...post, temporaryDeletion: true } : post
@@ -61,20 +64,24 @@ export default function DisplayPosts() {
       console.error('Error hiding post:', error);
     }
   };
-
+  
   const handleDelete = async (postId: string) => {
+    const isConfirmed = window.confirm("Are you sure you want to delete this post permanently?");
+    if (!isConfirmed) return;
+  
     try {
       await fetch(`/api/get-verified-posts?postId=${postId}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ temporaryDeletion: true }),
       });
-
+  
       setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
     } catch (error) {
       console.error('Error deleting post:', error);
     }
   };
+  
 
   if (loading) {
     return <div className="text-center text-xl mt-8">Loading...</div>;
