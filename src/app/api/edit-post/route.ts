@@ -1,4 +1,5 @@
 import prisma from "@/lib/db";
+import { redis } from "@/lib/redis";
 import { NextResponse } from "next/server";
 
 export async function PATCH(req: Request) {
@@ -12,6 +13,32 @@ export async function PATCH(req: Request) {
       );
     }
 
+    // Fetch the post and related address (organization) from the database
+    const post = await prisma.post.findUnique({
+      where: { id: postId },
+      select: {
+        id: true,
+        postAddress: {
+          select: { orgnization: true }, // Organization is stored in Address model
+        },
+      },
+    });
+
+    if (!post) {
+      return NextResponse.json({ error: "Post not found" }, { status: 404 });
+    }
+
+    const cacheKey = post.postAddress?.[0]?.orgnization; // Get the organization key
+
+    // If the post's organization exists in cache, delete it
+    if (cacheKey) {
+      const isCached = await redis.exists(cacheKey);
+      if (isCached) {
+        await redis.del(cacheKey);
+      }
+    }
+
+    // Update the post approval status
     const updatedPost = await prisma.post.update({
       where: { id: postId },
       data: { approval },
