@@ -46,7 +46,9 @@
 
       "card":{
         
-        "location":"الموقع"
+        "location":"الموقع",
+        "missing-items":"الأغراض المفقودة"
+
       },
 
 

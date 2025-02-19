@@ -46,7 +46,8 @@
 
     "card":{
       
-      "location":"Location"
+      "location":"Location",
+      "missing-items":"Missing Items"
     },
 
 
@@ -82,6 +83,7 @@
       "item2":"wallet",
       "item3":"Ring",
       "item4":"Key"
+      
     },
 
     "timeBaseWords":{
