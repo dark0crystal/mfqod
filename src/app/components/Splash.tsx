@@ -48,7 +48,7 @@ export default function Splash() {
           animate={{ x: 0 }}
           transition={{ duration: 1, type: "spring", stiffness: 100 }}
         >
-          <span className="mx-4">|</span>
+          <span className="mx-4 ">|</span>
         </motion.div>
 
         <motion.div
