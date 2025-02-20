@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { MdArrowOutward } from 'react-icons/md';
 
 type Post = {
+  approval: any;
   id: string;
   temporaryDeletion: boolean;
   title: string;
@@ -97,9 +98,8 @@ export default function DisplayPosts() {
           {posts.map((post) => (
             <div
               key={post.id}
-              className={`relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 w-[350px] min-w-[350px] ${
-                post.temporaryDeletion ? 'hidden' : 'block'
-              }`}
+              className={`relative  rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 w-[350px] min-w-[350px] ${
+                post.temporaryDeletion ? 'hidden' : 'block'}  ${post.approval ? 'bg-white':'bg-red-300'}`}
             >
               {/* Image Section */}
               <div className="relative h-40">
