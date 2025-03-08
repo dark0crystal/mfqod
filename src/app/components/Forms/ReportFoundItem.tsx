@@ -2,11 +2,12 @@
 
 import { supabase } from "@/lib/supabase";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import ReactConfetti from "react-confetti";
 import DataProvider from "@/app/storage";
 import CompressorFileInput from "../CompressorFileInput";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 type ItemFormFields = {
   title: string;
@@ -23,9 +24,12 @@ export default function ReportFoundItem() {
   const [placeOptions, setPlaceOptions] = useState<{ key: string; name: string }[]>([]);
   const [compressedFiles, setCompressedFiles] = useState<File[]>([]);
   const [confetti, setConfetti] = useState(false);
-  const t= useTranslations("storage")
-  const c= useTranslations("report-found")
-  const {OrgPlaces} =DataProvider()
+  const [isProcessing, setIsProcessing] = useState(false);
+  const t = useTranslations("storage");
+  const c = useTranslations("report-found");
+  const { OrgPlaces } = DataProvider();
+  const router = useRouter();
+  const orgPlacesRef = useRef(OrgPlaces);
 
   //  async function sendEmail() {
   //   const res = await fetch("/api/send-email", {
@@ -48,16 +52,10 @@ export default function ReportFoundItem() {
   //   }
   // }
 
- 
-
-
   const onSubmit: SubmitHandler<ItemFormFields> = async (data) => {
-    console.log(data);
-
-    
-    
-
     try {
+      setIsProcessing(true);
+      
       const response = await fetch("/api/upload-found-item", {
         method: "POST",
         body: JSON.stringify(data),
@@ -111,29 +109,31 @@ export default function ReportFoundItem() {
         }
        
         reset();
+        
+        // Redirect after successful submission and a short delay for confetti
+        setTimeout(() => {
+          router.push("/");
+        }, 3000);
       } else {
         console.error("Failed to upload item.");
       }
     } catch (error) {
       console.error("Error submitting form:", error);
+    } finally {
+      setIsProcessing(false);
     }
   };
 
   const handleOrganizationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOrg = e.target.value;
-    console.log("before",selectedOrg)
     setOrganization(selectedOrg);
-    console.log("after" ,organization)
 
-    const selectedOrgData = OrgPlaces.find(
+    const selectedOrgData = orgPlacesRef.current.find(
       (org) => org.key === selectedOrg
-      
     );
-    console.log("after",selectedOrgData)
+    
     if (selectedOrgData) {
-      console.log(selectedOrgData)
       const places = selectedOrgData.places;
-      console.log(places)
       setPlaceOptions(places);
       setValue("place", "");
     } else {
@@ -141,23 +141,29 @@ export default function ReportFoundItem() {
     }
   };
 
+  // Initialize place options when organization changes
   useEffect(() => {
     if (organization) {
-      const selectedOrgData = OrgPlaces.find(
+      const selectedOrgData = orgPlacesRef.current.find(
         (org) => org.key === organization
       );
       if (selectedOrgData) {
-        const places = selectedOrgData.places;
-        setPlaceOptions(places);
+        setPlaceOptions(selectedOrgData.places);
       }
     }
-  }, [OrgPlaces, organization]);
+  }, [organization]);
+
+  // Store OrgPlaces in ref to avoid dependency issues
+  useEffect(() => {
+    orgPlacesRef.current = OrgPlaces;
+  }, [OrgPlaces]);
 
   useEffect(() => {
     if (confetti) {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setConfetti(false);
       }, 7000);
+      return () => clearTimeout(timer);
     }
   }, [confetti]);
 
@@ -272,12 +278,16 @@ export default function ReportFoundItem() {
         </div>
         
         <div className="text-center">
-          <button type="submit" disabled={isSubmitting} className="w-full p-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-400">
-            {isSubmitting ? "Submitting..." : "Submit"}
+          <button 
+            type="submit" 
+            disabled={isSubmitting || isProcessing} 
+            className="w-full p-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-400"
+          >
+            {isSubmitting || isProcessing ? "Processing..." : "Submit"}
           </button>
         </div>
         <div className="text-center">
-          <h1 >{c("note")}</h1>
+          <h1>{c("note")}</h1>
         </div>
       </form>
     </div>
