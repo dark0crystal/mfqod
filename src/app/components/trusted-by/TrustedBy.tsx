@@ -11,11 +11,11 @@ import { useTranslations } from "next-intl"
 // import { useTranslations } from "next-intl"
 
 const CardContent =[
-    {title:"almoug" ,image:img12},
-    {title:"almoug" ,image:img13},
-    {title:"almoug" ,image:img14},
-    {title:"almoug" ,image:img12},
-    {title:"almoug" ,image:img14},
+    {title:"squ" ,image:img13},
+    {title:"squ" ,image:img13},
+    {title:"squ" ,image:img13},
+    {title:"squ" ,image:img13},
+    {title:"squ" ,image:img13},
     
 ];
 
