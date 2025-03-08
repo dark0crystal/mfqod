@@ -1,8 +1,7 @@
 
 // import { getTranslations } from "next-intl/server";
-// import { Link } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 import { Lalezar } from "next/font/google";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 // import { getLocale } from "next-intl/server";
 
