@@ -31,26 +31,7 @@ export default function ReportFoundItem() {
   const router = useRouter();
   const orgPlacesRef = useRef(OrgPlaces);
 
-  //  async function sendEmail() {
-  //   const res = await fetch("/api/send-email", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       email: ["mfqod909@gmail.com","albusaidi9094@gmail.com"],
-  //       subject: "Welcome to Our Service 🎉",
-  //       content: "<p>Hello, this is a test email from OneSignal!</p>",
-  //     }),
-  //   });
-  
-  //   const data = await res.json();
-  //   if (data.success) {
-  //     alert("Email sent successfully!");
-  //   } else {
-  //     alert("Failed to send email.");
-  //   }
-  // }
+ 
 
   const onSubmit: SubmitHandler<ItemFormFields> = async (data) => {
     try {
