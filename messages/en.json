@@ -62,6 +62,7 @@
       "terms":"Terms of Service",
       "dashboard":"Dashboard",
       "Register":"Sign In",
+      "pricing":"Pricing",
       "disclaimer": "Disclaimer: Mafqood is neither authorized nor endorsed by any of the mentioned organizations as of the last update v1.0.2. At Mafqood, we use the names of organizations for simulation purposes only.",
       "developer":"Made With ❤️",
       "description":"Mfqod makes it easy for you to find your lost property"
@@ -113,7 +114,26 @@
 },
 "loading":{
         "loadingMessage":"Loading..."
-}
+},
+
+    "pricing": {
+      "title": "Affordable plans for every budget",
+      "subtitle": "Explore our range of pricing options designed to fit any budget, offering exceptional value and flexibility to meet your unique needs.",
+      "free": "Free",
+      "plus": "Plus",
+      "premium": "Premium",
+      "priceFree": "Free",
+      "pricePlus": "Contact us",
+      "pricePremium": "Contact us",
+      "freeDescription": "For public libraries, mosques and community spaces.",
+      "plusDescription": "For restaurants, hotels and similar venues. Limited to 20 items.",
+      "premiumDescription": "For restaurants and hotels. Unlimited items.",
+      "featuresLabel": "Features:",
+      "freeFeatures": "Public libraries & mosques|Basic lost & found listing|Community support|Email support",
+      "plusFeatures": "Restaurants & hotels|Up to 20 items|Real-time listing|Monthly reports|Email support",
+      "premiumFeatures": "Restaurants & hotels|Unlimited items|Real-time listing|Priority support|Dedicated account manager",
+      "getStarted": "Get Started"
+    }
 
     
   }

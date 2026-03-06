@@ -3,17 +3,13 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import DisplayPosts from "./DisplayPosts";
 import DataProvider from "@/app/storage";
 import Footer from "@/app/components/Footer";
 import Image from "next/image";
-import ad from "../../../../public/ad.png";
-import bg11 from "../../../../public/bg11.jpg";
 import bg12 from "../../../../public/bg12.jpeg";
 import { FaSearch } from "react-icons/fa";
 import { RiLoader2Line } from "react-icons/ri";
-import { useTranslations } from "next-intl";
 
 const schema = z.object({
   item: z.string().min(1, { message: "The Field is required!" }),
@@ -24,44 +20,14 @@ type FormFields = z.infer<typeof schema>;
 
 export default function Search() {
   const [items, setItems] = useState<any[]>([]);
-  const [currentName, setCurrentName] = useState<string>();
-  const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false); // Loading state
 
   const { orgNames } = DataProvider();
-  const t = useTranslations("search");
-
-  const handleClick = async (name: string) => {
-    setCurrentName(name);
-    setShow(false);
-    await fetchItemByPlace(name);
-  };
-
-  const handleShow = () => {
-    setShow(!show);
-  };
 
   const fetchItems = async (item: string, place: string) => {
     setLoading(true); // Start loading
     try {
       const response = await fetch(`/api/get-items?item=${item}&orgName=${place}`);
-      if (response.ok) {
-        const data = await response.json();
-        setItems(data);
-      } else {
-        console.error("Failed to fetch items");
-      }
-    } catch (error) {
-      console.error("Error fetching items:", error);
-    } finally {
-      setLoading(false); // Stop loading
-    }
-  };
-
-  const fetchItemByPlace = async (place: string) => {
-    setLoading(true); // Start loading
-    try {
-      const response = await fetch(`/api/get-items-by-place?orgName=${place}`);
       if (response.ok) {
         const data = await response.json();
         setItems(data);
@@ -88,55 +54,9 @@ export default function Search() {
   };
 
   return (
-    <div className="relative lg:grid lg:grid-cols-12 lg:h-[88vh]">
-      {/* Left Section */}
-      <div className="hidden lg:col-span-2 lg:flex flex-col items-center overflow-y-auto p-4">
-        <div className="flex flex-col gap-4">
-          {orgNames.map((org, index: any) => (
-            <button
-              key={index}
-              onClick={() => handleClick(org.key)}
-              className={`p-3 rounded-full transition-transform duration-300 text-sm ${
-                currentName === org.key
-                  ? "bg-blue-100 border border-blue-400 p-3 rounded-md scale-110"
-                  : "bg-white border border-blue-200 p-3 rounded-md"
-              }`}
-            >
-              {org.name}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* For mobile and ipad view */}
-      <div className="z-40 fixed bottom-8 right-6 lg:hidden">
-        {show && (
-          <div className="relative flex flex-col gap-2">
-            {orgNames.map((org, index: any) => (
-              <button
-                key={index}
-                onClick={() => handleClick(org.key)}
-                className={`px-3 py-2 rounded-full transition-transform duration-300 text-sm ${
-                  currentName === org.key
-                    ? "bg-blue-200 border border-blue-500 rounded-md scale-105"
-                    : "bg-white border border-blue-200 rounded-md"
-                }`}
-              >
-                {org.name}
-              </button>
-            ))}
-          </div>
-        )}
-        <button
-          className="text-white border-2 bg-blue-500 py-3 px-4 rounded-md mt-2 text-lg font-semibold"
-          onClick={handleShow}
-        >
-          {t("filter")}
-        </button>
-      </div>
-
-      {/* Center Section */}
-      <div className="col-span-12 lg:col-span-8 flex flex-col items-center p-4 overflow-y-auto w-full h-full">
+    <div className="relative lg:h-[88vh]">
+      {/* Main content */}
+      <div className="flex flex-col items-center p-4 overflow-y-auto w-full min-h-full">
         <div className="relative z-20 w-full flex items-center min-h-[30vh] justify-center">
           <div className="absolute -z-10 w-full rounded-xl overflow-hidden h-full">
             <Image
@@ -194,16 +114,6 @@ export default function Search() {
           )}
           <Footer />
         </div>
-      </div>
-
-      {/* Right Section */}
-      <div className="hidden lg:col-span-2 p-4 lg:flex flex-col justify-center items-center">
-        {/* <div className="relative h-full w-full rounded-2xl overflow-hidden">
-          <Image alt="ad" src={ad} fill objectFit="cover"/>
-         <div className="absolute bottom-0 bg-gray-300/20 text-center w-full rounded-t-2xl h-10"> 
-            <h1 className="text-lg text-white  font-normal">Fake Sponsorship</h1>
-          </div>
-         </div> */}
       </div>
     </div>
   );

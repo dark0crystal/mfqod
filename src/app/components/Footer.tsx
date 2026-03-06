@@ -26,6 +26,7 @@ const privacyLinks = [
 const otherLinks = [
   { href: "/dashboard", label: `${t("dashboard")}` },
   { href: "/login", label: `${t("Register")}` },
+  { href: "/pricing", label: `${t("pricing")}` },
 ];
 
   return (
