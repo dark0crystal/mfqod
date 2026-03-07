@@ -2,8 +2,11 @@ import prisma from "@/lib/db";
 import { NextResponse, NextRequest } from "next/server";
 import { redis } from "@/lib/redis";
 
-export async function GET(req: NextRequest, { params }: { params: { slug: string } }) {
-  const itemId = params.slug;
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ slug: string }> }
+) {
+  const { slug: itemId } = await params;
 
   if (!itemId || typeof itemId !== "string") {
     return new Response("Invalid or missing itemId", { status: 400 });
@@ -26,7 +29,10 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
       include: {
         author: {
           select: {
+            id: true,
+            name: true,
             email: true,
+            image: true,
           },
         },
         uploadedPostPhotos: {
@@ -39,6 +45,14 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
             place: true,
             country: true,
             orgnization: true,
+          },
+        },
+        approvedClaim: {
+          select: {
+            id: true,
+            claimTitle: true,
+            claimContent: true,
+            user: { select: { id: true, name: true, email: true } },
           },
         },
       },
@@ -56,8 +70,22 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
       type: post.type,
       temporaryDeletion: post.temporaryDeletion,
       approval: post.approval,
+      status: post.status,
+      approvedClaimId: post.approvedClaimId,
+      disposalTitle: post.disposalTitle,
+      disposalDescription: post.disposalDescription,
+      disposalHow: post.disposalHow,
+      approvedClaim: post.approvedClaim,
       createdAt: post.createdAt,
-      authorEmail: post.author.email,
+      author: post.author
+        ? {
+            id: post.author.id,
+            name: post.author.name,
+            email: post.author.email,
+            image: post.author.image,
+          }
+        : null,
+      authorEmail: post.author?.email ?? null,
       images: post.uploadedPostPhotos.map((photo) => photo.postUrl),
       address: post.postAddress.map((address) => ({
         place: address.place,

@@ -66,7 +66,7 @@ export async function GET(req: NextRequest) {
     });
 
     // Cache the results
-    await redis.set(orgName, JSON.stringify(postsWithImages), 'EX', 3600); // Cache expires in 1 hour
+    await redis.set(orgName, JSON.stringify(postsWithImages), "EX", 3600); // Cache expires in 1 hour
 
     console.log("Fetched from database and cached:", orgName);
 

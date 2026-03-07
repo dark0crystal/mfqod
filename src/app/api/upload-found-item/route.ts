@@ -7,9 +7,10 @@ interface NewItem {
   title: string;
   content: string;
   type: string;
-  place: string;
-  country: string;
-  orgnization: string;
+  branchId?: string;
+  place?: string;
+  country?: string;
+  orgnization?: string;
 }
 
 export async function POST(req: NextRequest) {
@@ -22,35 +23,43 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // Create a new post in the database
     const newPost = await prisma.post.create({
       data: {
         userId: session.user.id,
         title: body.title,
         content: body.content,
         type: body.type,
-        
+        branchId: body.branchId || null,
       },
-      select:{
-        id:true
-      }
+      select: { id: true },
     });
 
-    // Create a new post in the database
-    const newAddress = await prisma.address.create({
-        data: {
-          postId:newPost.id,
-          place:body.place,
-          country :body.country,
-          orgnization :body.orgnization
-          
-        },
-        
+    let place: string | null = body.place ?? null;
+    let country: string | null = body.country ?? null;
+    let orgnization: string | null = body.orgnization ?? null;
+    if (body.branchId) {
+      const branch = await prisma.branch.findUnique({
+        where: { id: body.branchId },
+        include: { country: true },
       });
+      if (branch) {
+        place = branch.address ?? branch.nameEn;
+        orgnization = branch.nameEn;
+        if (branch.country) country = branch.country.nameEn;
+      }
+    }
 
-      await redis.del(body.orgnization);
+    await prisma.address.create({
+      data: {
+        postId: newPost.id,
+        place,
+        country,
+        orgnization,
+      },
+    });
 
-    // Return the new post ID in the response
+    if (orgnization) await redis.del(orgnization);
+
     return NextResponse.json({ message: "Post created successfully", postId: newPost.id }, { status: 200 });
   } catch (error) {
     console.error("Error creating post:", error);

@@ -1,3 +1,66 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: #106d93;
+    --color-primary-hover: #0d5a7a;
+    --color-form-bg: #f7f7f7;
+    --color-form-label: #a0a0a0;
+    --color-form-text: #333333;
+  }
+}
+
+@layer components {
+  /* Form design: pill-shaped inputs, soft background, generous padding */
+  .form-label {
+    @apply block text-sm font-medium mb-1.5;
+    color: var(--color-form-label);
+  }
+
+  .form-input {
+    @apply w-full py-3 px-4 rounded-2xl border-0 focus:outline-none focus:ring-2 focus:ring-primary transition;
+    background-color: var(--color-form-bg);
+    color: var(--color-form-text);
+  }
+  .form-input::placeholder {
+    color: var(--color-form-label);
+  }
+
+  .form-select {
+    @apply w-full py-3 px-4 rounded-2xl border-0 focus:outline-none focus:ring-2 focus:ring-primary transition appearance-none bg-no-repeat;
+    background-color: var(--color-form-bg);
+    color: var(--color-form-text);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23a0a0a0'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-size: 1.25rem;
+    background-position: right 0.75rem center;
+    padding-right: 2.5rem;
+  }
+
+  .form-textarea {
+    @apply w-full py-3 px-4 rounded-2xl border-0 focus:outline-none focus:ring-2 focus:ring-primary transition min-h-[80px];
+    background-color: var(--color-form-bg);
+    color: var(--color-form-text);
+  }
+  .form-textarea::placeholder {
+    color: var(--color-form-label);
+  }
+
+  .btn-primary {
+    @apply py-3 px-6 rounded-2xl font-semibold text-white transition focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed;
+    background-color: var(--color-primary);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--color-primary-hover);
+  }
+
+  .btn-primary-outline {
+    @apply py-3 px-6 rounded-2xl font-semibold border-2 transition focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+  .btn-primary-outline:hover {
+    background-color: var(--color-primary-light);
+  }
+}

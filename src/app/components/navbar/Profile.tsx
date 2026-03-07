@@ -30,7 +30,7 @@ export default function Profile() {
           {/* Profile Button */}
           <button
             onClick={handleProfile}
-            className="relative w-[43px] h-[43px] rounded-xl overflow-hidden border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="relative w-[43px] h-[43px] rounded-xl overflow-hidden border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
             aria-label="Toggle profile menu"
           >
             <Image

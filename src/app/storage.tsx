@@ -1,42 +1,41 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useState, useEffect } from "react";
+
+type Branch = {
+  id: string;
+  nameEn: string;
+  nameAr: string | null;
+  address: string | null;
+  countryId: string | null;
+  country: { id: string; nameEn: string; nameAr: string | null; code: string | null } | null;
+};
 
 export default function DataProvider() {
-  const t = useTranslations("storage"); // Assuming translations are under a "common" namespace
+  const [branches, setBranches] = useState<Branch[]>([]);
 
-  // Translated organization names
-  const orgNames = [
-    { key: "SQU", name: t("org.SQU") },
-    { key: "UTAS Muscat", name: t("org.UTAS Muscat") },
-    { key: "UTAS Ibra", name: t("org.UTAS Ibra") },
-    { key: "Bin Omair", name: t("org.Bin Omair") },
-    { key: "UTAS Nizwa", name: t("org.UTAS Nizwa") },
-  ];
+  useEffect(() => {
+    fetch("/api/branches")
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => setBranches(Array.isArray(data) ? data : []))
+      .catch(() => setBranches([]));
+  }, []);
 
-  // Translated organization places
-  const OrgPlaces = [
-    { key: "SQU", places: [{key:"SQU Library",name:t("place.SQU Library")}, {key:"SQU Lost and Found Department",name:t("place.SQU Lost and Found Department")}] },
-    {
-      key: "UTAS Muscat",
-      places: [{key:"UTAS Muscat Library" , name:t("place.UTAS Muscat Library")}, {key:"UTAS Muscat Lost and Found Department",name:t("place.UTAS Muscat Lost and Found Department")}],
-    },
-    {
-      key: "UTAS Ibra",
-      places: [{key:"UTAS Ibra Library",name:t("place.UTAS Ibra Library")}, {key:"UTAS Ibra Lost and Found Department",name:t("place.UTAS Ibra Lost and Found Department")}],
-    },
-    {
-      key: "Bin Omair",
-      places: [{key:"Bin Omair Library",name:t("place.Bin Omair Library")}],
-    },
-    {
-      key: "UTAS Nizwa",
-      places: [{key:"UTAS Nizwa Library",name:t("place.UTAS Nizwa Library")}, {key:"UTAS Nizwa Lost and Found Department",name:t("place.UTAS Nizwa Lost and Found Department")}],
-    },
-  ];
-
-  // Roles (no translation needed)
   const roles = ["BASIC", "VERIFIED", "ADMIN", "TECHADMIN"];
 
-  return { orgNames, OrgPlaces, roles };
+  // Group branches by country for dropdowns
+  const branchesByCountry = branches.reduce<Record<string, Branch[]>>((acc, b) => {
+    const key = b.country?.id ?? "none";
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(b);
+    return acc;
+  }, {});
+
+  const countryMap = new Map<string, { id: string; nameEn: string; code: string | null }>();
+  branches.forEach((b) => {
+    if (b.country) countryMap.set(b.country.id, b.country);
+  });
+  const countryList = Array.from(countryMap.values());
+
+  return { branches, branchesByCountry, countryList, roles };
 }

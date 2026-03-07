@@ -12,6 +12,7 @@ export async function GET(req: NextRequest) {
    const { searchParams } = new URL(req.url);
    const placeName = searchParams.get('placeName');
    const orgName = searchParams.get('orgName');
+   const branchId = searchParams.get('branchId');
   const session = await auth();
   const userId = session?.user?.id
   if (!userId) {
@@ -26,9 +27,31 @@ export async function GET(req: NextRequest) {
         }
     })
  const role = userRole?.role
-console.log(role)
-//after gitting the user role 
+
   try {
+    // Branch-based filtering (preferred when branchId is provided)
+    if (branchId) {
+      if (role === 'VERIFIED') {
+        const userHasBranch = await prisma.userBranch.findFirst({
+          where: { userId, branchId },
+        });
+        if (!userHasBranch) {
+          return NextResponse.json({ error: 'You do not manage this branch' }, { status: 403 });
+        }
+      }
+      if (role === 'ADMIN' || role === 'TECHADMIN' || role === 'VERIFIED') {
+        const posts = await prisma.post.findMany({
+          where: { branchId, status: 'PENDING' },
+          include: {
+            postAddress: true,
+            uploadedPostPhotos: { select: { postUrl: true } },
+            author: { select: { id: true, name: true } },
+          },
+        });
+        return NextResponse.json({ role, posts });
+      }
+    }
+
     if(role =="VERIFIED"){
     // Fetch the user's address (place) from the Manage table (using findUnique, not findMany)
 
@@ -52,6 +75,7 @@ console.log(role)
         if(placeName == userManage.place && orgName !=null){       
           const posts = await prisma.post.findMany({
             where: {
+              status: 'PENDING',
               postAddress: {
                 some: {
                   place: placeName // Match the 'place' field in Address with the user's address
@@ -75,6 +99,7 @@ console.log(role)
     }else if(orgName !=null ){
       const posts = await prisma.post.findMany({
         where: {
+          status: 'PENDING',
           postAddress: {
             some: {
               orgnization: orgName // Match the 'place' field in Address with the user's address
@@ -106,6 +131,7 @@ console.log(role)
       if (orgName) {
         const posts = await prisma.post.findMany({
           where: {
+            status: 'PENDING',
             postAddress: {
               some: {
                 orgnization: orgName, // Filter posts where `orgnization` matches the given `orgName`
@@ -150,10 +176,41 @@ console.log(role)
 export async function PUT(req: NextRequest) {
     const { searchParams } = new URL(req.url); // Get query parameters from the request URL
     const postId = searchParams.get('postId');
-console.log(postId)
-// console.log(temporaryDeletion)
   if (!postId) {
     return NextResponse.json({ error: 'Post ID is required' }, { status: 400 });
+  }
+
+  const session = await auth();
+  const userId = session?.user?.id;
+  if (!userId) {
+    return NextResponse.json({ error: 'User ID is required' }, { status: 401 });
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { role: true },
+  });
+  if (!user || (user.role !== 'ADMIN' && user.role !== 'TECHADMIN' && user.role !== 'VERIFIED')) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  }
+
+  const post = await prisma.post.findUnique({
+    where: { id: postId },
+    select: { branchId: true },
+  });
+  if (!post) {
+    return NextResponse.json({ error: 'Post not found' }, { status: 404 });
+  }
+  if (user.role === 'VERIFIED') {
+    if (!post.branchId) {
+      return NextResponse.json({ error: 'You can only update posts that belong to a branch' }, { status: 403 });
+    }
+    const userHasBranch = await prisma.userBranch.findFirst({
+      where: { userId, branchId: post.branchId },
+    });
+    if (!userHasBranch) {
+      return NextResponse.json({ error: 'You do not manage this branch' }, { status: 403 });
+    }
   }
 
   try {
@@ -215,8 +272,27 @@ export async function DELETE(req: NextRequest) {
       select: { role: true },
     });
 
-    if (!user || (user.role !== "ADMIN" && user.role !== "TECHADMIN")) {
+    if (!user || (user.role !== "ADMIN" && user.role !== "TECHADMIN" && user.role !== "VERIFIED")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    }
+
+    const post = await prisma.post.findUnique({
+      where: { id: postId },
+      select: { branchId: true },
+    });
+    if (!post) {
+      return NextResponse.json({ error: "Post not found" }, { status: 404 });
+    }
+    if (user.role === "VERIFIED") {
+      if (!post.branchId) {
+        return NextResponse.json({ error: "You can only delete posts that belong to a branch" }, { status: 403 });
+      }
+      const userHasBranch = await prisma.userBranch.findFirst({
+        where: { userId, branchId: post.branchId },
+      });
+      if (!userHasBranch) {
+        return NextResponse.json({ error: "You do not manage this branch" }, { status: 403 });
+      }
     }
 
     // Fetch all associated image URLs

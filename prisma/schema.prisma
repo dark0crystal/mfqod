@@ -25,10 +25,13 @@ model User {
   accounts      Account[]
   sessions      Session[]
   manage        Manage[]
+  userBranches  UserBranch[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
   post Post[]
   claim Claim[]
+  tickets Ticket[]
+  ticketMessages TicketMessage[]
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -46,6 +49,47 @@ model Manage{
   place String?
   user User @relation(fields: [userId], references: [id])
   orgnization String?
+}
+
+model Country {
+  id            String   @id @default(cuid())
+  nameEn        String   @unique // English name
+  nameAr        String?  // Arabic name
+  descriptionEn String?  // English description
+  descriptionAr String?  // Arabic description
+  code          String?  // e.g. "OM", "AE"
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  branches      Branch[]
+}
+
+model Branch {
+  id            String    @id @default(cuid())
+  nameEn        String    // English name
+  nameAr        String?   // Arabic name
+  descriptionEn String?   // English description
+  descriptionAr String?   // Arabic description
+  countryId     String?
+  country       Country?  @relation(fields: [countryId], references: [id], onDelete: SetNull)
+  address       String?
+  latitude      Float
+  longitude     Float
+  imageUrl      String?   // optional branch image
+  description   String?   // legacy; use descriptionEn/descriptionAr
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  userBranches UserBranch[]
+  posts         Post[]
+}
+
+model UserBranch {
+  id        String   @id @default(cuid())
+  userId    String
+  branchId  String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  branch    Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  @@unique([userId, branchId])
 }
 model Account {
   userId            String
@@ -106,13 +150,21 @@ model Authenticator {
 model Post{
   id  String   @id @default(cuid())
   userId String
+  branchId String?
   title String
   content String?
   type String? 
   claimsCount Int     @default(0) // Pre-aggregated claims count
   temporaryDeletion Boolean @default(false)
   approval Boolean @default(false)
+  status PostStatus @default(PENDING)
+  approvedClaimId String? @unique
+  approvedClaim   Claim?  @relation("ApprovedClaim", fields: [approvedClaimId], references: [id])
+  disposalTitle String?
+  disposalDescription String?
+  disposalHow String?
   author User @relation(fields: [userId],references: [id])
+  branch Branch? @relation(fields: [branchId], references: [id])
   createdAt DateTime @default(now())
   writtenClaims Claim[]
   uploadedPostPhotos PostPhotos[]
@@ -143,6 +195,14 @@ enum AddressStatus{
   UnAvailable
   Available
 }
+
+enum PostStatus {
+  PENDING
+  APPROVED
+  DISPOSED
+  CANCELLED
+}
+
 model Claim{
   id    String          @id @default(cuid())
   postId String
@@ -155,6 +215,7 @@ model Claim{
   userId String
   user User @relation(fields: [userId], references: [id])
   uploadedClaimPhotos ClaimPhotos[]
+  approvedForPost Post? @relation("ApprovedClaim")
 
 }
 
@@ -164,4 +225,42 @@ model ClaimPhotos{
   photoUrl String
   claim Claim @relation(fields: [claimId], references: [id])
   createdAt DateTime @default(now())
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  CLOSED
+}
+
+enum TicketType {
+  SUBSCRIPTION
+  PROBLEM_REPORT
+  SUPPORT
+  OTHER
+}
+
+model Ticket {
+  id          String       @id @default(cuid())
+  userId      String
+  subject     String
+  body        String       // initial message
+  type        TicketType
+  status      TicketStatus @default(OPEN)
+  reopenedAt  DateTime?
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ticketMessages TicketMessage[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model TicketMessage {
+  id           String   @id @default(cuid())
+  ticketId     String
+  userId       String
+  body         String
+  isStaffReply Boolean  @default(false)
+  ticket       Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
 }

@@ -1,26 +1,5 @@
 import { NextResponse } from "next/server";
-import prisma from "@/lib/db"; // Adjust to your Prisma instance
-
-export async function GET(req: Request, { params }: { params: { userId: string } }) {
-  try {
-    const { userId } = params;
-
-    const record = await prisma.manage.findFirst({
-      where: { userId },
-    });
-
-    if (!record) {
-      return NextResponse.json({ error: "Record not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(record);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return NextResponse.json({ error: "Failed to fetch data" }, { status: 500 });
-  }
-}
-
-
+import prisma from "@/lib/db";
 
 export async function POST(req: Request) {
   try {

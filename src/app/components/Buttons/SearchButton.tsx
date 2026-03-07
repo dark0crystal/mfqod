@@ -9,8 +9,8 @@ export function SearchButton() {
 
   
   return (
-    <Link href="/search" className="w-full md:w-[200px]  bg-gradient-to-r from-[#2196f3] to-[#2f7ce1] p-4 rounded-xl text-white font-semibold text-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
-          {t("search")}
+    <Link href="/search" className="w-full md:w-[200px] btn-primary inline-flex items-center justify-center hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
+      {t("search")}
     </Link>
   );
 }

@@ -60,6 +60,12 @@ export default function MobileNavbar() {
             </h1>
           </Link>
 
+          <Link href="/branches" onClick={toggleNavbar}>
+            <h1 className="text-2xl font-normal text-gray-700 hover:text-blue-600">
+              {t("branches")}
+            </h1>
+          </Link>
+
           <Profile/>
         </div>
       )}

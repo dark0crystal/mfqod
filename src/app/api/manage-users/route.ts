@@ -18,17 +18,48 @@ export async function GET(req: NextRequest) {
         id: true,
         email: true,
         name: true,
-        role:true,
-        manage:{
-            select:{
-                place:true,
-                orgnization:true,
-            }
-        }
+        image: true,
+        role: true,
+        manage: {
+          select: {
+            place: true,
+            orgnization: true,
+          },
+        },
+        userBranches: {
+          select: {
+            branch: { select: { id: true, nameEn: true, nameAr: true } },
+          },
+        },
+        _count: {
+          select: { post: true, claim: true },
+        },
       },
     });
 
-    return NextResponse.json(users);
+    const serialized = users.map((u) => {
+      const [firstManage] = u.manage;
+      return {
+        id: u.id,
+        email: u.email,
+        name: u.name,
+        image: u.image,
+        role: u.role,
+        managing: firstManage
+          ? { place: firstManage.place, orgnization: firstManage.orgnization }
+          : null,
+        branches: u.userBranches.map((ub) => ({
+          id: ub.branch.id,
+          name: ub.branch.nameEn,
+          nameEn: ub.branch.nameEn,
+          nameAr: ub.branch.nameAr,
+        })),
+        postsCount: u._count.post,
+        claimsCount: u._count.claim,
+      };
+    });
+
+    return NextResponse.json(serialized);
   } catch (error) {
     console.error("Error fetching users:", error);
     return NextResponse.json({ error: "Failed to fetch users" }, { status: 500 });
